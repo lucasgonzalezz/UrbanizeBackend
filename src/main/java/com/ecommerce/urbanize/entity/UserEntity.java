@@ -35,8 +35,6 @@ public class UserEntity {
     @Size(min = 3, max = 255)
     private String lastName1;
 
-    @NotNull
-    @NotBlank
     @Size(min = 3, max = 255)
     private String lastName2;
 
