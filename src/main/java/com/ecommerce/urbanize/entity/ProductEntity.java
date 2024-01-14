@@ -30,6 +30,11 @@ public class ProductEntity {
     private int stock;
 
     @NotNull
+    @NotBlank
+    @Size(min = 1, max = 3)
+    private String size;
+
+    @NotNull
     private int price;
 
     @Lob
@@ -42,26 +47,30 @@ public class ProductEntity {
     public ProductEntity() {
     }
 
-    public ProductEntity(Long id, String name, int stock, int price, byte[] image, CategoryEntity category) {
+    public ProductEntity(Long id, String name, int stock, String size, int price, byte[] image,
+            CategoryEntity category) {
         this.id = id;
         this.name = name;
         this.stock = stock;
+        this.size = size;
         this.price = price;
         this.image = image;
         this.category = category;
     }
 
-    public ProductEntity(String name, int stock, int price, byte[] image, CategoryEntity category) {
+    public ProductEntity(String name, int stock, String size, int price, byte[] image, CategoryEntity category) {
         this.name = name;
         this.stock = stock;
+        this.size = size;
         this.price = price;
         this.image = image;
         this.category = category;
     }
 
-    public ProductEntity(String name, int stock, int price, byte[] image) {
+    public ProductEntity(String name, int stock, String size, int price, byte[] image) {
         this.name = name;
         this.stock = stock;
+        this.size = size;
         this.price = price;
         this.image = image;
     }
@@ -88,6 +97,14 @@ public class ProductEntity {
 
     public void setStock(int stock) {
         this.stock = stock;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
     }
 
     public int getPrice() {

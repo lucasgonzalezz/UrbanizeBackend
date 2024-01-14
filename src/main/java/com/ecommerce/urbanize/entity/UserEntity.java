@@ -8,6 +8,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -58,10 +60,9 @@ public class UserEntity {
     private String city;
 
     @NotNull
-    @NotBlank
-    @Size(min = 5, max = 10, message = "The postal code must have 5 to 10 characters")
-    @Pattern(regexp = "\\d+", message = "The postal code must contain only digits")
-    private String postalCode;
+    @Min(value = 1000, message = "The postal code must be at least 1000")
+    @Max(value = 52999, message = "The postal code must be at most 52999")
+    private int postalCode;
 
     @NotNull
     @NotBlank
@@ -104,7 +105,7 @@ public class UserEntity {
 
     public UserEntity(Long id, String name, String lastName1, String lastName2, LocalDate birthDate, int phoneNumber,
             String dni,
-            String postalCode, String city, String address, String email, String username, String password,
+            int postalCode, String city, String address, String email, String username, String password,
             Boolean role) {
         this.id = id;
         this.name = name;
@@ -123,7 +124,7 @@ public class UserEntity {
     }
 
     public UserEntity(String name, String lastName1, String lastName2, LocalDate birthDate, int phoneNumber, String dni,
-            String postalCode, String city, String address, String email, String username, String password,
+            int postalCode, String city, String address, String email, String username, String password,
             Boolean role) {
         this.name = name;
         this.lastName1 = lastName1;
@@ -209,11 +210,11 @@ public class UserEntity {
         this.city = city;
     }
 
-    public String getPostalCode() {
+    public int getPostalCode() {
         return postalCode;
     }
 
-    public void setPostalCode(String postalCode) {
+    public void setPostalCode(int postalCode) {
         this.postalCode = postalCode;
     }
 

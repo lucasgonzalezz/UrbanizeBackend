@@ -19,7 +19,7 @@ public class PurchaseDetailEntity {
     private Long id;
 
     @NotNull
-    private int quantity;
+    private int amount;
 
     @NotNull
     private int price;
@@ -35,18 +35,18 @@ public class PurchaseDetailEntity {
     public PurchaseDetailEntity() {
     }
 
-    public PurchaseDetailEntity(Long id, int quantity, int price, OrderEntity purchase,
+    public PurchaseDetailEntity(Long id, int amount, int price, OrderEntity purchase,
             ProductEntity product) {
         this.id = id;
-        this.quantity = quantity;
+        this.amount = amount;
         this.price = price;
         this.purchase = purchase;
         this.product = product;
     }
 
-    public PurchaseDetailEntity(int quantity, int price, OrderEntity purchase,
+    public PurchaseDetailEntity(int amount, int price, OrderEntity purchase,
             ProductEntity product) {
-        this.quantity = quantity;
+        this.amount = amount;
         this.price = price;
         this.purchase = purchase;
         this.product = product;
@@ -60,12 +60,12 @@ public class PurchaseDetailEntity {
         this.id = id;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public int getAmount() {
+        return amount;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 
     public int getPrice() {
