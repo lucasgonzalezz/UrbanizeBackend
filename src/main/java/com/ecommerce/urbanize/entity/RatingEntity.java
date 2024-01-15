@@ -5,12 +5,12 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.GeneratedValue;
 import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.NotBlank;
 import com.fasterxml.jackson.annotation.JsonFormat;
-
 import java.time.LocalDate;
 import jakarta.persistence.GenerationType;
 
@@ -32,8 +32,11 @@ public class RatingEntity {
     @Size(min = 3, max = 255)
     private String description;
 
+    @Lob
+    private byte[] image;
+
     @NotNull
-    private int stars;
+    private int punctuation;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private LocalDate date;
@@ -49,31 +52,36 @@ public class RatingEntity {
     public RatingEntity() {
     }
 
-    public RatingEntity(Long id, String title, String description, int stars, LocalDate date, UserEntity user,
+    public RatingEntity(Long id, String title, String description, byte[] image, int punctuation, LocalDate date,
+            UserEntity user,
             ProductEntity product) {
         this.id = id;
         this.title = title;
         this.description = description;
-        this.stars = stars;
+        this.image = image;
+        this.punctuation = punctuation;
         this.date = date;
         this.user = user;
         this.product = product;
     }
 
-    public RatingEntity(String title, String description, int stars, LocalDate date, UserEntity user,
+    public RatingEntity(String title, String description, byte[] image, int punctuation, LocalDate date,
+            UserEntity user,
             ProductEntity product) {
         this.title = title;
         this.description = description;
-        this.stars = stars;
+        this.image = image;
+        this.punctuation = punctuation;
         this.date = date;
         this.user = user;
         this.product = product;
     }
 
-    public RatingEntity(String title, String description, int stars, LocalDate date) {
+    public RatingEntity(String title, String description, byte[] image, int punctuation, LocalDate date) {
         this.title = title;
         this.description = description;
-        this.stars = stars;
+        this.image = image;
+        this.punctuation = punctuation;
         this.date = date;
     }
 
@@ -101,12 +109,20 @@ public class RatingEntity {
         this.description = description;
     }
 
-    public int getStars() {
-        return stars;
+    public int getPunctuation() {
+        return punctuation;
     }
 
-    public void setStars(int stars) {
-        this.stars = stars;
+    public void setPunctuation(int punctuation) {
+        this.punctuation = punctuation;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
     public LocalDate getDate() {

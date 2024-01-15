@@ -10,7 +10,6 @@ import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.NotBlank;
 import com.fasterxml.jackson.annotation.JsonFormat;
-
 import java.time.LocalDate;
 import jakarta.persistence.GenerationType;
 
@@ -33,6 +32,11 @@ public class OrderEntity {
     @Size(min = 3, max = 255)
     private String status;
 
+    @NotNull
+    @NotBlank
+    @Size(min = 3, max = 255)
+    private String orderCode;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idBill;
@@ -44,35 +48,39 @@ public class OrderEntity {
     public OrderEntity() {
     }
 
-    public OrderEntity(Long id, LocalDate orderDate, LocalDate deliveryDate, String status, Long idBill,
+    public OrderEntity(Long id, LocalDate orderDate, LocalDate deliveryDate, String status, String orderCode, Long idBill,
             UserEntity user) {
         this.id = id;
         this.orderDate = orderDate;
         this.deliveryDate = deliveryDate;
         this.status = status;
+        this.orderCode = orderCode;
         this.idBill = idBill;
         this.user = user;
     }
 
-    public OrderEntity(LocalDate orderDate, LocalDate deliveryDate, String status, Long idBill, UserEntity user) {
+    public OrderEntity(LocalDate orderDate, LocalDate deliveryDate, String status, String orderCode, Long idBill, UserEntity user) {
         this.orderDate = orderDate;
         this.deliveryDate = deliveryDate;
         this.status = status;
+        this.orderCode = orderCode;
         this.idBill = idBill;
         this.user = user;
     }
 
-    public OrderEntity(LocalDate orderDate, LocalDate deliveryDate, String status, Long idBill) {
+    public OrderEntity(LocalDate orderDate, LocalDate deliveryDate, String status, String orderCode, Long idBill) {
         this.orderDate = orderDate;
         this.deliveryDate = deliveryDate;
         this.status = status;
+        this.orderCode = orderCode;
         this.idBill = idBill;
     }
 
-    public OrderEntity(LocalDate orderDate, LocalDate deliveryDate, String status) {
+    public OrderEntity(LocalDate orderDate, LocalDate deliveryDate, String status, String orderCode) {
         this.orderDate = orderDate;
         this.deliveryDate = deliveryDate;
         this.status = status;
+        this.orderCode = orderCode;
     }
 
     public Long getId() {
@@ -105,6 +113,14 @@ public class OrderEntity {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getOrderCode() {
+        return orderCode;
+    }
+
+    public void setOrderCode(String orderCode) {
+        this.orderCode = orderCode;
     }
 
     public Long getIdBill() {

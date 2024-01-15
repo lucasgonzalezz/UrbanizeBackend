@@ -7,7 +7,6 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.GeneratedValue;
 import jakarta.validation.constraints.NotNull;
-
 import jakarta.persistence.GenerationType;
 
 @Entity
