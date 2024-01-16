@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface RatingRepository extends JpaRepository<RatingEntity, Long> {
 
-    // Find all ratings for a specific product
+    // Find all ratings by a specific product
     Page<RatingEntity> findByIdProduct(Long idProduct, Pageable pageable);
 
     // Find all ratings by a specific user

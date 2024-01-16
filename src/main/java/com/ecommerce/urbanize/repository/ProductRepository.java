@@ -14,9 +14,21 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
     // Method to find products by category ID
     Page<ProductEntity> findByIdCategory(Long id, Pageable pageable);
 
-    // Method to find products by size using @query
+    // Method to find products by size (sizes: xs, s, m, l, xl, xxl)
     @Query(value = "SELECT * FROM product WHERE size = ?1", nativeQuery = true)
     Page<ProductEntity> findBySize(String size, Pageable pageable);
+
+    // Method to find products by stock descending
+    @Query(value = "SELECT * FROM product ORDER BY stock DESC", nativeQuery = true)
+    Page<ProductEntity> findByStockDesc(Pageable pageable);
+
+    // Method to find products by price descending
+    @Query(value = "SELECT * FROM product ORDER BY price DESC", nativeQuery = true)
+    Page<ProductEntity> findByPriceDesc(Pageable pageable);
+
+    // Method to find products by price and category descending
+    @Query(value = "SELECT * FROM product WHERE idCategory = ?1 ORDER BY price DESC", nativeQuery = true)
+    Page<ProductEntity> findByPriceDescAndIdCategory(Long idCategory, Pageable pageable);
 
     // Method to reset the auto-increment counter for the "user" table
     @Modifying
