@@ -6,10 +6,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.ecommerce.urbanize.entity.CategoryEntity;
-import com.ecommerce.urbanize.entity.UserEntity;
 import com.ecommerce.urbanize.exception.ResourceNotFoundException;
 import com.ecommerce.urbanize.repository.CategoryRepository;
 import jakarta.servlet.http.HttpServletRequest;
+
 
 @Service
 public class CategoryService {

@@ -20,6 +20,9 @@ public class CartEntity {
     @NotNull
     private int amount;
 
+    @NotNull
+    private double price;
+
     @ManyToOne
     @JoinColumn(name = "idUser")
     private UserEntity user;
@@ -31,15 +34,17 @@ public class CartEntity {
     public CartEntity() {
     }
 
-    public CartEntity(Long id, int amount, UserEntity user, ProductEntity product) {
+    public CartEntity(Long id, int amount, double price, UserEntity user, ProductEntity product) {
         this.id = id;
         this.amount = amount;
+        this.price = price;
         this.user = user;
         this.product = product;
     }
 
-    public CartEntity(int amount, UserEntity user, ProductEntity product) {
+    public CartEntity(int amount, double price, UserEntity user, ProductEntity product) {
         this.amount = amount;
+        this.price = price;
         this.user = user;
         this.product = product;
     }
@@ -58,6 +63,14 @@ public class CartEntity {
 
     public void setAmount(int amount) {
         this.amount = amount;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     public UserEntity getUser() {
