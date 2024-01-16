@@ -22,13 +22,13 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     @Query(value = "SELECT u.*, count o(o.id) FROM user u, order o WHERE u.id = o.idUser GROUP BY u.id ORDER BY count(u.id) DESC", nativeQuery = true)
     Page<UserEntity> findUsersByOrderDesc(Pageable pageable);
 
-    // Find users ordered by the count of ratings in descending order
-    @Query(value = "SELECT u.*, count r(r.id) FROM user u, rating r WHERE u.id = r.idUser GROUP BY u.id ORDER BY count(u.id) DESC", nativeQuery = true)
-    Page<UserEntity> findUsersByRatingDesc(Pageable pageable);
-
     // Find users ordered by the count of orders in ascending order
     @Query(value = "SELECT u.*, count o(o.id) FROM user u, order o WHERE u.id = o.idUser GROUP BY u.id ORDER BY count(u.id) ASC", nativeQuery = true)
     Page<UserEntity> findUsersByOrderAsc(Pageable pageable);
+
+    // Find users ordered by the count of ratings in descending order
+    @Query(value = "SELECT u.*, count r(r.id) FROM user u, rating r WHERE u.id = r.idUser GROUP BY u.id ORDER BY count(u.id) DESC", nativeQuery = true)
+    Page<UserEntity> findUsersByRatingDesc(Pageable pageable);
 
     // Reset the auto-increment counter for the "user" table
     @Modifying
