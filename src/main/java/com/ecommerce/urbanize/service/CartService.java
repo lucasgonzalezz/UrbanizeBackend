@@ -2,16 +2,20 @@ package com.ecommerce.urbanize.service;
 
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 import com.ecommerce.urbanize.entity.CartEntity;
 import com.ecommerce.urbanize.entity.UserEntity;
 import com.ecommerce.urbanize.entity.ProductEntity;
 import com.ecommerce.urbanize.exception.ResourceNotFoundException;
 import com.ecommerce.urbanize.repository.CartRepository;
+
 import jakarta.servlet.http.HttpServletRequest;
+
 import jakarta.transaction.Transactional;
 
 @Service
@@ -60,13 +64,11 @@ public class CartService {
         if (cartFromDatabase.isPresent()) {
             CartEntity cart = cartFromDatabase.get();
             cart.setAmount(cart.getAmount() + oCartEntity.getAmount());
-            cart.setPrice(cart.getAmount() * cart.getProduct().getPrice());
             return cart.getId();
         } else {
             oCartEntity.setId(null);
             oCartEntity.setUser(oUserEntity);
             oCartEntity.setProduct(oProductEntity);
-            oCartEntity.setPrice(oProductEntity.getPrice() * oCartEntity.getAmount());
             return oCartRepository.save(oCartEntity).getId();
         }
     }
@@ -77,10 +79,6 @@ public class CartService {
         CartEntity oCartEntityFromDatabase = this.get(oCartEntity.getId());
         oCartEntity.setUser(oCartEntityFromDatabase.getUser());
         oCartEntity.setProduct(oCartEntityFromDatabase.getProduct());
-
-        int newAmount = oCartEntity.getAmount();
-        double unitPrice = oCartEntity.getProduct().getPrice();
-        oCartEntity.setPrice(newAmount * unitPrice);
 
         return oCartRepository.save(oCartEntity);
     }

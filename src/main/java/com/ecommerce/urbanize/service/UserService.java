@@ -1,16 +1,19 @@
 package com.ecommerce.urbanize.service;
 
 import java.time.LocalDate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.ecommerce.urbanize.entity.UserEntity;
 import com.ecommerce.urbanize.exception.ResourceNotFoundException;
 import com.ecommerce.urbanize.helper.DataGenerationHelper;
 import com.ecommerce.urbanize.repository.UserRepository;
+
 import jakarta.servlet.http.HttpServletRequest;
 
 @Service
@@ -93,12 +96,12 @@ public class UserService {
 
     // Get users with the most orders
     public Page<UserEntity> getUsersWithMostOrders(Pageable oPageable) {
-        return oUserRepository.findUsersByOrderDesc(oPageable);
+        return oUserRepository.findUsersByPurchaseDesc(oPageable);
     }
 
     // Get users with the fewest orders
     public Page<UserEntity> getUsersWithFewestOrders(Pageable oPageable) {
-        return oUserRepository.findUsersByOrderAsc(oPageable);
+        return oUserRepository.findUsersByPurchaseAsc(oPageable);
     }
 
     // Get users with the most ratings

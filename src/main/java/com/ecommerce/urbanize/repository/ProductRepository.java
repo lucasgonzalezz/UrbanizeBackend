@@ -3,10 +3,12 @@ package com.ecommerce.urbanize.repository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import com.ecommerce.urbanize.entity.ProductEntity;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+
+import com.ecommerce.urbanize.entity.ProductEntity;
 
 // Interface definition extending JpaRepository for ProductEntity with Long as ID type
 public interface ProductRepository extends JpaRepository<ProductEntity, Long> {

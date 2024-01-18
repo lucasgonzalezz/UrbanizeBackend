@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ecommerce.urbanize.entity.PurchaseEntity;
-import com.ecommerce.urbanize.service.OrderService;
+import com.ecommerce.urbanize.service.PurchaseService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*", maxAge = 3600)
 @RestController
@@ -17,7 +17,7 @@ import com.ecommerce.urbanize.service.OrderService;
 public class OrderApi {
 
     @Autowired 
-    OrderService oOrderService;
+    PurchaseService oOrderService;
 
     // Get order by ID
     @GetMapping("/{id}")

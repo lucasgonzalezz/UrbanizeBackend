@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ecommerce.urbanize.entity.PurchaseDetailEntity;
-import com.ecommerce.urbanize.entity.UserEntity;
 import com.ecommerce.urbanize.service.PurchaseDetailService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*", maxAge = 3600)

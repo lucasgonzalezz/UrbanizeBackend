@@ -2,12 +2,15 @@
 package com.ecommerce.urbanize.repository;
 
 import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import com.ecommerce.urbanize.entity.RatingEntity;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+
+import com.ecommerce.urbanize.entity.RatingEntity;
 
 public interface RatingRepository extends JpaRepository<RatingEntity, Long> {
 
