@@ -77,6 +77,11 @@ public class RatingService {
         return oRatingRepository.findByIdUser(idUser, pageable);
     }
 
+    // Get a rating for a specific product and user
+    public Optional<RatingEntity> findByIdProductAndIdUser(Long idProduct, Long idUser) {
+        return oRatingRepository.findByIdProductAndIdUser(idProduct, idUser);
+    }
+
     // Get average rating for a product
     public Double getAverageRating(Long idProduct) {
         return oRatingRepository.getAverageRating(idProduct);

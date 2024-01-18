@@ -98,7 +98,7 @@ public class ProductService {
 
     // Empty the product table
     @Transactional
-    public Long emptyTable() {
+    public Long empty() {
         oProductRepository.deleteAll();
         oProductRepository.resetAutoIncrement();
         oProductRepository.flush();
