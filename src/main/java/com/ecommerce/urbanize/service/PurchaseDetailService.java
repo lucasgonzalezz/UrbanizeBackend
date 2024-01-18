@@ -79,7 +79,7 @@ public class PurchaseDetailService {
     }
 
     // Empty the purchase detail table
-    public Long emptyTable() {
+    public Long empty() {
         oPurchaseDetailRepository.deleteAll();
         oPurchaseDetailRepository.resetAutoIncrement();
         oPurchaseDetailRepository.flush();
