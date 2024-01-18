@@ -6,24 +6,24 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import com.ecommerce.urbanize.entity.OrderEntity;
+import com.ecommerce.urbanize.entity.PurchaseEntity;
 
-public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
+public interface OrderRepository extends JpaRepository<PurchaseEntity, Long> {
 
     // Find orders by user ID
-    Page<OrderEntity> findByIdUser(Long idUser, Pageable pageable);
+    Page<PurchaseEntity> findByIdUser(Long idUser, Pageable pageable);
 
     // Find orders, ordered by the newest first
     @Query(value = "SELECT * FROM order ORDER BY orderDate DESC", nativeQuery = true)
-    Page<OrderEntity> findByNewestOrder(Pageable pageable);
+    Page<PurchaseEntity> findByNewestOrder(Pageable pageable);
 
     // Find orders, ordered by the oldest first
     @Query(value = "SELECT * FROM order ORDER BY orderDate ASC", nativeQuery = true)
-    Page<OrderEntity> findByOldestOrder(Pageable pageable);
+    Page<PurchaseEntity> findByOldestOrder(Pageable pageable);
 
     // Find orders by order code (using LIKE)
     @Query(value = "SELECT * FROM order WHERE orderCode LIKE %?1%", nativeQuery = true)
-    Page<OrderEntity> findByOrderCode(String orderCode, Pageable pageable);
+    Page<PurchaseEntity> findByOrderCode(String orderCode, Pageable pageable);
 
     // Reset the auto-increment value of the order table
     @Modifying

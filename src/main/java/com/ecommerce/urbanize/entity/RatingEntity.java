@@ -3,16 +3,19 @@ package com.ecommerce.urbanize.entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.ManyToOne;
+
 import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.NotBlank;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.time.LocalDate;
-import jakarta.persistence.GenerationType;
 
 @Entity
 @Table(name = "rating")

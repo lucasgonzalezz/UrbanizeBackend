@@ -5,7 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.ecommerce.urbanize.entity.OrderEntity;
+import com.ecommerce.urbanize.entity.PurchaseEntity;
 import com.ecommerce.urbanize.exception.ResourceNotFoundException;
 import com.ecommerce.urbanize.repository.OrderRepository;
 import com.ecommerce.urbanize.repository.PurchaseDetailRepository;
@@ -33,7 +33,7 @@ public class OrderService {
     PurchaseDetailService oPurchaseDetailService;
 
     // Get order by ID
-    public OrderEntity get(Long id) {
+    public PurchaseEntity get(Long id) {
         return oOrderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Order not found"));
     }
 

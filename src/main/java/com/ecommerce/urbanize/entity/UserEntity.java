@@ -2,20 +2,24 @@ package com.ecommerce.urbanize.entity;
 
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.GeneratedValue;
+
 import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.time.LocalDate;
+
 import jakarta.persistence.GenerationType;
 
 @Entity
@@ -88,7 +92,7 @@ public class UserEntity {
     private Boolean role = false;
 
     @OneToMany(mappedBy = "user", fetch = jakarta.persistence.FetchType.LAZY)
-    private List<OrderEntity> orders;
+    private List<PurchaseEntity> orders;
 
     @OneToMany(mappedBy = "user", fetch = jakarta.persistence.FetchType.LAZY)
     private List<RatingEntity> ratings;
@@ -257,7 +261,7 @@ public class UserEntity {
         this.role = role;
     }
 
-    public List<OrderEntity> getOrders() {
+    public List<PurchaseEntity> getOrders() {
         return orders;
     }
 

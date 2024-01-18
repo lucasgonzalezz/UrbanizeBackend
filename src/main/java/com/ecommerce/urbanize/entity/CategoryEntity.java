@@ -3,14 +3,16 @@ package com.ecommerce.urbanize.entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.GeneratedValue;
+
 import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.NotBlank;
+
 import java.util.List;
 import java.util.ArrayList;
-import jakarta.persistence.GenerationType;
 
 @Entity
 @Table(name = "category")

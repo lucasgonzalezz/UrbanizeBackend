@@ -3,11 +3,12 @@ package com.ecommerce.urbanize.entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.GeneratedValue;
+
 import jakarta.validation.constraints.NotNull;
-import jakarta.persistence.GenerationType;
 
 @Entity
 @Table(name = "purchaseDetail")
@@ -24,31 +25,29 @@ public class PurchaseDetailEntity {
     private int price;
 
     @ManyToOne
-    @JoinColumn(name = "idOrder")
-    private OrderEntity purchase;
-
-    @ManyToOne
     @JoinColumn(name = "idProduct")
     private ProductEntity product;
+
+    @ManyToOne
+    @JoinColumn(name = "idPurchase")
+    private PurchaseEntity purchase;
 
     public PurchaseDetailEntity() {
     }
 
-    public PurchaseDetailEntity(Long id, int amount, int price, OrderEntity purchase,
-            ProductEntity product) {
+    public PurchaseDetailEntity(Long id, int amount, int price, ProductEntity product, PurchaseEntity purchase) {
         this.id = id;
         this.amount = amount;
         this.price = price;
-        this.purchase = purchase;
         this.product = product;
+        this.purchase = purchase;
     }
 
-    public PurchaseDetailEntity(int amount, int price, OrderEntity purchase,
-            ProductEntity product) {
+    public PurchaseDetailEntity(int amount, int price, ProductEntity product, PurchaseEntity purchase) {
         this.amount = amount;
         this.price = price;
-        this.purchase = purchase;
         this.product = product;
+        this.purchase = purchase;
     }
 
     public Long getId() {
@@ -75,14 +74,6 @@ public class PurchaseDetailEntity {
         this.price = price;
     }
 
-    public OrderEntity getPurchase() {
-        return purchase;
-    }
-
-    public void setPurchase(OrderEntity purchase) {
-        this.purchase = purchase;
-    }
-
     public ProductEntity getProduct() {
         return product;
     }
@@ -91,4 +82,11 @@ public class PurchaseDetailEntity {
         this.product = product;
     }
 
+    public PurchaseEntity getPurchase() {
+        return purchase;
+    }
+
+    public void setPurchase(PurchaseEntity purchase) {
+        this.purchase = purchase;
+    }
 }
