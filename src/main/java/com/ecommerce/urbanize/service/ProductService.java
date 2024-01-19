@@ -51,20 +51,22 @@ public class ProductService {
 
     // Update product stock and check if depleted
     @Transactional
-    public ProductEntity updateStock(Long id, int quantity) {
-        ProductEntity product = oProductRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+    public void updateStock(ProductEntity oProductEntity, int amount) {
+        ProductEntity productFound = oProductRepository.findById(oProductEntity.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Error: Camiseta no encontrada."));
 
-        int updatedStock = product.getStock() - quantity;
-        if (updatedStock < 0) {
-            // Stock is depleted
-            throw new RuntimeException("Insufficient stock for product with ID: " + id);
+        if (productFound != null) {
+            int currentStock = productFound.getStock();
+            int newStock = currentStock - amount;
+
+            if (newStock < 0) {
+                // Si no hay suficiente stock, lanzar una excepción o mostrar un mensaje
+                throw new IllegalStateException("No hay suficiente stock para comprar esta camiseta.");
+            }
+
+            productFound.setStock(newStock);
+            oProductRepository.save(productFound);
         }
-
-        product.setStock(updatedStock);
-        oProductRepository.save(product);
-
-        return product;
     }
 
     // Get a random product

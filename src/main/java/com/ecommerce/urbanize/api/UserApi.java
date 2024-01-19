@@ -78,21 +78,21 @@ public class UserApi {
     }
 
     // empty
-    @GetMapping("/empty")
+    @DeleteMapping("/empty")
     public ResponseEntity<Long> empty() {
         return ResponseEntity.ok(oUserService.empty());
     }
 
     // Get users with the most orders
-    @GetMapping("/mostOrders")
-    public ResponseEntity<Page<UserEntity>> getMostOrders(Pageable oPageable) {
-        return ResponseEntity.ok(oUserService.getUsersWithMostOrders(oPageable));
+    @GetMapping("/mostPurchases")
+    public ResponseEntity<Page<UserEntity>> getMostPurchases(Pageable oPageable) {
+        return ResponseEntity.ok(oUserService.getUsersWithMostPurchases(oPageable));
     }
 
     // Get users with the fewest orders
-    @GetMapping("/fewestOrders")
-    public ResponseEntity<Page<UserEntity>> getFewestOrders(Pageable oPageable) {
-        return ResponseEntity.ok(oUserService.getUsersWithFewestOrders(oPageable));
+    @GetMapping("/fewestPurchases")
+    public ResponseEntity<Page<UserEntity>> getFewestPurchases(Pageable oPageable) {
+        return ResponseEntity.ok(oUserService.getUsersWithFewestPurchases(oPageable));
     }
 
     // Get users with the most ratings

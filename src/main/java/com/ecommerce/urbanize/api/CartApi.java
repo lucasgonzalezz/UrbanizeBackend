@@ -37,8 +37,8 @@ public class CartApi {
 
     // Get cart by user ID
     @GetMapping("/byUser/{idUser}")
-    public ResponseEntity<List<CartEntity>> getByUser(@PathVariable("idUser") Long idUser) {
-        return ResponseEntity.ok(oCartService.getByUser(idUser));
+    public ResponseEntity<List<CartEntity>> getCartByUser(@PathVariable("idUser") Long idUser) {
+        return ResponseEntity.ok(oCartService.getCartByUser(idUser));
     }
 
     // Get cart by user ID and product ID
@@ -68,14 +68,15 @@ public class CartApi {
 
     // Get page of carts
     @GetMapping("")
-    public ResponseEntity<Page<CartEntity>> getPage(@PageableDefault(size = 30, sort = {"id"}, direction = Sort.Direction.ASC) Pageable oPageable) {
+    public ResponseEntity<Page<CartEntity>> getPage(
+            @PageableDefault(size = 30, sort = { "id" }, direction = Sort.Direction.ASC) Pageable oPageable) {
         return ResponseEntity.ok(oCartService.getPage(oPageable));
     }
 
     // poulate
 
     // empty
-    @GetMapping("/empty")
+    @DeleteMapping("/empty")
     public ResponseEntity<Long> empty() {
         return ResponseEntity.ok(oCartService.empty());
     }
@@ -86,6 +87,6 @@ public class CartApi {
     @GetMapping("/byUser/{idUser}")
     public ResponseEntity<List<CartEntity>> getAllByUser(@PathVariable("idUser") Long idUser) {
         return ResponseEntity.ok(oCartService.getAllByUser(idUser));
- 
+
     }
 }

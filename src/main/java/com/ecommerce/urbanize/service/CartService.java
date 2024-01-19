@@ -39,7 +39,7 @@ public class CartService {
     }
 
     // Get cart by user ID
-    public List<CartEntity> getByUser(Long idUser) {
+    public List<CartEntity> getCartByUser(Long idUser) {
         return oCartRepository.findByIdUser(idUser);
     }
 
@@ -64,7 +64,7 @@ public class CartService {
         if (cartFromDatabase.isPresent()) {
             CartEntity cart = cartFromDatabase.get();
             cart.setAmount(cart.getAmount() + oCartEntity.getAmount());
-            return cart.getId();
+            return oCartRepository.save(oCartEntity).getId();
         } else {
             oCartEntity.setId(null);
             oCartEntity.setUser(oUserEntity);

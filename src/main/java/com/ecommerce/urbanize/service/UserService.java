@@ -95,12 +95,12 @@ public class UserService {
     }
 
     // Get users with the most orders
-    public Page<UserEntity> getUsersWithMostOrders(Pageable oPageable) {
+    public Page<UserEntity> getUsersWithMostPurchases(Pageable oPageable) {
         return oUserRepository.findUsersByPurchaseDesc(oPageable);
     }
 
     // Get users with the fewest orders
-    public Page<UserEntity> getUsersWithFewestOrders(Pageable oPageable) {
+    public Page<UserEntity> getUsersWithFewestPurchases(Pageable oPageable) {
         return oUserRepository.findUsersByPurchaseAsc(oPageable);
     }
 

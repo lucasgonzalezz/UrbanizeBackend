@@ -3,8 +3,10 @@ package com.ecommerce.urbanize.service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
 import java.util.List;
 import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,6 +21,7 @@ import com.ecommerce.urbanize.entity.UserEntity;
 import com.ecommerce.urbanize.exception.ResourceNotFoundException;
 import com.ecommerce.urbanize.repository.PurchaseRepository;
 import com.ecommerce.urbanize.repository.PurchaseDetailRepository;
+
 import jakarta.transaction.Transactional;
 
 @Service
@@ -45,6 +48,11 @@ public class PurchaseService {
     // Get order by ID
     public PurchaseEntity get(Long id) {
         return oPurchaseRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Order not found"));
+    }
+
+    // Get order by user ID
+    public Page<PurchaseEntity> findByIdUser(Long idUser, Pageable oPageable) {
+        return oPurchaseRepository.findByIdUser(idUser, oPageable);
     }
 
     public Page<PurchaseEntity> getPage(Pageable oPageable) {
@@ -74,7 +82,7 @@ public class PurchaseService {
         oPurchaseDetailEntity.setPurchase(oPurchaseEntity);
         oPurchaseDetailEntity.setAmount(oCartEntity.getAmount());
         oPurchaseDetailEntity.setPrice(oCartEntity.getProduct().getPrice());
-       
+
         oPurchaseDetailRepository.save(oPurchaseDetailEntity);
 
         ProductEntity Product = oCartEntity.getProduct();
@@ -85,7 +93,7 @@ public class PurchaseService {
         oPurchaseEntity.setUser(oUserEntity);
         oPurchaseEntity.setPurchaseDate(LocalDate.now());
         oPurchaseEntity.setPurchaseCode(generateOrderCode());
-        
+
         return oPurchaseRepository.save(oPurchaseEntity);
     }
 
@@ -93,7 +101,7 @@ public class PurchaseService {
     @Transactional
     public PurchaseEntity makeAllCartPurchase(List<CartEntity> carts, UserEntity oUserEntity) {
         PurchaseEntity oPurchaseEntity = new PurchaseEntity();
-        
+
         carts = oCartService.getCartByUser(oUserEntity.getId());
 
         for (CartEntity cart : carts) {
@@ -103,13 +111,13 @@ public class PurchaseService {
             oPurchaseDetailEntity.setPurchase(oPurchaseEntity);
             oPurchaseDetailEntity.setAmount(cart.getAmount());
             oPurchaseDetailEntity.setPrice(cart.getProduct().getPrice());
-            
+
             oPurchaseDetailRepository.save(oPurchaseDetailEntity);
         }
 
         for (CartEntity cart : carts) {
             ProductEntity product = cart.getProduct();
-            oProductService.actualizarStock(product, cart.getAmount());
+            oProductService.updateStock(product, cart.getAmount());
         }
 
         oCartService.deleteByUser(oUserEntity.getId());
@@ -117,20 +125,20 @@ public class PurchaseService {
         oPurchaseEntity.setUser(oUserEntity);
         oPurchaseEntity.setPurchaseDate(LocalDate.now());
         oPurchaseEntity.setPurchaseCode(generateOrderCode());
-        
 
         return oPurchaseRepository.save(oPurchaseEntity);
 
     }
 
     // Cancel order
-     public Long cancelPurchase(Long id) {
+    public Long cancelPurchase(Long id) {
         if (oPurchaseRepository.existsById(id)) {
-            Page<PurchaseDetailEntity> purchaseDatils = oPurchaseDetailRepository.findByCompraId(id, PageRequest.of(0, 1000));
+            Page<PurchaseDetailEntity> purchaseDatils = oPurchaseDetailRepository.findByIdPurchase(id,
+                    PageRequest.of(0, 1000));
             for (PurchaseDetailEntity purchaseDetail : purchaseDatils) {
                 ProductEntity product = purchaseDetail.getProduct();
                 int amount = purchaseDetail.getAmount();
-                oProductService.actualizarStock(product, -amount);
+                oProductService.updateStock(product, -amount);
             }
             oPurchaseDetailRepository.deleteAll(purchaseDatils);
             oPurchaseRepository.deleteById(id);
@@ -138,6 +146,46 @@ public class PurchaseService {
         } else {
             throw new ResourceNotFoundException("Error: La compra no existe.");
         }
+    }
+
+    // Find purchases, ordered by the newest first
+    public Page<PurchaseEntity> findByNewestPurchase(Pageable oPageable) {
+        return oPurchaseRepository.findByNewestPurchase(oPageable);
+    }
+
+    // Find purchases, ordered by the oldest first
+    public Page<PurchaseEntity> findByOldestPurchase(Pageable oPageable) {
+        return oPurchaseRepository.findByOldestPurchase(oPageable);
+    }
+
+    // Find purchases by purchase code (using LIKE)
+    public Page<PurchaseEntity> findByPurchaseCode(String purchaseCode, Pageable oPageable) {
+        return oPurchaseRepository.findByPurchaseCode(purchaseCode, oPageable);
+    }
+
+    // Find total purchases by user ID
+    public Double findTotalPurchasesByIdUser(Long idUser) {
+        return oPurchaseRepository.findTotalPurchasesByIdUser(idUser);
+    }
+
+    // Find total purchase by ID
+    public Double findTotalPurchaseById(Long id) {
+        return oPurchaseRepository.findTotalPurchaseById(id);
+    }
+
+    // Find total purchase by user ID and purchase ID
+    public Double findTotalPurchaseByUserIdAndPurchaseId(Long idUser, Long idPurchase) {
+        return oPurchaseRepository.findTotalPurchaseByUserIdAndPurchaseId(idUser, idPurchase);
+    }
+
+    // Find purchases by user ID, ordered by the most expensive first
+    public Page<PurchaseEntity> findPurchasesMostExpensiveByIdUser(Long idUser, Pageable oPageable) {
+        return oPurchaseRepository.findPurchasesMostExpensiveByIdUser(idUser, oPageable);
+    }
+
+    // Find purchases by user ID, ordered by the cheapest first
+    public Page<PurchaseEntity> findPurchasesMostCheapestByIdUser(Long idUser, Pageable oPageable) {
+        return oPurchaseRepository.findPurchasesMostCheapestByIdUser(idUser, oPageable);
     }
 
     // Empty the order table

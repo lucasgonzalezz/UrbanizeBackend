@@ -56,7 +56,7 @@ public class ProductApi {
     // populate
 
     // empty
-    @GetMapping("/empty")
+    @DeleteMapping("/empty")
     public ResponseEntity<Long> empty() {
         return ResponseEntity.ok(oProductService.empty());
     }
