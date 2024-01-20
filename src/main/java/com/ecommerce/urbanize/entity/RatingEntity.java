@@ -45,11 +45,11 @@ public class RatingEntity {
     private LocalDate date;
 
     @ManyToOne
-    @JoinColumn(name = "idUser")
+    @JoinColumn(name = "user_id")
     private UserEntity user;
 
     @ManyToOne
-    @JoinColumn(name = "idProduct")
+    @JoinColumn(name = "product_id")
     private ProductEntity product;
 
     public RatingEntity() {

@@ -38,7 +38,7 @@ public class PurchaseEntity {
     private String purchaseCode;
 
     @ManyToOne
-    @JoinColumn(name = "idUser")
+    @JoinColumn(name = "user_id")
     private UserEntity user;
 
     @NotNull

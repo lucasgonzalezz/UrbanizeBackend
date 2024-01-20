@@ -76,8 +76,8 @@ public class ProductService {
     }
 
     // Get products by category ID
-    public Page<ProductEntity> getByCategory(Long idCategory, Pageable oPageable) {
-        return oProductRepository.findByIdCategory(idCategory, oPageable);
+    public Page<ProductEntity> getByCategory(Long category_id, Pageable oPageable) {
+        return oProductRepository.findByIdCategory(category_id, oPageable);
     }
 
     // Get products by size
@@ -96,8 +96,8 @@ public class ProductService {
     }
 
     // Get products by price and category descending
-    public Page<ProductEntity> getByPriceDescAndIdCategory(Long idCategory, Pageable oPageable) {
-        return oProductRepository.findByPriceDescAndIdCategory(idCategory, oPageable);
+    public Page<ProductEntity> getByPriceDescAndIdCategory(Long category_id, Pageable oPageable) {
+        return oProductRepository.findByPriceDescAndIdCategory(category_id, oPageable);
     }
 
     // Empty the product table

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: database:3306
--- Tiempo de generación: 15-01-2024 a las 19:59:46
+-- Tiempo de generación: 20-01-2024 a las 14:23:18
 -- Versión del servidor: 8.1.0
 -- Versión de PHP: 8.2.11
 
@@ -30,10 +30,9 @@ SET time_zone = "+00:00";
 CREATE TABLE `cart` (
   `id` bigint NOT NULL,
   `amount` int NOT NULL,
-  `price` int NOT NULL,
-  `idProduct` bigint NOT NULL,
-  `idUser` bigint NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `user_id` bigint NOT NULL,
+  `product_id` bigint NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_bin;
 
 -- --------------------------------------------------------
 
@@ -43,24 +42,8 @@ CREATE TABLE `cart` (
 
 CREATE TABLE `category` (
   `id` bigint NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `order`
---
-
-CREATE TABLE `order` (
-  `id` bigint NOT NULL,
-  `orderDate` datetime NOT NULL,
-  `deliveryDate` datetime NOT NULL,
-  `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `orderCode` varchar(255) NOT NULL,
-  `idUser` bigint NOT NULL,
-  `idBill` bigint NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `name` varchar(255) COLLATE utf16_bin NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_bin;
 
 -- --------------------------------------------------------
 
@@ -70,13 +53,36 @@ CREATE TABLE `order` (
 
 CREATE TABLE `product` (
   `id` bigint NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `name` varchar(255) COLLATE utf16_bin NOT NULL,
   `stock` int NOT NULL,
-  `size` varchar(3) NOT NULL,
+  `size` varchar(3) COLLATE utf16_bin NOT NULL,
   `price` int NOT NULL,
-  `image` longblob NOT NULL,
-  `idCategory` bigint NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `image` tinyblob,
+  `category_id` bigint NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_bin;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `purchase`
+--
+
+CREATE TABLE `purchase` (
+  `id` bigint NOT NULL,
+  `purchaseDate` date NOT NULL,
+  `deliveryDate` date NOT NULL,
+  `status` varchar(255) COLLATE utf16_bin NOT NULL,
+  `purchaseCode` int NOT NULL,
+  `id_user` bigint NOT NULL,
+  `numBill` int NOT NULL,
+  `dateBill` date NOT NULL,
+  `date_bill` date DEFAULT NULL,
+  `delivery_date` date DEFAULT NULL,
+  `num_bill` int NOT NULL,
+  `purchase_code` varchar(255) COLLATE utf16_bin NOT NULL,
+  `purchase_date` date DEFAULT NULL,
+  `user_id` bigint DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_bin;
 
 -- --------------------------------------------------------
 
@@ -88,9 +94,23 @@ CREATE TABLE `purchaseDetail` (
   `id` bigint NOT NULL,
   `amount` int NOT NULL,
   `price` int NOT NULL,
-  `idProduct` bigint NOT NULL,
-  `idOrder` bigint NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `product_id` bigint NOT NULL,
+  `purchase_id` bigint NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_bin;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `purchase_detail`
+--
+
+CREATE TABLE `purchase_detail` (
+  `id` bigint NOT NULL,
+  `amount` int NOT NULL,
+  `price` int NOT NULL,
+  `product_id` bigint DEFAULT NULL,
+  `purchase_id` bigint DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_bin;
 
 -- --------------------------------------------------------
 
@@ -100,14 +120,14 @@ CREATE TABLE `purchaseDetail` (
 
 CREATE TABLE `rating` (
   `id` bigint NOT NULL,
-  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `image` longblob NOT NULL,
+  `title` varchar(255) COLLATE utf16_bin NOT NULL,
+  `description` varchar(255) COLLATE utf16_bin NOT NULL,
+  `image` tinyblob,
   `punctuation` int NOT NULL,
-  `date` datetime NOT NULL,
-  `idUser` bigint NOT NULL,
-  `idProduct` bigint NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `date` date NOT NULL,
+  `user_id` bigint NOT NULL,
+  `product_id` bigint NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_bin;
 
 -- --------------------------------------------------------
 
@@ -117,20 +137,25 @@ CREATE TABLE `rating` (
 
 CREATE TABLE `user` (
   `id` bigint NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `lastName1` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `lastName2` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `name` varchar(255) COLLATE utf16_bin NOT NULL,
+  `lastName1` varchar(255) COLLATE utf16_bin NOT NULL,
+  `lastName2` varchar(255) COLLATE utf16_bin NOT NULL,
   `birthDate` date NOT NULL,
   `phoneNumber` int NOT NULL,
-  `dni` varchar(9) NOT NULL,
-  `city` varchar(255) NOT NULL,
+  `dni` varchar(9) COLLATE utf16_bin NOT NULL,
+  `city` varchar(255) COLLATE utf16_bin NOT NULL,
   `postalCode` int NOT NULL,
-  `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `username` varchar(255) NOT NULL,
-  `password` varchar(512) NOT NULL,
-  `rol` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `address` varchar(255) COLLATE utf16_bin NOT NULL,
+  `email` varchar(255) COLLATE utf16_bin NOT NULL,
+  `username` varchar(255) COLLATE utf16_bin NOT NULL,
+  `password` varchar(512) COLLATE utf16_bin NOT NULL,
+  `role` tinyint(1) NOT NULL,
+  `birth_date` date DEFAULT NULL,
+  `last_name1` varchar(255) COLLATE utf16_bin NOT NULL,
+  `last_name2` varchar(255) COLLATE utf16_bin DEFAULT NULL,
+  `phone_number` int NOT NULL,
+  `postal_code` int NOT NULL
+) ;
 
 --
 -- Índices para tablas volcadas
@@ -141,8 +166,8 @@ CREATE TABLE `user` (
 --
 ALTER TABLE `cart`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `idUsuario` (`idUser`),
-  ADD KEY `idProducto` (`idProduct`);
+  ADD KEY `FK3d704slv66tw6x5hmbm6p2x3u` (`product_id`),
+  ADD KEY `FKl70asp4l4w0jmbm1tqyofho4o` (`user_id`);
 
 --
 -- Indices de la tabla `category`
@@ -151,34 +176,40 @@ ALTER TABLE `category`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `order`
---
-ALTER TABLE `order`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `idUsuario` (`idUser`);
-
---
 -- Indices de la tabla `product`
 --
 ALTER TABLE `product`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `idCategoria` (`idCategory`);
+  ADD KEY `FK1mtsbur82frn64de7balymq9s` (`category_id`);
+
+--
+-- Indices de la tabla `purchase`
+--
+ALTER TABLE `purchase`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK86i0stm7cqsglqptdvjij1k3m` (`user_id`);
 
 --
 -- Indices de la tabla `purchaseDetail`
 --
 ALTER TABLE `purchaseDetail`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `purchase_detail`
+--
+ALTER TABLE `purchase_detail`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `idProducto` (`idProduct`),
-  ADD KEY `idPedido` (`idOrder`);
+  ADD KEY `FK79a6tsn4e9qfillme2u9kr3i2` (`product_id`),
+  ADD KEY `FK65hoe4yy1817l2vm74msb8eq5` (`purchase_id`);
 
 --
 -- Indices de la tabla `rating`
 --
 ALTER TABLE `rating`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `idUsuario` (`idUser`),
-  ADD KEY `idProducto` (`idProduct`);
+  ADD KEY `FKlkuwie0au2dru36asng9nywmh` (`product_id`),
+  ADD KEY `FKpn05vbx6usw0c65tcyuce4dw5` (`user_id`);
 
 --
 -- Indices de la tabla `user`
@@ -203,21 +234,27 @@ ALTER TABLE `category`
   MODIFY `id` bigint NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `order`
---
-ALTER TABLE `order`
-  MODIFY `id` bigint NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT de la tabla `product`
 --
 ALTER TABLE `product`
   MODIFY `id` bigint NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `purchase`
+--
+ALTER TABLE `purchase`
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `purchaseDetail`
 --
 ALTER TABLE `purchaseDetail`
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `purchase_detail`
+--
+ALTER TABLE `purchase_detail`
   MODIFY `id` bigint NOT NULL AUTO_INCREMENT;
 
 --
@@ -240,34 +277,34 @@ ALTER TABLE `user`
 -- Filtros para la tabla `cart`
 --
 ALTER TABLE `cart`
-  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `user` (`id`),
-  ADD CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`idProduct`) REFERENCES `product` (`id`);
-
---
--- Filtros para la tabla `order`
---
-ALTER TABLE `order`
-  ADD CONSTRAINT `order_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `user` (`id`);
+  ADD CONSTRAINT `FK3d704slv66tw6x5hmbm6p2x3u` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`),
+  ADD CONSTRAINT `FKl70asp4l4w0jmbm1tqyofho4o` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
 --
 -- Filtros para la tabla `product`
 --
 ALTER TABLE `product`
-  ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`idCategory`) REFERENCES `category` (`id`);
+  ADD CONSTRAINT `FK1mtsbur82frn64de7balymq9s` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`);
 
 --
--- Filtros para la tabla `purchaseDetail`
+-- Filtros para la tabla `purchase`
 --
-ALTER TABLE `purchaseDetail`
-  ADD CONSTRAINT `purchasedetail_ibfk_1` FOREIGN KEY (`idProduct`) REFERENCES `product` (`id`),
-  ADD CONSTRAINT `purchasedetail_ibfk_2` FOREIGN KEY (`idOrder`) REFERENCES `order` (`id`);
+ALTER TABLE `purchase`
+  ADD CONSTRAINT `FK86i0stm7cqsglqptdvjij1k3m` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
+
+--
+-- Filtros para la tabla `purchase_detail`
+--
+ALTER TABLE `purchase_detail`
+  ADD CONSTRAINT `FK65hoe4yy1817l2vm74msb8eq5` FOREIGN KEY (`purchase_id`) REFERENCES `purchase` (`id`),
+  ADD CONSTRAINT `FK79a6tsn4e9qfillme2u9kr3i2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`);
 
 --
 -- Filtros para la tabla `rating`
 --
 ALTER TABLE `rating`
-  ADD CONSTRAINT `rating_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `user` (`id`),
-  ADD CONSTRAINT `rating_ibfk_2` FOREIGN KEY (`idProduct`) REFERENCES `product` (`id`);
+  ADD CONSTRAINT `FKlkuwie0au2dru36asng9nywmh` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`),
+  ADD CONSTRAINT `FKpn05vbx6usw0c65tcyuce4dw5` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

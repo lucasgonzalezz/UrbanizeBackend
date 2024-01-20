@@ -41,7 +41,7 @@ public class ProductEntity {
     private byte[] image;
 
     @ManyToOne
-    @JoinColumn(name = "idCategory")
+    @JoinColumn(name = "category_id")
     private CategoryEntity category;
 
     public ProductEntity() {

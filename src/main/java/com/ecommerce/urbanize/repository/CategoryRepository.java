@@ -13,7 +13,7 @@ import com.ecommerce.urbanize.entity.CategoryEntity;
 public interface CategoryRepository extends JpaRepository<CategoryEntity, Long> {
 
     // Categories ordered by the quantity of associated products in descending order
-    @Query(value = "SELECT * FROM category ORDER BY (SELECT COUNT(*) FROM product WHERE product.idCategory = category.id) DESC", nativeQuery = true)
+    @Query(value = "SELECT * FROM category ORDER BY (SELECT COUNT(*) FROM product WHERE product.category_id = category.id) DESC", nativeQuery = true)
     Page<CategoryEntity> findByQuantityProduct(Pageable pageable);
 
     // Reset the auto-increment value for the primary key in the category table

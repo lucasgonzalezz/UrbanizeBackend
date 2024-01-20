@@ -22,15 +22,15 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     Optional<UserEntity> findByUsernameAndPassword(String username, String password);
 
     // Find users ordered by the count of purchases in descending order
-    @Query(value = "SELECT u.*, count p(p.id) FROM user u, purchase p WHERE u.id = .idUser GROUP BY u.id ORDER BY count(u.id) DESC", nativeQuery = true)
+    @Query(value = "SELECT u.*, count p(p.id) FROM user u, purchase p WHERE u.id = .user_id GROUP BY u.id ORDER BY count(u.id) DESC", nativeQuery = true)
     Page<UserEntity> findUsersByPurchaseDesc(Pageable pageable);
 
     // Find users ordered by the count of purchases in ascending order
-    @Query(value = "SELECT u.*, count p(p.id) FROM user u, purchase p WHERE u.id = p.idUser GROUP BY u.id ORDER BY count(u.id) ASC", nativeQuery = true)
+    @Query(value = "SELECT u.*, count p(p.id) FROM user u, purchase p WHERE u.id = p.user_id GROUP BY u.id ORDER BY count(u.id) ASC", nativeQuery = true)
     Page<UserEntity> findUsersByPurchaseAsc(Pageable pageable);
 
     // Find users ordered by the count of ratings in descending order
-    @Query(value = "SELECT u.*, count r(r.id) FROM user u, rating r WHERE u.id = r.idUser GROUP BY u.id ORDER BY count(u.id) DESC", nativeQuery = true)
+    @Query(value = "SELECT u.*, count r(r.id) FROM user u, rating r WHERE u.id = r.user_id GROUP BY u.id ORDER BY count(u.id) DESC", nativeQuery = true)
     Page<UserEntity> findUsersByRatingDesc(Pageable pageable);
 
     // Reset the auto-increment counter for the "user" table

@@ -34,21 +34,25 @@ public class PurchaseDetailApi {
     }
 
     // Get purchase details by order ID
-    @GetMapping("/byOrder/{idOrder}")
-    public ResponseEntity<Page<PurchaseDetailEntity>> findByIdOrder(@PathVariable("idOrder") Long idOrder, @PageableDefault(size = 30, sort = {"id"}, direction = Sort.Direction.ASC) Pageable oPageable) {
-        return ResponseEntity.ok(oPurchaseDetailService.findByIdOrder(idOrder, oPageable));
+    @GetMapping("/byOrder/{order_id}")
+    public ResponseEntity<Page<PurchaseDetailEntity>> findByIdOrder(@PathVariable("order_id") Long order_id,
+            @PageableDefault(size = 30, sort = { "id" }, direction = Sort.Direction.ASC) Pageable oPageable) {
+        return ResponseEntity.ok(oPurchaseDetailService.findByIdOrder(order_id, oPageable));
     }
 
     // Get purchase details by product ID
-    @GetMapping("/byProduct/{idProduct}")
-    public ResponseEntity<Page<PurchaseDetailEntity>> findByIdProduct(@PathVariable("idProduct") Long idProduct, @PageableDefault(size = 30, sort = {"id"}, direction = Sort.Direction.ASC) Pageable oPageable) {
-        return ResponseEntity.ok(oPurchaseDetailService.findByIdProduct(idProduct, oPageable));
+    @GetMapping("/byProduct/{product_id}")
+    public ResponseEntity<Page<PurchaseDetailEntity>> findByIdProduct(@PathVariable("product_id") Long product_id,
+            @PageableDefault(size = 30, sort = { "id" }, direction = Sort.Direction.ASC) Pageable oPageable) {
+        return ResponseEntity.ok(oPurchaseDetailService.findByIdProduct(product_id, oPageable));
     }
 
     // Get purchase details by order ID and product ID
-    @GetMapping("/byOrderAndProduct/{idOrder}/{idProduct}")
-    public ResponseEntity<Page<PurchaseDetailEntity>> findByIdOrderAndIdProduct(@PathVariable("idOrder") Long idOrder, @PathVariable("idProduct") Long idProduct, @PageableDefault(size = 30, sort = {"id"}, direction = Sort.Direction.ASC) Pageable oPageable) {
-        return ResponseEntity.ok(oPurchaseDetailService.findByIdOrderAndIdProduct(idOrder, idProduct, oPageable));
+    @GetMapping("/byOrderAndProduct/{order_id}/{product_id}")
+    public ResponseEntity<Page<PurchaseDetailEntity>> findByIdOrderAndIdProduct(@PathVariable("order_id") Long order_id,
+            @PathVariable("product_id") Long product_id,
+            @PageableDefault(size = 30, sort = { "id" }, direction = Sort.Direction.ASC) Pageable oPageable) {
+        return ResponseEntity.ok(oPurchaseDetailService.findByIdOrderAndIdProduct(order_id, product_id, oPageable));
     }
 
     // Get a random purchase detail
@@ -77,7 +81,8 @@ public class PurchaseDetailApi {
 
     // Get all purchase details
     @GetMapping("")
-    public ResponseEntity<Page<PurchaseDetailEntity>> getPage(@PageableDefault(size = 30, sort = {"id"}, direction = Sort.Direction.ASC) Pageable oPageable) {
+    public ResponseEntity<Page<PurchaseDetailEntity>> getPage(
+            @PageableDefault(size = 30, sort = { "id" }, direction = Sort.Direction.ASC) Pageable oPageable) {
         return ResponseEntity.ok(oPurchaseDetailService.getPage(oPageable));
     }
 
@@ -91,13 +96,15 @@ public class PurchaseDetailApi {
 
     // Get purchase details ordered by price in descending order
     @GetMapping("/byPriceDesc")
-    public ResponseEntity<Page<PurchaseDetailEntity>> findAllByPriceDesc(@PageableDefault(size = 30, sort = {"price"}, direction = Sort.Direction.DESC) Pageable oPageable) {
+    public ResponseEntity<Page<PurchaseDetailEntity>> findAllByPriceDesc(
+            @PageableDefault(size = 30, sort = { "price" }, direction = Sort.Direction.DESC) Pageable oPageable) {
         return ResponseEntity.ok(oPurchaseDetailService.findAllByPriceDesc(oPageable));
     }
 
     // Get purchase details ordered by price in ascending order
     @GetMapping("/byPriceAsc")
-    public ResponseEntity<Page<PurchaseDetailEntity>> findAllByPriceAsc(@PageableDefault(size = 30, sort = {"price"}, direction = Sort.Direction.ASC) Pageable oPageable) {
+    public ResponseEntity<Page<PurchaseDetailEntity>> findAllByPriceAsc(
+            @PageableDefault(size = 30, sort = { "price" }, direction = Sort.Direction.ASC) Pageable oPageable) {
         return ResponseEntity.ok(oPurchaseDetailService.findAllByPriceAsc(oPageable));
     }
 

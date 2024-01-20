@@ -27,7 +27,7 @@ import com.ecommerce.urbanize.service.PurchaseService;
 @RequestMapping("/order")
 public class PurchaseApi {
 
-    @Autowired 
+    @Autowired
     PurchaseService oPurchaseService;
 
     // Get purchase by ID
@@ -38,18 +38,19 @@ public class PurchaseApi {
 
     // Get page of purchases
     @GetMapping("")
-    public ResponseEntity<Page<PurchaseEntity>> getPage(Pageable oPageable)  {
+    public ResponseEntity<Page<PurchaseEntity>> getPage(Pageable oPageable) {
         return ResponseEntity.ok(oPurchaseService.getPage(oPageable));
     }
 
     // Get page of purchases by user ID
-    @GetMapping("/byUser/{idUser}")
-    public ResponseEntity<Page<PurchaseEntity>> getPageByIdUser(@PathVariable("idUser") Long idUser, Pageable oPageable)  {
-        return ResponseEntity.ok(oPurchaseService.findByIdUser(idUser, oPageable));
+    @GetMapping("/byUser/{user_id}")
+    public ResponseEntity<Page<PurchaseEntity>> getPageByIdUser(@PathVariable("user_id") Long user_id,
+            Pageable oPageable) {
+        return ResponseEntity.ok(oPurchaseService.findByIdUser(user_id, oPageable));
     }
 
     // Get a random purchase
-        @GetMapping("/random")
+    @GetMapping("/random")
     public ResponseEntity<PurchaseEntity> getRandomCompra() {
         PurchaseEntity purchase = oPurchaseService.getOneRandom();
         return new ResponseEntity<>(purchase, HttpStatus.OK);
@@ -59,30 +60,30 @@ public class PurchaseApi {
     @PostMapping("/makeSingleCartPurchase")
     public ResponseEntity<PurchaseEntity> makeSingleCartPurchase(
             @RequestBody CartEntity oCartEntity,
-            @RequestParam Long idUser) {
-                UserEntity user = new UserEntity();
-                user.setId(idUser);
+            @RequestParam Long user_id) {
+        UserEntity user = new UserEntity();
+        user.setId(user_id);
 
-                PurchaseEntity purchase = oPurchaseService.makeSingleCartPurchase(oCartEntity, user);
-                return new ResponseEntity<>(purchase, HttpStatus.CREATED);
+        PurchaseEntity purchase = oPurchaseService.makeSingleCartPurchase(oCartEntity, user);
+        return new ResponseEntity<>(purchase, HttpStatus.CREATED);
     }
 
     // Make purchase of all carts
     @PostMapping("/makeAllCartPurchase")
     public ResponseEntity<PurchaseEntity> makeAllCartPurchase(
             @RequestBody List<CartEntity> carts,
-            @RequestParam Long idUser) {
-                UserEntity user = new UserEntity();
-                user.setId(idUser);
+            @RequestParam Long user_id) {
+        UserEntity user = new UserEntity();
+        user.setId(user_id);
 
-                PurchaseEntity purchase = oPurchaseService.makeAllCartPurchase(carts, user);
-                return new ResponseEntity<>(purchase, HttpStatus.CREATED);
+        PurchaseEntity purchase = oPurchaseService.makeAllCartPurchase(carts, user);
+        return new ResponseEntity<>(purchase, HttpStatus.CREATED);
     }
 
     // Delete purchase by ID
     @DeleteMapping("/{id}")
-    public ResponseEntity<Long> cancelPurchase(@PathVariable("idPurchase") Long idPurchase) {
-        Long cancelledIdPurchase = oPurchaseService.cancelPurchase(idPurchase);
+    public ResponseEntity<Long> cancelPurchase(@PathVariable("purchase_id") Long purchase_id) {
+        Long cancelledIdPurchase = oPurchaseService.cancelPurchase(purchase_id);
         return new ResponseEntity<>(cancelledIdPurchase, HttpStatus.OK);
     }
 
@@ -106,14 +107,15 @@ public class PurchaseApi {
 
     // Find purchases by purchase code (using LIKE)
     @GetMapping("/findPurchasesByPurchaseCode")
-    public ResponseEntity<Page<PurchaseEntity>> findByPurchaseCode(@RequestParam String purchaseCode, Pageable oPageable) {
+    public ResponseEntity<Page<PurchaseEntity>> findByPurchaseCode(@RequestParam String purchaseCode,
+            Pageable oPageable) {
         return ResponseEntity.ok(oPurchaseService.findByPurchaseCode(purchaseCode, oPageable));
     }
 
     // Find total purchases by user ID
     @GetMapping("/findTotalPurchasesByIdUser")
-    public ResponseEntity<Double> findTotalPurchasesByIdUser(@RequestParam Long idUser) {
-        return ResponseEntity.ok(oPurchaseService.findTotalPurchasesByIdUser(idUser));
+    public ResponseEntity<Double> findTotalPurchasesByIdUser(@RequestParam Long user_id) {
+        return ResponseEntity.ok(oPurchaseService.findTotalPurchasesByIdUser(user_id));
     }
 
     // Find total purchase by ID
@@ -124,22 +126,25 @@ public class PurchaseApi {
 
     // Find total purchase by user ID and purchase ID
     @GetMapping("/findTotalPurchaseByUserIdAndPurchaseId")
-    public ResponseEntity<Double> findTotalPurchaseByUserIdAndPurchaseId(@RequestParam Long idUser, @RequestParam Long idPurchase) {
-        return ResponseEntity.ok(oPurchaseService.findTotalPurchaseByUserIdAndPurchaseId(idUser, idPurchase));
+    public ResponseEntity<Double> findTotalPurchaseByUserIdAndPurchaseId(@RequestParam Long user_id,
+            @RequestParam Long purchase_id) {
+        return ResponseEntity.ok(oPurchaseService.findTotalPurchaseByUserIdAndPurchaseId(user_id, purchase_id));
     }
 
     // Find purchases by user ID, ordered by the most expensive first
     @GetMapping("/findPurchasesMostExpensiveByIdUser")
-    public ResponseEntity<Page<PurchaseEntity>> findPurchasesMostExpensiveByIdUser(@RequestParam Long idUser, Pageable oPageable) {
-        return ResponseEntity.ok(oPurchaseService.findPurchasesMostExpensiveByIdUser(idUser, oPageable));
+    public ResponseEntity<Page<PurchaseEntity>> findPurchasesMostExpensiveByIdUser(@RequestParam Long user_id,
+            Pageable oPageable) {
+        return ResponseEntity.ok(oPurchaseService.findPurchasesMostExpensiveByIdUser(user_id, oPageable));
     }
 
     // Find purchases by user ID, ordered by the cheapest first
     @GetMapping("/findPurchasesMostCheapestByIdUser")
-    public ResponseEntity<Page<PurchaseEntity>> findPurchasesMostCheapestByIdUser(@RequestParam Long idUser, Pageable oPageable) {
-        return ResponseEntity.ok(oPurchaseService.findPurchasesMostCheapestByIdUser(idUser, oPageable));
+    public ResponseEntity<Page<PurchaseEntity>> findPurchasesMostCheapestByIdUser(@RequestParam Long user_id,
+            Pageable oPageable) {
+        return ResponseEntity.ok(oPurchaseService.findPurchasesMostCheapestByIdUser(user_id, oPageable));
     }
-    
+
     // empty the order table
     @DeleteMapping("/empty")
     public ResponseEntity<Long> empty() {

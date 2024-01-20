@@ -13,7 +13,7 @@ import com.ecommerce.urbanize.entity.PurchaseEntity;
 public interface PurchaseRepository extends JpaRepository<PurchaseEntity, Long> {
 
     // Find purchases by user ID
-    Page<PurchaseEntity> findByIdUser(Long idUser, Pageable pageable);
+    Page<PurchaseEntity> findByIdUser(Long user_id, Pageable pageable);
 
     // Find purchases, ordered by the newest first
     @Query(value = "SELECT * FROM purchase ORDER BY purchaseDate DESC", nativeQuery = true)
@@ -27,20 +27,20 @@ public interface PurchaseRepository extends JpaRepository<PurchaseEntity, Long> 
     @Query(value = "SELECT * FROM purchase WHERE purchaseCode LIKE %?1%", nativeQuery = true)
     Page<PurchaseEntity> findByPurchaseCode(String purchaseCode, Pageable pageable);
 
-    @Query(value = "SELECT SUM(pd.price * pd.amount) FROM purchase p, purchaseDetail pd WHERE p.id = pd.idPurchase AND p.idUser = ?1", nativeQuery = true)
-    Double findTotalPurchasesByIdUser(Long idUser);
+    @Query(value = "SELECT SUM(pd.price * pd.amount) FROM purchase p, purchaseDetail pd WHERE p.id = pd.purchase_id AND p.user_id = ?1", nativeQuery = true)
+    Double findTotalPurchasesByIdUser(Long user_id);
 
-    @Query(value = "SELECT SUM(pd.price * pd.amount) FROM purchaseDetail pd WHERE pd.idPurchase = ?1", nativeQuery = true)
+    @Query(value = "SELECT SUM(pd.price * pd.amount) FROM purchaseDetail pd WHERE pd.purchase_id = ?1", nativeQuery = true)
     Double findTotalPurchaseById(Long id);
 
-    @Query(value = "SELECT SUM(pd.precio * pd.cantidad) FROM purchaseDetail pd, purchase p WHERE pd.idPurchase = p.id AND p.idUser = ?1 AND p.id = ?2", nativeQuery = true)
-    Double findTotalPurchaseByUserIdAndPurchaseId(Long idUser, Long idPurchase);
+    @Query(value = "SELECT SUM(pd.precio * pd.cantidad) FROM purchaseDetail pd, purchase p WHERE pd.purchase_id = p.id AND p.user_id = ?1 AND p.id = ?2", nativeQuery = true)
+    Double findTotalPurchaseByUserIdAndPurchaseId(Long user_id, Long idPurchase);
 
-    @Query(value = "SELECT * FROM purchase WHERE idUser = ?1 ORDER BY (SELECT SUM(pd.precio * pd.cantidad) FROM purchaseDetail pd WHERE pd.idPurchase = purchase.id) DESC", nativeQuery = true)
-    Page<PurchaseEntity> findPurchasesMostExpensiveByIdUser(Long idUser, Pageable pageable);
+    @Query(value = "SELECT * FROM purchase WHERE user_id = ?1 ORDER BY (SELECT SUM(pd.precio * pd.cantidad) FROM purchaseDetail pd WHERE pd.purchase_id = purchase.id) DESC", nativeQuery = true)
+    Page<PurchaseEntity> findPurchasesMostExpensiveByIdUser(Long user_id, Pageable pageable);
 
-    @Query(value = "SELECT * FROM purchase WHERE idUser = ?1 ORDER BY (SELECT SUM(pd.precio * pd.cantidad) FROM purchaseDetail pd WHERE pd.idPurchase = purchase.id) ASC", nativeQuery = true)
-    Page<PurchaseEntity> findPurchasesMostCheapestByIdUser(Long idUser, Pageable pageable);
+    @Query(value = "SELECT * FROM purchase WHERE user_id = ?1 ORDER BY (SELECT SUM(pd.precio * pd.cantidad) FROM purchaseDetail pd WHERE pd.purchase_id = purchase.id) ASC", nativeQuery = true)
+    Page<PurchaseEntity> findPurchasesMostCheapestByIdUser(Long user_id, Pageable pageable);
 
     // Reset the auto-increment value of the purchase table
     @Modifying

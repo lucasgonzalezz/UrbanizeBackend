@@ -51,8 +51,8 @@ public class PurchaseService {
     }
 
     // Get order by user ID
-    public Page<PurchaseEntity> findByIdUser(Long idUser, Pageable oPageable) {
-        return oPurchaseRepository.findByIdUser(idUser, oPageable);
+    public Page<PurchaseEntity> findByIdUser(Long user_id, Pageable oPageable) {
+        return oPurchaseRepository.findByIdUser(user_id, oPageable);
     }
 
     public Page<PurchaseEntity> getPage(Pageable oPageable) {
@@ -164,8 +164,8 @@ public class PurchaseService {
     }
 
     // Find total purchases by user ID
-    public Double findTotalPurchasesByIdUser(Long idUser) {
-        return oPurchaseRepository.findTotalPurchasesByIdUser(idUser);
+    public Double findTotalPurchasesByIdUser(Long user_id) {
+        return oPurchaseRepository.findTotalPurchasesByIdUser(user_id);
     }
 
     // Find total purchase by ID
@@ -174,18 +174,18 @@ public class PurchaseService {
     }
 
     // Find total purchase by user ID and purchase ID
-    public Double findTotalPurchaseByUserIdAndPurchaseId(Long idUser, Long idPurchase) {
-        return oPurchaseRepository.findTotalPurchaseByUserIdAndPurchaseId(idUser, idPurchase);
+    public Double findTotalPurchaseByUserIdAndPurchaseId(Long user_id, Long purchase_id) {
+        return oPurchaseRepository.findTotalPurchaseByUserIdAndPurchaseId(user_id, purchase_id);
     }
 
     // Find purchases by user ID, ordered by the most expensive first
-    public Page<PurchaseEntity> findPurchasesMostExpensiveByIdUser(Long idUser, Pageable oPageable) {
-        return oPurchaseRepository.findPurchasesMostExpensiveByIdUser(idUser, oPageable);
+    public Page<PurchaseEntity> findPurchasesMostExpensiveByIdUser(Long user_id, Pageable oPageable) {
+        return oPurchaseRepository.findPurchasesMostExpensiveByIdUser(user_id, oPageable);
     }
 
     // Find purchases by user ID, ordered by the cheapest first
-    public Page<PurchaseEntity> findPurchasesMostCheapestByIdUser(Long idUser, Pageable oPageable) {
-        return oPurchaseRepository.findPurchasesMostCheapestByIdUser(idUser, oPageable);
+    public Page<PurchaseEntity> findPurchasesMostCheapestByIdUser(Long user_id, Pageable oPageable) {
+        return oPurchaseRepository.findPurchasesMostCheapestByIdUser(user_id, oPageable);
     }
 
     // Empty the order table

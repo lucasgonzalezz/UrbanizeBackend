@@ -39,13 +39,13 @@ public class CartService {
     }
 
     // Get cart by user ID
-    public List<CartEntity> getCartByUser(Long idUser) {
-        return oCartRepository.findByIdUser(idUser);
+    public List<CartEntity> getCartByUser(Long user_id) {
+        return oCartRepository.findByIdUser(user_id);
     }
 
     // Get cart by user ID and product ID
-    public CartEntity getByUserAndProduct(Long idUser, Long idProduct) {
-        return oCartRepository.findByIdUserAndIdProduct(idUser, idProduct)
+    public CartEntity getByUserAndProduct(Long user_id, Long product_id) {
+        return oCartRepository.findByIdUserAndIdProduct(user_id, product_id)
                 .orElseThrow(() -> new ResourceNotFoundException("Cart not found"));
     }
 
@@ -90,13 +90,13 @@ public class CartService {
     }
 
     // Delete all carts for a specific user
-    public void deleteByUser(Long idUser) {
-        oCartRepository.deleteByIdUser(idUser);
+    public void deleteByUser(Long user_id) {
+        oCartRepository.deleteByIdUser(user_id);
     }
 
     // Get all carts for a specific user
-    public List<CartEntity> getAllByUser(Long idUser) {
-        return oCartRepository.findAllByIdUser(idUser);
+    public List<CartEntity> getAllByUser(Long user_id) {
+        return oCartRepository.findAllByIdUser(user_id);
     }
 
     // Empty the cart table

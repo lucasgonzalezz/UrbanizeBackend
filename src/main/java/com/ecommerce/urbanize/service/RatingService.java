@@ -71,63 +71,63 @@ public class RatingService {
     }
 
     // Get ratings by product ID
-    public Page<RatingEntity> findByIdProduct(Long idProduct, Pageable pageable) {
-        return oRatingRepository.findByIdProduct(idProduct, pageable);
+    public Page<RatingEntity> findByIdProduct(Long product_id, Pageable pageable) {
+        return oRatingRepository.findByIdProduct(product_id, pageable);
     }
 
     // Get ratings by user ID
-    public Page<RatingEntity> findByIdUser(Long idUser, Pageable pageable) {
-        return oRatingRepository.findByIdUser(idUser, pageable);
+    public Page<RatingEntity> findByIdUser(Long user_id, Pageable pageable) {
+        return oRatingRepository.findByIdUser(user_id, pageable);
     }
 
     // Get a rating for a specific product and user
-    public Optional<RatingEntity> findByIdProductAndIdUser(Long idProduct, Long idUser) {
-        return oRatingRepository.findByIdProductAndIdUser(idProduct, idUser);
+    public Optional<RatingEntity> findByIdProductAndIdUser(Long product_id, Long user_id) {
+        return oRatingRepository.findByIdProductAndIdUser(product_id, user_id);
     }
 
     // Get average rating for a product
-    public Double getAverageRating(Long idProduct) {
-        return oRatingRepository.getAverageRating(idProduct);
+    public Double getAverageRating(Long product_id) {
+        return oRatingRepository.getAverageRating(product_id);
     }
 
     // Get ratings sorted by lowest punctuation
-    public Page<RatingEntity> getRatingByLowestPunctuation(Long idProduct, Pageable pageable) {
-        return oRatingRepository.getRatingByLowestPunctuation(idProduct, pageable);
+    public Page<RatingEntity> getRatingByLowestPunctuation(Long product_id, Pageable pageable) {
+        return oRatingRepository.getRatingByLowestPunctuation(product_id, pageable);
     }
 
     // Get ratings sorted by highest punctuation
-    public Page<RatingEntity> getRatingByHighestPunctuation(Long idProduct, Pageable pageable) {
-        return oRatingRepository.getRatingByHighestPunctuation(idProduct, pageable);
+    public Page<RatingEntity> getRatingByHighestPunctuation(Long product_id, Pageable pageable) {
+        return oRatingRepository.getRatingByHighestPunctuation(product_id, pageable);
     }
 
     // Get ratings sorted by newest
-    public Page<RatingEntity> getRatingByNewest(Long idProduct, Pageable pageable) {
-        return oRatingRepository.getRatingByNewest(idProduct, pageable);
+    public Page<RatingEntity> getRatingByNewest(Long product_id, Pageable pageable) {
+        return oRatingRepository.getRatingByNewest(product_id, pageable);
     }
 
     // Get ratings sorted by oldest
-    public Page<RatingEntity> getRatingByOldest(Long idProduct, Pageable pageable) {
-        return oRatingRepository.getRatingByOldest(idProduct, pageable);
+    public Page<RatingEntity> getRatingByOldest(Long product_id, Pageable pageable) {
+        return oRatingRepository.getRatingByOldest(product_id, pageable);
     }
 
     // Get ratings by user with lowest punctuation
-    public Page<RatingEntity> getRatingByLowestPunctuationOfUsers(Long idUser, Pageable pageable) {
-        return oRatingRepository.getRatingByLowestPunctuationOfUsers(idUser, pageable);
+    public Page<RatingEntity> getRatingByLowestPunctuationOfUsers(Long user_id, Pageable pageable) {
+        return oRatingRepository.getRatingByLowestPunctuationOfUsers(user_id, pageable);
     }
 
     // Get ratings by user with highest punctuation
-    public Page<RatingEntity> getRatingByHighestPunctuationOfUsers(Long idUser, Pageable pageable) {
-        return oRatingRepository.getRatingByHighestPunctuationOfUsers(idUser, pageable);
+    public Page<RatingEntity> getRatingByHighestPunctuationOfUsers(Long user_id, Pageable pageable) {
+        return oRatingRepository.getRatingByHighestPunctuationOfUsers(user_id, pageable);
     }
 
     // Get ratings by user sorted by newest
-    public Page<RatingEntity> getRatingByNewestOfUsers(Long idUser, Pageable pageable) {
-        return oRatingRepository.getRatingByNewestOfUsers(idUser, pageable);
+    public Page<RatingEntity> getRatingByNewestOfUsers(Long user_id, Pageable pageable) {
+        return oRatingRepository.getRatingByNewestOfUsers(user_id, pageable);
     }
 
     // Get ratings by user sorted by oldest
-    public Page<RatingEntity> getRatingByOldestOfUsers(Long idUser, Pageable pageable) {
-        return oRatingRepository.getRatingByOldestOfUsers(idUser, pageable);
+    public Page<RatingEntity> getRatingByOldestOfUsers(Long user_id, Pageable pageable) {
+        return oRatingRepository.getRatingByOldestOfUsers(user_id, pageable);
     }
 
     // Empty the rating table

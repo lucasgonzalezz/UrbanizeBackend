@@ -47,7 +47,7 @@ public class ProductApi {
         return ResponseEntity.ok(oProductService.update(oProductEntity));
     }
 
-    // delete a product by ID  
+    // delete a product by ID
     @DeleteMapping("/{id}")
     public ResponseEntity<Long> delete(@PathVariable("id") Long id) {
         return ResponseEntity.ok(oProductService.delete(id));
@@ -86,9 +86,10 @@ public class ProductApi {
     }
 
     // Get products by price and category descending
-    @GetMapping("/byPriceAndCategory/{idCategory}")
-    public ResponseEntity<Iterable<ProductEntity>> getByPriceAndCategory(@PathVariable("price") String price, @PathVariable("idCategory") Long idCategory, Pageable oPageable) {
-        return ResponseEntity.ok(oProductService.getByPriceDescAndIdCategory(idCategory, oPageable));
+    @GetMapping("/byPriceAndCategory/{category_id}")
+    public ResponseEntity<Iterable<ProductEntity>> getByPriceAndCategory(@PathVariable("price") String price,
+            @PathVariable("category_id") Long category_id, Pageable oPageable) {
+        return ResponseEntity.ok(oProductService.getByPriceDescAndIdCategory(category_id, oPageable));
     }
 
 }
