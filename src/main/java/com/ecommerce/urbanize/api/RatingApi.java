@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+
 import org.springframework.data.web.PageableDefault;
+
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -33,43 +35,44 @@ public class RatingApi {
     @Autowired
     RatingService oRatingService;
 
+    // Get rating by ID
     @GetMapping("/{id}")
     public ResponseEntity<RatingEntity> get(@PathVariable("id") Long id) {
         return ResponseEntity.ok(oRatingService.get(id));
     }
 
-    // get a random rating
+    // Get a random rating
     @GetMapping("/random")
     public ResponseEntity<RatingEntity> getOneRandom() {
         return ResponseEntity.ok(oRatingService.getOneRandom());
     }
 
-    // create a new rating
+    // Create a new rating
     @PostMapping("")
     public ResponseEntity<Long> create(@RequestBody RatingEntity oRatingEntity) {
         return ResponseEntity.ok(oRatingService.create(oRatingEntity));
     }
 
-    // update an existing rating
+    // Update an existing rating
     @PutMapping("")
     public ResponseEntity<RatingEntity> update(@RequestBody RatingEntity oRatingEntity) {
         return ResponseEntity.ok(oRatingService.update(oRatingEntity));
     }
 
-    // delete a rating by ID
+    // Delete a rating by ID
     @DeleteMapping("/{id}")
     public ResponseEntity<Long> delete(@PathVariable("id") Long id) {
         return ResponseEntity.ok(oRatingService.delete(id));
     }
 
-    // get a page of ratings
+    // Get a page of ratings
     @GetMapping("")
     public ResponseEntity<Page<RatingEntity>> getPage(
             @PageableDefault(size = PAGE_SIZE, sort = { "id" }, direction = Sort.Direction.ASC) Pageable oPageable) {
         return ResponseEntity.ok(oRatingService.getPage(oPageable));
     }
 
-    // populate
+    // Populate
 
     // empty
     @GetMapping("/empty")

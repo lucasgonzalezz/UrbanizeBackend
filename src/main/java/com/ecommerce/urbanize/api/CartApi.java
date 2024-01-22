@@ -3,11 +3,15 @@ package com.ecommerce.urbanize.api;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+
 import org.springframework.data.web.PageableDefault;
+
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -81,9 +85,9 @@ public class CartApi {
         return ResponseEntity.ok(oCartService.empty());
     }
 
-    // delete all carts for a specific user
+    // Delete all carts for a specific user
 
-    // get all carts for a specific user
+    // Get all carts for a specific user
     @GetMapping("/allByUser/{user_id}")
     public ResponseEntity<List<CartEntity>> getAllByUser(@PathVariable("user_id") Long user_id) {
         return ResponseEntity.ok(oCartService.getAllByUser(user_id));

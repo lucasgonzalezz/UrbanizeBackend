@@ -24,38 +24,39 @@ public class CategoryApi {
     @Autowired
     CategoryService oCategoryService;
 
+    // Get category by ID
     @GetMapping("/{id}")
     public ResponseEntity<CategoryEntity> get(@PathVariable("id") Long id) {
         return ResponseEntity.ok(oCategoryService.get(id));
     }
 
-    // get a random category
+    // Get a random category
     @GetMapping("/random")
     public ResponseEntity<CategoryEntity> getOneRandom() {
         return ResponseEntity.ok(oCategoryService.getOneRandom());
     }
 
-    // create a new category
+    // Create a new category
     @PostMapping("")
     public ResponseEntity<Long> create(@RequestBody CategoryEntity oCategoryEntity) {
         return ResponseEntity.ok(oCategoryService.create(oCategoryEntity));
     }
 
-    // update an existing category
+    // Update an existing category
     @PutMapping("")
     public ResponseEntity<CategoryEntity> update(@RequestBody CategoryEntity oCategoryEntity) {
         return ResponseEntity.ok(oCategoryService.update(oCategoryEntity));
     }
 
-    // delete a category by ID
+    // Delete a category by ID
     @DeleteMapping("/{id}")
     public ResponseEntity<Long> delete(@PathVariable("id") Long id) {
         return ResponseEntity.ok(oCategoryService.delete(id));
     }
 
-    // populate
+    // Populate
 
-    // empty
+    // Empty
     @DeleteMapping("/empty")
     public ResponseEntity<Long> empty() {
         return ResponseEntity.ok(oCategoryService.empty());

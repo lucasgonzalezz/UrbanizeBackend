@@ -24,62 +24,63 @@ public class ProductApi {
     @Autowired
     ProductService oProductService;
 
+    // Get product by ID
     @GetMapping("/{id}")
     public ResponseEntity<ProductEntity> get(@PathVariable("id") Long id) {
         return ResponseEntity.ok(oProductService.get(id));
     }
 
-    // get a random product
+    // Get a random product
     @GetMapping("/random")
     public ResponseEntity<ProductEntity> getOneRandom() {
         return ResponseEntity.ok(oProductService.getOneRandom());
     }
 
-    // create a new product
+    // Create a new product
     @PostMapping("")
     public ResponseEntity<Long> create(@RequestBody ProductEntity oProductEntity) {
         return ResponseEntity.ok(oProductService.create(oProductEntity));
     }
 
-    // update an existing product
+    // Update an existing product
     @PutMapping("")
     public ResponseEntity<ProductEntity> update(@RequestBody ProductEntity oProductEntity) {
         return ResponseEntity.ok(oProductService.update(oProductEntity));
     }
 
-    // delete a product by ID
+    // Delete a product by ID
     @DeleteMapping("/{id}")
     public ResponseEntity<Long> delete(@PathVariable("id") Long id) {
         return ResponseEntity.ok(oProductService.delete(id));
     }
 
-    // populate
+    // Populate
 
-    // empty
+    // Empty
     @DeleteMapping("/empty")
     public ResponseEntity<Long> empty() {
         return ResponseEntity.ok(oProductService.empty());
     }
 
-    // get products by category ID
+    // Get products by category ID
     @GetMapping("/byCategory/{id}")
     public ResponseEntity<Iterable<ProductEntity>> getByCategory(@PathVariable("id") Long id, Pageable oPageable) {
         return ResponseEntity.ok(oProductService.getByCategory(id, oPageable));
     }
 
-    // get products by size
+    // Get products by size
     @GetMapping("/bySize/{size}")
     public ResponseEntity<Iterable<ProductEntity>> getBySize(@PathVariable("size") String size, Pageable oPageable) {
         return ResponseEntity.ok(oProductService.getBySize(size, oPageable));
     }
 
-    // get product by stock
+    // Get product by stock
     @GetMapping("/byStock/{stock}")
     public ResponseEntity<Iterable<ProductEntity>> getByStock(@PathVariable("stock") String stock, Pageable oPageable) {
         return ResponseEntity.ok(oProductService.getByStockDesc(oPageable));
     }
 
-    // get products by price
+    // Get products by price
     @GetMapping("/byPrice/{price}")
     public ResponseEntity<Iterable<ProductEntity>> getByPrice(@PathVariable("price") String price, Pageable oPageable) {
         return ResponseEntity.ok(oProductService.getByPriceDesc(oPageable));

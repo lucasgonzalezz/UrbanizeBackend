@@ -109,21 +109,21 @@ public class UserService {
         return oUserRepository.findUsersByRatingDesc(oPageable);
     }
 
-      // Empty the user table and add two sample users
-      @Transactional
-      public Long empty() {
-          oUserRepository.deleteAll();
-          oUserRepository.resetAutoIncrement();
-          // Add an admin user
-          UserEntity userAdmin = new UserEntity(1L, "Lucas", "Gonzalez", "Rozalen", LocalDate.of(2004, 03, 21),
-                  640383838, "26882786H", 46022, "Valencia", "Calle Duqe de Gaeta", "lucgr04@gmail.com", "lucgr",
-                  password, true);
-          oUserRepository.save(userAdmin);
-          // Add a normal user
-          UserEntity userNormal = new UserEntity(2L, "Blanca", "Pérez", "García", LocalDate.of(1995, 6, 15),
-                  555555555, "12345678A", 28001, "Madrid", "Calle Gran Vía", "blanca@gmail.com", "blancaizm",
-                  password, false);
-          oUserRepository.save(userNormal);
-          return oUserRepository.count();
-      }
+    // Empty the user table and add two sample users
+    @Transactional
+    public Long empty() {
+        oUserRepository.deleteAll();
+        oUserRepository.resetAutoIncrement();
+        // Add an admin user
+        UserEntity userAdmin = new UserEntity(1L, "Lucas", "Gonzalez", "Rozalen", LocalDate.of(2004, 03, 21),
+                640383838, "26882786H", 46022, "Valencia", "Calle Duqe de Gaeta", "lucgr04@gmail.com", "lucgr",
+                password, true);
+        oUserRepository.save(userAdmin);
+        // Add a normal user
+        UserEntity userNormal = new UserEntity(2L, "Blanca", "Pérez", "García", LocalDate.of(1995, 6, 15),
+                555555555, "12345678A", 28001, "Madrid", "Calle Gran Vía", "blanca@gmail.com", "blancaizm",
+                password, false);
+        oUserRepository.save(userNormal);
+        return oUserRepository.count();
+    }
 }

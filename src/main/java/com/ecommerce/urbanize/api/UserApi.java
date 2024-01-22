@@ -30,54 +30,56 @@ public class UserApi {
     @Autowired
     UserService oUserService;
 
+    // Get user by ID
     @GetMapping("/{id}")
     public ResponseEntity<UserEntity> get(@PathVariable("id") Long id) {
         return ResponseEntity.ok(oUserService.get(id));
     }
 
-    // get user by username
+    // Get user by username
     @GetMapping("/byUsername/{username}")
     public ResponseEntity<UserEntity> get(@PathVariable("username") String username) {
         return ResponseEntity.ok(oUserService.getByUsername(username));
     }
 
-    // get a random user
+    // Get a random user
     @GetMapping("/random")
     public ResponseEntity<UserEntity> getOneRandom() {
         return ResponseEntity.ok(oUserService.getOneRandom());
     }
 
-    // create a new user
+    // Create a new user
     @PostMapping("")
     public ResponseEntity<Long> create(@RequestBody UserEntity oUserEntity) {
         return ResponseEntity.ok(oUserService.create(oUserEntity));
     }
 
-    // update an existing user
+    // Update an existing user
     @PutMapping("")
     public ResponseEntity<UserEntity> update(@RequestBody UserEntity oUserEntity) {
         return ResponseEntity.ok(oUserService.update(oUserEntity));
     }
 
-    // delete a user by ID
+    // Delete a user by ID
     @DeleteMapping("/{id}")
     public ResponseEntity<Long> delete(@PathVariable("id") Long id) {
         return ResponseEntity.ok(oUserService.delete(id));
     }
 
-    // get a cantity of users using pagination
+    // Get a cantity of users using pagination
     @GetMapping("")
-    public ResponseEntity<Page<UserEntity>> getPage(@PageableDefault(size = 30, sort = {"id"}, direction = Sort.Direction.ASC) Pageable oPageable) {
+    public ResponseEntity<Page<UserEntity>> getPage(
+            @PageableDefault(size = 30, sort = { "id" }, direction = Sort.Direction.ASC) Pageable oPageable) {
         return ResponseEntity.ok(oUserService.getPage(oPageable));
     }
 
-    // populate
+    // Populate
     @GetMapping("/populate/{amount}")
     public ResponseEntity<Long> populate(@PathVariable("amount") Integer amount) {
         return ResponseEntity.ok(oUserService.populate(amount));
     }
 
-    // empty
+    // Empty
     @DeleteMapping("/empty")
     public ResponseEntity<Long> empty() {
         return ResponseEntity.ok(oUserService.empty());
