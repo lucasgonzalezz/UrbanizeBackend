@@ -77,7 +77,7 @@ public class ProductService {
 
     // Get products by category ID
     public Page<ProductEntity> getByCategory(Long category_id, Pageable oPageable) {
-        return oProductRepository.findByIdCategory(category_id, oPageable);
+        return oProductRepository.findByCategoryId(category_id, oPageable);
     }
 
     // Get products by size

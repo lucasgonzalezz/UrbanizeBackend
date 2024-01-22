@@ -38,18 +38,18 @@ public class UserEntity {
     @NotNull
     @NotBlank
     @Size(min = 3, max = 255)
-    private String lastName1;
+    private String last_name1;
 
     @Size(min = 3, max = 255)
-    private String lastName2;
+    private String last_name2;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
-    private LocalDate birthDate;
+    private LocalDate birth_date;
 
     @NotNull
     @Size(min = 9, max = 9, message = "The phone number must have 9 characters")
     @Pattern(regexp = "\\+?[0-9]+", message = "The phone number must contain only digits")
-    private int phoneNumber;
+    private int phone_number;
 
     @NotNull
     @NotBlank
@@ -65,7 +65,7 @@ public class UserEntity {
     @NotNull
     @Min(value = 1000, message = "The postal code must be at least 1000")
     @Max(value = 52999, message = "The postal code must be at most 52999")
-    private int postalCode;
+    private int postal_code;
 
     @NotNull
     @NotBlank
@@ -106,19 +106,19 @@ public class UserEntity {
         carts = new ArrayList<>();
     }
 
-    public UserEntity(Long id, String name, String lastName1, String lastName2, LocalDate birthDate, int phoneNumber,
+    public UserEntity(Long id, String name, String last_name1, String last_name2, LocalDate birth_date, int phone_number,
             String dni,
-            int postalCode, String city, String address, String email, String username, String password,
+            int postal_code, String city, String address, String email, String username, String password,
             Boolean role) {
         this.id = id;
         this.name = name;
-        this.lastName1 = lastName1;
-        this.lastName2 = lastName2;
-        this.birthDate = birthDate;
-        this.phoneNumber = phoneNumber;
+        this.last_name1 = last_name1;
+        this.last_name2 = last_name2;
+        this.birth_date = birth_date;
+        this.phone_number = phone_number;
         this.dni = dni;
         this.city = city;
-        this.postalCode = postalCode;
+        this.postal_code = postal_code;
         this.address = address;
         this.email = email;
         this.username = username;
@@ -130,13 +130,13 @@ public class UserEntity {
             int postalCode, String city, String address, String email, String username, String password,
             Boolean role) {
         this.name = name;
-        this.lastName1 = lastName1;
-        this.lastName2 = lastName2;
-        this.birthDate = birthDate;
-        this.phoneNumber = phoneNumber;
+        this.last_name1 = lastName1;
+        this.last_name2 = lastName2;
+        this.birth_date = birthDate;
+        this.phone_number = phoneNumber;
         this.dni = dni;
         this.city = city;
-        this.postalCode = postalCode;
+        this.postal_code = postalCode;
         this.address = address;
         this.email = email;
         this.username = username;
@@ -166,35 +166,35 @@ public class UserEntity {
     }
 
     public String getLastName1() {
-        return lastName1;
+        return last_name1;
     }
 
     public void setLastName1(String lastName1) {
-        this.lastName1 = lastName1;
+        this.last_name1 = lastName1;
     }
 
     public String getLastName2() {
-        return lastName2;
+        return last_name2;
     }
 
     public void setLastName2(String lastName2) {
-        this.lastName2 = lastName2;
+        this.last_name2 = lastName2;
     }
 
     public LocalDate getBirthDate() {
-        return birthDate;
+        return birth_date;
     }
 
     public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
+        this.birth_date = birthDate;
     }
 
     public int getPhoneNumber() {
-        return phoneNumber;
+        return phone_number;
     }
 
     public void setPhoneNumber(int phoneNumber) {
-        this.phoneNumber = phoneNumber;
+        this.phone_number = phoneNumber;
     }
 
     public String getDni() {
@@ -214,11 +214,11 @@ public class UserEntity {
     }
 
     public int getPostalCode() {
-        return postalCode;
+        return postal_code;
     }
 
     public void setPostalCode(int postalCode) {
-        this.postalCode = postalCode;
+        this.postal_code = postalCode;
     }
 
     public String getAddress() {

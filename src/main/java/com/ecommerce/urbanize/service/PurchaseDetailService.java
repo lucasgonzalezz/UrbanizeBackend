@@ -57,17 +57,17 @@ public class PurchaseDetailService {
 
     // Find purchase details by order ID
     public Page<PurchaseDetailEntity> findByIdOrder(Long order_id, Pageable pageable) {
-        return oPurchaseDetailRepository.findByIdPurchase(order_id, pageable);
+        return oPurchaseDetailRepository.findByPurchaseId(order_id, pageable);
     }
 
     // Find purchase details by product ID
     public Page<PurchaseDetailEntity> findByIdProduct(Long product_id, Pageable pageable) {
-        return oPurchaseDetailRepository.findByIdProduct(product_id, pageable);
+        return oPurchaseDetailRepository.findByProductId(product_id, pageable);
     }
 
     // Find purchase details by both order and product ID
     public Page<PurchaseDetailEntity> findByIdOrderAndIdProduct(Long order_id, Long product_id, Pageable pageable) {
-        return oPurchaseDetailRepository.findByIdPurchaseAndIdProduct(order_id, product_id, pageable);
+        return oPurchaseDetailRepository.findByPurchaseIdAndProductId(order_id, product_id, pageable);
     }
 
     // Order purchase details by price in descending order

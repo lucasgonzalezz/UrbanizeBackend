@@ -84,7 +84,7 @@ public class CartApi {
     // delete all carts for a specific user
 
     // get all carts for a specific user
-    @GetMapping("/byUser/{user_id}")
+    @GetMapping("/allByUser/{user_id}")
     public ResponseEntity<List<CartEntity>> getAllByUser(@PathVariable("user_id") Long user_id) {
         return ResponseEntity.ok(oCartService.getAllByUser(user_id));
 

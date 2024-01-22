@@ -39,7 +39,7 @@ public class RatingService {
     // combination
     public Long create(RatingEntity oRatingEntity) {
         Optional<RatingEntity> ratingFromDatabase = oRatingRepository
-                .findByIdProductAndIdUser(oRatingEntity.getProduct().getId(), oRatingEntity.getUser().getId());
+                .findByProductIdAndUserId(oRatingEntity.getProduct().getId(), oRatingEntity.getUser().getId());
         if (ratingFromDatabase.isPresent()) {
             RatingEntity rating = ratingFromDatabase.get();
             rating.setDate(LocalDate.now());
@@ -72,17 +72,17 @@ public class RatingService {
 
     // Get ratings by product ID
     public Page<RatingEntity> findByIdProduct(Long product_id, Pageable pageable) {
-        return oRatingRepository.findByIdProduct(product_id, pageable);
+        return oRatingRepository.findByProductId(product_id, pageable);
     }
 
     // Get ratings by user ID
     public Page<RatingEntity> findByIdUser(Long user_id, Pageable pageable) {
-        return oRatingRepository.findByIdUser(user_id, pageable);
+        return oRatingRepository.findByUserId(user_id, pageable);
     }
 
     // Get a rating for a specific product and user
     public Optional<RatingEntity> findByIdProductAndIdUser(Long product_id, Long user_id) {
-        return oRatingRepository.findByIdProductAndIdUser(product_id, user_id);
+        return oRatingRepository.findByProductIdAndUserId(product_id, user_id);
     }
 
     // Get average rating for a product

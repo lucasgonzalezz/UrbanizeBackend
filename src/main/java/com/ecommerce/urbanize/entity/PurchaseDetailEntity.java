@@ -11,7 +11,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "purchaseDetail")
+@Table(name = "purchase_detail")
 public class PurchaseDetailEntity {
 
     @Id

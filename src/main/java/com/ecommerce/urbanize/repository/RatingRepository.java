@@ -15,13 +15,13 @@ import com.ecommerce.urbanize.entity.RatingEntity;
 public interface RatingRepository extends JpaRepository<RatingEntity, Long> {
 
     // Find all ratings by a specific product
-    Page<RatingEntity> findByIdProduct(Long product_id, Pageable pageable);
+    Page<RatingEntity> findByProductId(Long product_id, Pageable pageable);
 
     // Find all ratings by a specific user
-    Page<RatingEntity> findByIdUser(Long user_id, Pageable pageable);
+    Page<RatingEntity> findByUserId(Long user_id, Pageable pageable);
 
     // Find a rating for a specific product and user
-    Optional<RatingEntity> findByIdProductAndIdUser(Long product_id, Long user_id);
+    Optional<RatingEntity> findByProductIdAndUserId(Long product_id, Long user_id);
 
     // Get the average rating of a product
     @Query(value = "SELECT AVG(punctuation) FROM rating WHERE product_id = ?1", nativeQuery = true)

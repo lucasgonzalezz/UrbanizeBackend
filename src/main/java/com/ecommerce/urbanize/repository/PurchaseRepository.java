@@ -13,7 +13,7 @@ import com.ecommerce.urbanize.entity.PurchaseEntity;
 public interface PurchaseRepository extends JpaRepository<PurchaseEntity, Long> {
 
     // Find purchases by user ID
-    Page<PurchaseEntity> findByIdUser(Long user_id, Pageable pageable);
+    Page<PurchaseEntity> findByUserId(Long user_id, Pageable pageable);
 
     // Find purchases, ordered by the newest first
     @Query(value = "SELECT * FROM purchase ORDER BY purchaseDate DESC", nativeQuery = true)
@@ -28,7 +28,7 @@ public interface PurchaseRepository extends JpaRepository<PurchaseEntity, Long> 
     Page<PurchaseEntity> findByPurchaseCode(String purchaseCode, Pageable pageable);
 
     @Query(value = "SELECT SUM(pd.price * pd.amount) FROM purchase p, purchaseDetail pd WHERE p.id = pd.purchase_id AND p.user_id = ?1", nativeQuery = true)
-    Double findTotalPurchasesByIdUser(Long user_id);
+    Double findTotalPurchasesByUserId(Long user_id);
 
     @Query(value = "SELECT SUM(pd.price * pd.amount) FROM purchaseDetail pd WHERE pd.purchase_id = ?1", nativeQuery = true)
     Double findTotalPurchaseById(Long id);
@@ -37,10 +37,10 @@ public interface PurchaseRepository extends JpaRepository<PurchaseEntity, Long> 
     Double findTotalPurchaseByUserIdAndPurchaseId(Long user_id, Long idPurchase);
 
     @Query(value = "SELECT * FROM purchase WHERE user_id = ?1 ORDER BY (SELECT SUM(pd.precio * pd.cantidad) FROM purchaseDetail pd WHERE pd.purchase_id = purchase.id) DESC", nativeQuery = true)
-    Page<PurchaseEntity> findPurchasesMostExpensiveByIdUser(Long user_id, Pageable pageable);
+    Page<PurchaseEntity> findPurchasesMostExpensiveByUserId(Long user_id, Pageable pageable);
 
     @Query(value = "SELECT * FROM purchase WHERE user_id = ?1 ORDER BY (SELECT SUM(pd.precio * pd.cantidad) FROM purchaseDetail pd WHERE pd.purchase_id = purchase.id) ASC", nativeQuery = true)
-    Page<PurchaseEntity> findPurchasesMostCheapestByIdUser(Long user_id, Pageable pageable);
+    Page<PurchaseEntity> findPurchasesMostCheapestByUserId(Long user_id, Pageable pageable);
 
     // Reset the auto-increment value of the purchase table
     @Modifying

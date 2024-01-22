@@ -40,12 +40,12 @@ public class CartService {
 
     // Get cart by user ID
     public List<CartEntity> getCartByUser(Long user_id) {
-        return oCartRepository.findByIdUser(user_id);
+        return oCartRepository.findByUserId(user_id);
     }
 
     // Get cart by user ID and product ID
     public CartEntity getByUserAndProduct(Long user_id, Long product_id) {
-        return oCartRepository.findByIdUserAndIdProduct(user_id, product_id)
+        return oCartRepository.findByUserIdAndProductId(user_id, product_id)
                 .orElseThrow(() -> new ResourceNotFoundException("Cart not found"));
     }
 
@@ -59,7 +59,7 @@ public class CartService {
         UserEntity oUserEntity = oUserService.get(oCartEntity.getUser().getId());
         ProductEntity oProductEntity = oProductService.get(oCartEntity.getProduct().getId());
 
-        Optional<CartEntity> cartFromDatabase = oCartRepository.findByIdUserAndIdProduct(oUserEntity.getId(),
+        Optional<CartEntity> cartFromDatabase = oCartRepository.findByUserIdAndProductId(oUserEntity.getId(),
                 oProductEntity.getId());
         if (cartFromDatabase.isPresent()) {
             CartEntity cart = cartFromDatabase.get();

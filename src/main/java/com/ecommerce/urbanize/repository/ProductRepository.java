@@ -14,7 +14,7 @@ import com.ecommerce.urbanize.entity.ProductEntity;
 public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
 
     // Method to find products by category ID
-    Page<ProductEntity> findByIdCategory(Long id, Pageable pageable);
+    Page<ProductEntity> findByCategoryId(Long id, Pageable pageable);
 
     // Method to find products by size (sizes: xs, s, m, l, xl, xxl)
     @Query(value = "SELECT * FROM product WHERE size = ?1", nativeQuery = true)

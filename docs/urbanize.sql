@@ -69,13 +69,7 @@ CREATE TABLE `product` (
 
 CREATE TABLE `purchase` (
   `id` bigint NOT NULL,
-  `purchaseDate` date NOT NULL,
-  `deliveryDate` date NOT NULL,
   `status` varchar(255) COLLATE utf16_bin NOT NULL,
-  `purchaseCode` int NOT NULL,
-  `id_user` bigint NOT NULL,
-  `numBill` int NOT NULL,
-  `dateBill` date NOT NULL,
   `date_bill` date DEFAULT NULL,
   `delivery_date` date DEFAULT NULL,
   `num_bill` int NOT NULL,
@@ -84,19 +78,6 @@ CREATE TABLE `purchase` (
   `user_id` bigint DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_bin;
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `purchaseDetail`
---
-
-CREATE TABLE `purchaseDetail` (
-  `id` bigint NOT NULL,
-  `amount` int NOT NULL,
-  `price` int NOT NULL,
-  `product_id` bigint NOT NULL,
-  `purchase_id` bigint NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_bin;
 
 -- --------------------------------------------------------
 
@@ -138,13 +119,8 @@ CREATE TABLE `rating` (
 CREATE TABLE `user` (
   `id` bigint NOT NULL,
   `name` varchar(255) COLLATE utf16_bin NOT NULL,
-  `lastName1` varchar(255) COLLATE utf16_bin NOT NULL,
-  `lastName2` varchar(255) COLLATE utf16_bin NOT NULL,
-  `birthDate` date NOT NULL,
-  `phoneNumber` int NOT NULL,
   `dni` varchar(9) COLLATE utf16_bin NOT NULL,
   `city` varchar(255) COLLATE utf16_bin NOT NULL,
-  `postalCode` int NOT NULL,
   `address` varchar(255) COLLATE utf16_bin NOT NULL,
   `email` varchar(255) COLLATE utf16_bin NOT NULL,
   `username` varchar(255) COLLATE utf16_bin NOT NULL,
@@ -189,11 +165,6 @@ ALTER TABLE `purchase`
   ADD PRIMARY KEY (`id`),
   ADD KEY `FK86i0stm7cqsglqptdvjij1k3m` (`user_id`);
 
---
--- Indices de la tabla `purchaseDetail`
---
-ALTER TABLE `purchaseDetail`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `purchase_detail`
@@ -245,11 +216,6 @@ ALTER TABLE `product`
 ALTER TABLE `purchase`
   MODIFY `id` bigint NOT NULL AUTO_INCREMENT;
 
---
--- AUTO_INCREMENT de la tabla `purchaseDetail`
---
-ALTER TABLE `purchaseDetail`
-  MODIFY `id` bigint NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `purchase_detail`

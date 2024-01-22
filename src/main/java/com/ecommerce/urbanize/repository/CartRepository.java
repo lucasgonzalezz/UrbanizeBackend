@@ -13,10 +13,10 @@ import com.ecommerce.urbanize.entity.CartEntity;
 public interface CartRepository extends JpaRepository<CartEntity, Long> {
 
     // Get a page of carts for a specific user
-    List<CartEntity> findByIdUser(Long user_id);
+    List<CartEntity> findByUserId(Long user_id);
 
     // Find a specific cart based on user and product IDs
-    Optional<CartEntity> findByIdUserAndIdProduct(Long user, Long product);
+    Optional<CartEntity> findByUserIdAndProductId(Long user_id, Long product_id);
 
     @Query(value = "SELECT c.amount * c.product.price FROM cart c WHERE c.id = ?1", nativeQuery = true)
     Double calculateCartCost(Long id);

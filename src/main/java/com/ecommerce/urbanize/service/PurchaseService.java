@@ -52,7 +52,7 @@ public class PurchaseService {
 
     // Get order by user ID
     public Page<PurchaseEntity> findByIdUser(Long user_id, Pageable oPageable) {
-        return oPurchaseRepository.findByIdUser(user_id, oPageable);
+        return oPurchaseRepository.findByUserId(user_id, oPageable);
     }
 
     public Page<PurchaseEntity> getPage(Pageable oPageable) {
@@ -133,7 +133,7 @@ public class PurchaseService {
     // Cancel order
     public Long cancelPurchase(Long id) {
         if (oPurchaseRepository.existsById(id)) {
-            Page<PurchaseDetailEntity> purchaseDatils = oPurchaseDetailRepository.findByIdPurchase(id,
+            Page<PurchaseDetailEntity> purchaseDatils = oPurchaseDetailRepository.findByPurchaseId(id,
                     PageRequest.of(0, 1000));
             for (PurchaseDetailEntity purchaseDetail : purchaseDatils) {
                 ProductEntity product = purchaseDetail.getProduct();
@@ -165,7 +165,7 @@ public class PurchaseService {
 
     // Find total purchases by user ID
     public Double findTotalPurchasesByIdUser(Long user_id) {
-        return oPurchaseRepository.findTotalPurchasesByIdUser(user_id);
+        return oPurchaseRepository.findTotalPurchasesByUserId(user_id);
     }
 
     // Find total purchase by ID
@@ -180,12 +180,12 @@ public class PurchaseService {
 
     // Find purchases by user ID, ordered by the most expensive first
     public Page<PurchaseEntity> findPurchasesMostExpensiveByIdUser(Long user_id, Pageable oPageable) {
-        return oPurchaseRepository.findPurchasesMostExpensiveByIdUser(user_id, oPageable);
+        return oPurchaseRepository.findPurchasesMostExpensiveByUserId(user_id, oPageable);
     }
 
     // Find purchases by user ID, ordered by the cheapest first
     public Page<PurchaseEntity> findPurchasesMostCheapestByIdUser(Long user_id, Pageable oPageable) {
-        return oPurchaseRepository.findPurchasesMostCheapestByIdUser(user_id, oPageable);
+        return oPurchaseRepository.findPurchasesMostCheapestByUserId(user_id, oPageable);
     }
 
     // Empty the order table

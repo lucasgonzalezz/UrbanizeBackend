@@ -13,13 +13,13 @@ import com.ecommerce.urbanize.entity.PurchaseDetailEntity;
 public interface PurchaseDetailRepository extends JpaRepository<PurchaseDetailEntity, Long> {
 
     // Find purchase details by purchase ID
-    Page<PurchaseDetailEntity> findByIdPurchase(Long purchase_id, Pageable pageable);
+    Page<PurchaseDetailEntity> findByPurchaseId(Long purchase_id, Pageable pageable);
 
     // Find purchase details by product ID
-    Page<PurchaseDetailEntity> findByIdProduct(Long product_id, Pageable pageable);
+    Page<PurchaseDetailEntity> findByProductId(Long product_id, Pageable pageable);
 
     // Find purchase details by both purchase and product ID
-    Page<PurchaseDetailEntity> findByIdPurchaseAndIdProduct(Long purchase_id, Long product_id, Pageable pageable);
+    Page<PurchaseDetailEntity> findByPurchaseIdAndProductId(Long purchase_id, Long product_id, Pageable pageable);
 
     // Order purchase details by price in descending order
     @Query(value = "SELECT * FROM purchaseDetail ORDER BY price DESC", nativeQuery = true)
