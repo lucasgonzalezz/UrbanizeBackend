@@ -1,4 +1,3 @@
-// This is a repository interface for managing database operations related to purchases in an e-commerce application.
 package com.ecommerce.urbanize.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,4 +1,3 @@
-// Import necessary packages
 package com.ecommerce.urbanize.repository;
 
 import org.springframework.data.domain.Page;
@@ -36,5 +35,4 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
     @Modifying
     @Query(value = "ALTER TABLE user AUTO_INCREMENT = 1", nativeQuery = true)
     void resetAutoIncrement();
-
 }

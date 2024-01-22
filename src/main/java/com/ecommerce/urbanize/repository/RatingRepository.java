@@ -1,4 +1,3 @@
-// This is a repository interface for handling database operations related to ratings in an e-commerce application.
 package com.ecommerce.urbanize.repository;
 
 import java.util.Optional;
