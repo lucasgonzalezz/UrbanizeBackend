@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import com.ecommerce.urbanize.entity.PurchaseDetailEntity;
 import com.ecommerce.urbanize.entity.PurchaseEntity;
 import com.ecommerce.urbanize.entity.UserEntity;
 import com.ecommerce.urbanize.exception.ResourceNotFoundException;
+import com.ecommerce.urbanize.helper.PurchaseDataGenerationHelper;
 import com.ecommerce.urbanize.repository.PurchaseRepository;
 import com.ecommerce.urbanize.repository.PurchaseDetailRepository;
 
@@ -45,26 +47,28 @@ public class PurchaseService {
     @Autowired
     PurchaseDetailService oPurchaseDetailService;
 
-    // Get order by ID
+    // Get purchase by ID
     public PurchaseEntity get(Long id) {
-        return oPurchaseRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Order not found"));
+        return oPurchaseRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Purchase not found"));
     }
 
-    // Get order by user ID
+    // Get purchase by user ID
     public Page<PurchaseEntity> findByIdUser(Long user_id, Pageable oPageable) {
         return oPurchaseRepository.findByUserId(user_id, oPageable);
     }
 
+    // Get page of orders
     public Page<PurchaseEntity> getPage(Pageable oPageable) {
         return oPurchaseRepository.findAll(oPageable);
     }
 
+    // Create a new purchase
     public PurchaseEntity getOneRandom() {
         Pageable oPageable = PageRequest.of((int) (Math.random() * oPurchaseRepository.count()), 1);
         return oPurchaseRepository.findAll(oPageable).getContent().get(0);
     }
 
-    // Generate order code
+    // Generate purchase code
     public String generateOrderCode() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
         String currentDate = LocalDateTime.now().format(formatter);
@@ -130,7 +134,7 @@ public class PurchaseService {
 
     }
 
-    // Cancel order
+    // Cancel purchase
     public Long cancelPurchase(Long id) {
         if (oPurchaseRepository.existsById(id)) {
             Page<PurchaseDetailEntity> purchaseDatils = oPurchaseDetailRepository.findByPurchaseId(id,
@@ -188,7 +192,27 @@ public class PurchaseService {
         return oPurchaseRepository.findPurchasesMostCheapestByUserId(user_id, oPageable);
     }
 
-    // Empty the order table
+    // Populate the database with random purchases
+    public Long populate(Integer amount) {
+        for (int i = 0; i < amount; i++) {
+            // Generate random purchase data
+            LocalDate purchaseDate = PurchaseDataGenerationHelper.getRandomDate();
+            LocalDate deliveryDate = PurchaseDataGenerationHelper.getRandomDate();
+            String status = PurchaseDataGenerationHelper.getRandomStatus();
+            String purchaseCode = PurchaseDataGenerationHelper.getRandomPurchaseCode();
+            // For simplicity, assuming you have a method to get a random UserEntity
+            UserEntity user = oUserService.getOneRandom();
+            int numBill = new Random().nextInt(1000) + 1; // Assuming the bill number is between 1 and 1000
+            LocalDate dateBill = PurchaseDataGenerationHelper.getRandomDate();
+
+            // Save the purchase to the repository
+            oPurchaseRepository.save(
+                    new PurchaseEntity(purchaseDate, deliveryDate, status, purchaseCode, user, numBill, dateBill));
+        }
+        return oPurchaseRepository.count();
+    }
+
+    // Empty the purchase table
     @Transactional
     public Long empty() {
         oPurchaseRepository.deleteAll();
@@ -196,5 +220,4 @@ public class PurchaseService {
         oPurchaseRepository.flush();
         return oPurchaseRepository.count();
     }
-
 }

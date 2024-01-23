@@ -90,9 +90,13 @@ public class PurchaseDetailApi {
         return ResponseEntity.ok(oPurchaseDetailService.getPage(oPageable));
     }
 
-    // populate
+    // Populate the purchase detail table
+    @GetMapping("/populate/{amount}")
+    public ResponseEntity<Long> populate(@PathVariable("amount") Integer amount) {
+        return ResponseEntity.ok(oPurchaseDetailService.populate(amount));
+    }
 
-    // empty
+    // Empty the purchase detail table
     @DeleteMapping("/empty")
     public ResponseEntity<Long> empty() {
         return ResponseEntity.ok(oPurchaseDetailService.empty());

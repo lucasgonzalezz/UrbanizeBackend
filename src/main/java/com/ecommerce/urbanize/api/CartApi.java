@@ -77,9 +77,13 @@ public class CartApi {
         return ResponseEntity.ok(oCartService.getPage(oPageable));
     }
 
-    // poulate
+    // Poulate database with random carts
+    @PostMapping("/populate/{amount}")
+    public ResponseEntity<Long> populate(@PathVariable("amount") Integer amount) {
+        return ResponseEntity.ok(oCartService.populate(amount));
+    }
 
-    // empty
+    // Empty the cart table
     @DeleteMapping("/empty")
     public ResponseEntity<Long> empty() {
         return ResponseEntity.ok(oCartService.empty());

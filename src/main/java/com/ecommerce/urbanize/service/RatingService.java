@@ -10,8 +10,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ecommerce.urbanize.entity.ProductEntity;
 import com.ecommerce.urbanize.entity.RatingEntity;
+import com.ecommerce.urbanize.entity.UserEntity;
 import com.ecommerce.urbanize.exception.ResourceNotFoundException;
+import com.ecommerce.urbanize.helper.RatingGenerationHelper;
 import com.ecommerce.urbanize.repository.RatingRepository;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,6 +27,12 @@ public class RatingService {
 
     @Autowired
     HttpServletRequest oHttpServletRequest;
+
+    @Autowired
+    UserService oUserService;
+
+    @Autowired
+    ProductService oProductService;
 
     // Get rating by ID
     public RatingEntity get(Long id) {
@@ -130,6 +139,25 @@ public class RatingService {
         return oRatingRepository.getRatingByOldestOfUsers(user_id, pageable);
     }
 
+    // Populate the database with random ratings
+    public Long populate(Integer amount) {
+        for (int i = 0; i < amount; i++) {
+            // Generate random rating data
+            String title = RatingGenerationHelper.getRandomTitle();
+            String description = RatingGenerationHelper.getRandomDescription();
+            int punctuation = RatingGenerationHelper.getRandomPunctuation();
+            LocalDate date = RatingGenerationHelper.getRandomDate();
+            // For simplicity, assuming you have methods to get random UserEntity and
+            // ProductEntity
+            UserEntity user = oUserService.getOneRandom();
+            ProductEntity product = oProductService.getOneRandom();
+
+            // Save the rating to the repository
+            oRatingRepository.save(new RatingEntity(title, description, punctuation, date, user, product));
+        }
+        return oRatingRepository.count();
+    }
+
     // Empty the rating table
     @Transactional
     public Long empty() {
@@ -138,5 +166,4 @@ public class RatingService {
         oRatingRepository.flush();
         return oRatingRepository.count();
     }
-
 }

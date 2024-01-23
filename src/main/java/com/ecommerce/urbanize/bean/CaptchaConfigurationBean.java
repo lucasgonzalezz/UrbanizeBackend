@@ -8,11 +8,19 @@ import org.springframework.context.annotation.Configuration;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.google.code.kaptcha.util.Config;
 
+/**
+ * Configuration bean for setting up the captcha generation properties.
+ */
 @Configuration
 public class CaptchaConfigurationBean {
 
+    /**
+     * Creates and configures a DefaultKaptcha bean for captcha generation.
+     * 
+     * @return The configured DefaultKaptcha bean.
+     */
     @Bean
-    public DefaultKaptcha DefaultKaptcha() {
+    public DefaultKaptcha defaultKaptcha() {
         Properties properties = new Properties();
         properties.setProperty("kaptcha.border", "yes");
         properties.setProperty("kaptcha.border.color", "black");
@@ -27,5 +35,4 @@ public class CaptchaConfigurationBean {
         defaultKaptcha.setConfig(config);
         return defaultKaptcha;
     }
-
 }

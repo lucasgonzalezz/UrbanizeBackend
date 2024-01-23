@@ -145,7 +145,13 @@ public class PurchaseApi {
         return ResponseEntity.ok(oPurchaseService.findPurchasesMostCheapestByIdUser(user_id, oPageable));
     }
 
-    // Empty the order table
+    // Populate the purchase table
+    @GetMapping("/populate/{amount}")
+    public ResponseEntity<Long> populate(@PathVariable("amount") Integer amount) {
+        return ResponseEntity.ok(oPurchaseService.populate(amount));
+    }
+
+    // Empty the purchase table
     @DeleteMapping("/empty")
     public ResponseEntity<Long> empty() {
         Long deletedCount = oPurchaseService.empty();

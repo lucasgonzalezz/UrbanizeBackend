@@ -30,8 +30,9 @@ public class MediaController {
     private final StorageService storageService;
     private final HttpServletRequest request;
 
+    // Endpoint for uploading files
     @PostMapping("/")
-    public Map<String, String> uploadFile (@RequestParam("file") MultipartFile multipartFile) {
+    public Map<String, String> uploadFile(@RequestParam("file") MultipartFile multipartFile) {
         String path = storageService.store(multipartFile);
         String host = request.getRequestURL().toString().replace(request.getRequestURI(), "");
         String url = ServletUriComponentsBuilder.fromHttpUrl(host).path("/media/").path(path).toUriString();
@@ -39,11 +40,11 @@ public class MediaController {
         return Map.of("url", url);
     }
 
+    // Endpoint for retrieving files based on filename
     @GetMapping("/{filename:.+}")
     public ResponseEntity<Resource> getFile(@PathVariable String filename) throws IOException {
         Resource file = storageService.loadAsResource(filename);
         String contentType = Files.probeContentType(file.getFile().toPath());
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, contentType).body(file);
     }
-    
 }

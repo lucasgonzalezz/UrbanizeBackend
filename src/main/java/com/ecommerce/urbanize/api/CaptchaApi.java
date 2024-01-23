@@ -16,10 +16,11 @@ import com.ecommerce.urbanize.service.CaptchaService;
 public class CaptchaApi {
 
     @Autowired
-    CaptchaService oCaptchaService;
+    CaptchaService captchaService;
 
+    // Endpoint for creating a new captcha
     @PostMapping("/create")
     public ResponseEntity<CaptchaEntity> create() {
-        return ResponseEntity.ok(oCaptchaService.createCaptcha());
+        return ResponseEntity.ok(captchaService.createCaptcha());
     }
 }

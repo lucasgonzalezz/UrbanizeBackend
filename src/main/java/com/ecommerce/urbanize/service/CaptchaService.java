@@ -16,6 +16,9 @@ import com.ecommerce.urbanize.repository.CaptchaRepository;
 
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 
+/**
+ * Service class for managing captchas.
+ */
 @Service
 public class CaptchaService {
 
@@ -25,7 +28,11 @@ public class CaptchaService {
     @Autowired
     private DefaultKaptcha defaultKaptcha;
 
-    // Create a new captcha entity
+    /**
+     * Creates and saves a new captcha entity in the database.
+     * 
+     * @return The created CaptchaEntity.
+     */
     public CaptchaEntity createCaptcha() {
         CaptchaEntity captchaEntity = new CaptchaEntity();
         String text = defaultKaptcha.createText();
@@ -36,7 +43,12 @@ public class CaptchaService {
         return captchaRepository.save(captchaEntity);
     }
 
-    // Get a random captcha from the database
+    /**
+     * Retrieves a random captcha from the database.
+     * 
+     * @return A random CaptchaEntity.
+     * @throws RuntimeException If no captchas are found in the database.
+     */
     public CaptchaEntity getRandomCaptcha() {
         List<CaptchaEntity> list = captchaRepository.findAll();
         if (!list.isEmpty()) {
@@ -48,7 +60,12 @@ public class CaptchaService {
         }
     }
 
-    // Generate a captcha image for the given text
+    /**
+     * Generates a captcha image for the given text.
+     * 
+     * @param text The text for which the captcha image is generated.
+     * @return The byte array representing the captcha image.
+     */
     private byte[] generateCaptchaImage(String text) {
         BufferedImage bufferedImage = defaultKaptcha.createImage(text);
         try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {

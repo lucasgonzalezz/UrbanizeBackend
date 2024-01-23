@@ -65,6 +65,24 @@ public class ProductEntity {
     }
 
     /**
+     * Constructor with parameters for full entity initialization.
+     *
+     * @param name     The product's name.
+     * @param stock    The product's stock.
+     * @param size     The product's size.
+     * @param price    The product's price.
+     * @param category The product's category.
+     */
+    public ProductEntity(String name, int stock, String size, int price,
+            CategoryEntity category) {
+        this.name = name;
+        this.stock = stock;
+        this.size = size;
+        this.price = price;
+        this.category = category;
+    }
+
+    /**
      * Constructor with parameters for partial entity initialization.
      *
      * @param name     The product's name.

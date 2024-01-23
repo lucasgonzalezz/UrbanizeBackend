@@ -72,6 +72,26 @@ public class RatingEntity {
     }
 
     /**
+     * Constructor with parameters for full entity initialization.
+     *
+     * @param title       The rating's title.
+     * @param description The rating's description.
+     * @param punctuation The rating's punctuation.
+     * @param date        The rating's date.
+     * @param user        The user associated with the rating.
+     * @param product     The product associated with the rating.
+     */
+    public RatingEntity(String title, String description, int punctuation, LocalDate date,
+            UserEntity user, ProductEntity product) {
+        this.title = title;
+        this.description = description;
+        this.punctuation = punctuation;
+        this.date = date;
+        this.user = user;
+        this.product = product;
+    }
+
+    /**
      * Constructor with parameters for partial entity initialization.
      *
      * @param title       The rating's title.
@@ -106,6 +126,22 @@ public class RatingEntity {
         this.title = title;
         this.description = description;
         this.image = image;
+        this.punctuation = punctuation;
+        this.date = date;
+    }
+
+    /**
+     * Constructor with parameters for minimal entity initialization.
+     *
+     * @param title       The rating's title.
+     * @param description The rating's description.
+     * @param image       The rating's image.
+     * @param punctuation The rating's punctuation.
+     * @param date        The rating's date.
+     */
+    public RatingEntity(String title, String description, int punctuation, LocalDate date) {
+        this.title = title;
+        this.description = description;
         this.punctuation = punctuation;
         this.date = date;
     }

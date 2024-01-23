@@ -15,19 +15,21 @@ import com.ecommerce.urbanize.service.SessionService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/sesion")
+@RequestMapping("/session")
 public class SessionController {
 
     @Autowired
-    SessionService oSessionService;
+    SessionService sessionService;
 
+    // Endpoint for pre-login operations, such as captcha generation
     @GetMapping("/prelogin")
     public ResponseEntity<CaptchaResponseBean> prelogin() {
-        return ResponseEntity.ok(oSessionService.prelogin());
+        return ResponseEntity.ok(sessionService.prelogin());
     }
 
+    // Endpoint for handling login with captcha verification
     @PostMapping("/login")
-    public ResponseEntity<String> loginCaptcha(@RequestBody CaptchaBean oCaptchaBean) {
-        return ResponseEntity.ok(oSessionService.loginCaptcha(oCaptchaBean));
+    public ResponseEntity<String> loginCaptcha(@RequestBody CaptchaBean captchaBean) {
+        return ResponseEntity.ok(sessionService.loginCaptcha(captchaBean));
     }
 }

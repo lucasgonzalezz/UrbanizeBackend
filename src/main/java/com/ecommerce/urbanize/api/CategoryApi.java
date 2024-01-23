@@ -1,8 +1,11 @@
 package com.ecommerce.urbanize.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.data.domain.Pageable;
+
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -54,9 +57,13 @@ public class CategoryApi {
         return ResponseEntity.ok(oCategoryService.delete(id));
     }
 
-    // Populate
+    // Populate database with random categories
+    @PostMapping("/populate/{amount}")
+    public ResponseEntity<Long> populate(@PathVariable("amount") Integer amount) {
+        return ResponseEntity.ok(oCategoryService.populate(amount));
+    }
 
-    // Empty
+    // Empty the category table
     @DeleteMapping("/empty")
     public ResponseEntity<Long> empty() {
         return ResponseEntity.ok(oCategoryService.empty());

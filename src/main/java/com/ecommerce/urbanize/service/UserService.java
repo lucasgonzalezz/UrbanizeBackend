@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ecommerce.urbanize.entity.UserEntity;
 import com.ecommerce.urbanize.exception.ResourceNotFoundException;
-import com.ecommerce.urbanize.helper.DataGenerationHelper;
+import com.ecommerce.urbanize.helper.UserGenerationHelper;
 import com.ecommerce.urbanize.repository.UserRepository;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -76,17 +76,17 @@ public class UserService {
     public Long populate(Integer amount) {
         for (int i = 0; i < amount; i++) {
             // Generate random user data
-            String name = DataGenerationHelper.getRadomName();
-            String lastName1 = DataGenerationHelper.getRadomLastName1();
-            String lastName2 = DataGenerationHelper.getRadomLastName2();
-            LocalDate birthDate = DataGenerationHelper.getRandomBirthDate();
-            int phoneNumber = DataGenerationHelper.getRandomPhoneNumber();
-            String dni = DataGenerationHelper.getRandomDNI();
-            int postalCode = DataGenerationHelper.getRandomPostalCode();
-            String city = DataGenerationHelper.getRandomCity();
-            String address = DataGenerationHelper.getRandomAddress();
-            String email = DataGenerationHelper.getRandomEmail();
-            String username = DataGenerationHelper.getRandomUsername();
+            String name = UserGenerationHelper.getRadomName();
+            String lastName1 = UserGenerationHelper.getRadomLastName1();
+            String lastName2 = UserGenerationHelper.getRadomLastName2();
+            LocalDate birthDate = UserGenerationHelper.getRandomBirthDate();
+            int phoneNumber = UserGenerationHelper.getRandomPhoneNumber();
+            String dni = UserGenerationHelper.getRandomDNI();
+            int postalCode = UserGenerationHelper.getRandomPostalCode();
+            String city = UserGenerationHelper.getRandomCity();
+            String address = UserGenerationHelper.getRandomAddress();
+            String email = UserGenerationHelper.getRandomEmail();
+            String username = UserGenerationHelper.getRandomUsername();
             // Save the user to the repository
             oUserRepository.save(new UserEntity(name, lastName1, lastName2, birthDate, phoneNumber, dni, postalCode,
                     city, address, email, username, password, true));

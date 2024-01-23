@@ -7,11 +7,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ecommerce.urbanize.entity.CategoryEntity;
 import com.ecommerce.urbanize.entity.ProductEntity;
 import com.ecommerce.urbanize.exception.ResourceNotFoundException;
+import com.ecommerce.urbanize.helper.ProductDataGenerationHelper;
 import com.ecommerce.urbanize.repository.ProductRepository;
-
-import jakarta.servlet.http.HttpServletRequest;
 
 @Service
 public class ProductService {
@@ -20,7 +20,7 @@ public class ProductService {
     private ProductRepository oProductRepository;
 
     @Autowired
-    private HttpServletRequest oHttpServletRequest;
+    private CategoryService oCategoryService;
 
     // Get product by ID
     public ProductEntity get(Long id) {
@@ -53,7 +53,7 @@ public class ProductService {
     @Transactional
     public void updateStock(ProductEntity oProductEntity, int amount) {
         ProductEntity productFound = oProductRepository.findById(oProductEntity.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("Error: Camiseta no encontrada."));
+                .orElseThrow(() -> new ResourceNotFoundException("Error: Product not found."));
 
         if (productFound != null) {
             int currentStock = productFound.getStock();
@@ -61,7 +61,7 @@ public class ProductService {
 
             if (newStock < 0) {
                 // Si no hay suficiente stock, lanzar una excepción o mostrar un mensaje
-                throw new IllegalStateException("No hay suficiente stock para comprar esta camiseta.");
+                throw new IllegalStateException("There is not enough stock to buy this shirt.");
             }
 
             productFound.setStock(newStock);
@@ -98,6 +98,23 @@ public class ProductService {
     // Get products by price and category descending
     public Page<ProductEntity> getByPriceDescAndIdCategory(Long category_id, Pageable oPageable) {
         return oProductRepository.findByPriceDescAndIdCategory(category_id, oPageable);
+    }
+
+    // Populate the product table
+    public Long populate(Integer amount) {
+        for (int i = 0; i < amount; i++) {
+            // Generate random product data
+            String productName = ProductDataGenerationHelper.getRandomProductName();
+            int stock = ProductDataGenerationHelper.getRandomStock();
+            String size = ProductDataGenerationHelper.getRandomSize();
+            int price = ProductDataGenerationHelper.getRandomPrice();
+            // For simplicity, assuming you have a method to get a random CategoryEntity
+            CategoryEntity category = oCategoryService.getOneRandom();
+
+            // Save the product to the repository
+            oProductRepository.save(new ProductEntity(productName, stock, size, price, category));
+        }
+        return oProductRepository.count();
     }
 
     // Empty the product table

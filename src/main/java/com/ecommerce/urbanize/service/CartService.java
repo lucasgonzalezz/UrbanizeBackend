@@ -12,6 +12,7 @@ import com.ecommerce.urbanize.entity.CartEntity;
 import com.ecommerce.urbanize.entity.UserEntity;
 import com.ecommerce.urbanize.entity.ProductEntity;
 import com.ecommerce.urbanize.exception.ResourceNotFoundException;
+import com.ecommerce.urbanize.helper.CartDataGenerationHelper;
 import com.ecommerce.urbanize.repository.CartRepository;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -97,6 +98,21 @@ public class CartService {
     // Get all carts for a specific user
     public List<CartEntity> getAllByUser(Long user_id) {
         return oCartRepository.findAllByIdUser(user_id);
+    }
+
+    // Populate database with random carts
+    public Long populate(Integer amount) {
+        for (int i = 0; i < amount; i++) {
+            // Generate random cart data
+            int amountInCart = CartDataGenerationHelper.getRandomAmount();
+            // Get random user and product from repositories
+            UserEntity randomUser = oUserService.getOneRandom();
+            ProductEntity randomProduct = oProductService.getOneRandom();
+
+            // Save the cart to the repository
+            oCartRepository.save(new CartEntity(amountInCart, randomUser, randomProduct));
+        }
+        return oCartRepository.count();
     }
 
     // Empty the cart table

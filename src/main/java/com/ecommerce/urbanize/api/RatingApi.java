@@ -72,9 +72,13 @@ public class RatingApi {
         return ResponseEntity.ok(oRatingService.getPage(oPageable));
     }
 
-    // Populate
+    // Populate the rating table
+    @GetMapping("/populate/{amount}")
+    public ResponseEntity<Long> populate(@PathVariable("amount") Integer amount) {
+        return ResponseEntity.ok(oRatingService.populate(amount));
+    }
 
-    // empty
+    // Empty the rating table
     @GetMapping("/empty")
     public ResponseEntity<Long> empty() {
         return ResponseEntity.ok(oRatingService.empty());

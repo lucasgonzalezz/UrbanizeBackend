@@ -54,9 +54,13 @@ public class ProductApi {
         return ResponseEntity.ok(oProductService.delete(id));
     }
 
-    // Populate
+    // Populate database with random products
+    @PostMapping("/populate/{amount}")
+    public ResponseEntity<Long> populate(@PathVariable("amount") Integer amount) {
+        return ResponseEntity.ok(oProductService.populate(amount));
+    }
 
-    // Empty
+    // Empty the product table
     @DeleteMapping("/empty")
     public ResponseEntity<Long> empty() {
         return ResponseEntity.ok(oProductService.empty());
