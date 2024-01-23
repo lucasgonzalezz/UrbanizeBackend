@@ -6,11 +6,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.ecommerce.urbanize.entity.ProductEntity;
 import com.ecommerce.urbanize.entity.PurchaseDetailEntity;
-import com.ecommerce.urbanize.entity.PurchaseEntity;
 import com.ecommerce.urbanize.exception.ResourceNotFoundException;
-import com.ecommerce.urbanize.helper.PurchaseDetailDataGenerationHelper;
 import com.ecommerce.urbanize.repository.PurchaseDetailRepository;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,11 +21,11 @@ public class PurchaseDetailService {
     @Autowired
     HttpServletRequest oHttpServletRequest;
 
-    @Autowired
-    ProductService oProductService;
+    //@Autowired
+    //ProductService oProductService;
 
-    @Autowired
-    PurchaseService oPurchaseService;
+    //@Autowired  
+    //PurchaseService oPurchaseService;
 
     // Get purchase detail by ID
     public PurchaseDetailEntity get(Long id) {
@@ -89,7 +86,8 @@ public class PurchaseDetailService {
         return oPurchaseDetailRepository.findAllByPriceAsc(pageable);
     }
 
-    // Populate the purchase detail table
+    /* 
+        // Populate the purchase detail table
     public Long populate(Integer amount) {
         for (int i = 0; i < amount; i++) {
             // Generate random purchase detail data
@@ -105,6 +103,7 @@ public class PurchaseDetailService {
         }
         return oPurchaseDetailRepository.count();
     }
+    */
 
     // Empty the purchase detail table
     public Long empty() {

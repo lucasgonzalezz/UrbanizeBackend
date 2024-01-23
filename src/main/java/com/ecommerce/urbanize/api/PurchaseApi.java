@@ -146,7 +146,6 @@ public class PurchaseApi {
     }
 
     // Populate the purchase table
-    @GetMapping("/populate/{amount}")
     public ResponseEntity<Long> populate(@PathVariable("amount") Integer amount) {
         return ResponseEntity.ok(oPurchaseService.populate(amount));
     }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: database:3306
--- Tiempo de generación: 20-01-2024 a las 14:23:18
+-- Tiempo de generación: 23-01-2024 a las 19:50:43
 -- Versión del servidor: 8.1.0
 -- Versión de PHP: 8.2.11
 
@@ -20,6 +20,18 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `urbanize`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `captcha`
+--
+
+CREATE TABLE `captcha` (
+  `id` bigint NOT NULL,
+  `text` varchar(255) COLLATE utf16_bin NOT NULL,
+  `image` tinyblob
+) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_bin;
 
 -- --------------------------------------------------------
 
@@ -42,7 +54,21 @@ CREATE TABLE `cart` (
 
 CREATE TABLE `category` (
   `id` bigint NOT NULL,
-  `name` varchar(255) COLLATE utf16_bin NOT NULL
+  `name` varchar(255) CHARACTER SET utf16 COLLATE utf16_bin NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_bin;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `pendent`
+--
+
+CREATE TABLE `pendent` (
+  `id` bigint NOT NULL,
+  `timecode` timestamp NOT NULL,
+  `token` varchar(512) COLLATE utf16_bin NOT NULL,
+  `captcha_id` bigint NOT NULL,
+  `id_captcha` bigint DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_bin;
 
 -- --------------------------------------------------------
@@ -53,9 +79,9 @@ CREATE TABLE `category` (
 
 CREATE TABLE `product` (
   `id` bigint NOT NULL,
-  `name` varchar(255) COLLATE utf16_bin NOT NULL,
+  `name` varchar(255) CHARACTER SET utf16 COLLATE utf16_bin NOT NULL,
   `stock` int NOT NULL,
-  `size` varchar(3) COLLATE utf16_bin NOT NULL,
+  `size` varchar(3) CHARACTER SET utf16 COLLATE utf16_bin NOT NULL,
   `price` int NOT NULL,
   `image` tinyblob,
   `category_id` bigint NOT NULL
@@ -69,15 +95,14 @@ CREATE TABLE `product` (
 
 CREATE TABLE `purchase` (
   `id` bigint NOT NULL,
-  `status` varchar(255) COLLATE utf16_bin NOT NULL,
+  `status` varchar(255) CHARACTER SET utf16 COLLATE utf16_bin NOT NULL,
   `date_bill` date DEFAULT NULL,
   `delivery_date` date DEFAULT NULL,
   `num_bill` int NOT NULL,
-  `purchase_code` varchar(255) COLLATE utf16_bin NOT NULL,
+  `purchase_code` varchar(255) CHARACTER SET utf16 COLLATE utf16_bin NOT NULL,
   `purchase_date` date DEFAULT NULL,
   `user_id` bigint DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_bin;
-
 
 -- --------------------------------------------------------
 
@@ -101,8 +126,8 @@ CREATE TABLE `purchase_detail` (
 
 CREATE TABLE `rating` (
   `id` bigint NOT NULL,
-  `title` varchar(255) COLLATE utf16_bin NOT NULL,
-  `description` varchar(255) COLLATE utf16_bin NOT NULL,
+  `title` varchar(255) CHARACTER SET utf16 COLLATE utf16_bin NOT NULL,
+  `description` varchar(255) CHARACTER SET utf16 COLLATE utf16_bin NOT NULL,
   `image` tinyblob,
   `punctuation` int NOT NULL,
   `date` date NOT NULL,
@@ -118,24 +143,30 @@ CREATE TABLE `rating` (
 
 CREATE TABLE `user` (
   `id` bigint NOT NULL,
-  `name` varchar(255) COLLATE utf16_bin NOT NULL,
-  `dni` varchar(9) COLLATE utf16_bin NOT NULL,
-  `city` varchar(255) COLLATE utf16_bin NOT NULL,
-  `address` varchar(255) COLLATE utf16_bin NOT NULL,
-  `email` varchar(255) COLLATE utf16_bin NOT NULL,
-  `username` varchar(255) COLLATE utf16_bin NOT NULL,
-  `password` varchar(512) COLLATE utf16_bin NOT NULL,
+  `name` varchar(255) CHARACTER SET utf16 COLLATE utf16_bin NOT NULL,
+  `dni` varchar(9) CHARACTER SET utf16 COLLATE utf16_bin NOT NULL,
+  `city` varchar(255) CHARACTER SET utf16 COLLATE utf16_bin NOT NULL,
+  `address` varchar(255) CHARACTER SET utf16 COLLATE utf16_bin NOT NULL,
+  `email` varchar(255) CHARACTER SET utf16 COLLATE utf16_bin NOT NULL,
+  `username` varchar(255) CHARACTER SET utf16 COLLATE utf16_bin NOT NULL,
+  `password` varchar(512) CHARACTER SET utf16 COLLATE utf16_bin NOT NULL,
   `role` tinyint(1) NOT NULL,
   `birth_date` date DEFAULT NULL,
-  `last_name1` varchar(255) COLLATE utf16_bin NOT NULL,
-  `last_name2` varchar(255) COLLATE utf16_bin DEFAULT NULL,
+  `last_name1` varchar(255) CHARACTER SET utf16 COLLATE utf16_bin NOT NULL,
+  `last_name2` varchar(255) CHARACTER SET utf16 COLLATE utf16_bin DEFAULT NULL,
   `phone_number` int NOT NULL,
   `postal_code` int NOT NULL
-) ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_bin;
 
 --
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `captcha`
+--
+ALTER TABLE `captcha`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `cart`
@@ -152,6 +183,14 @@ ALTER TABLE `category`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `pendent`
+--
+ALTER TABLE `pendent`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKkbutblfpnyda9coucfxkhb9xy` (`id_captcha`),
+  ADD KEY `FK9c2o0gxaajqepobgxjecdldsc` (`captcha_id`);
+
+--
 -- Indices de la tabla `product`
 --
 ALTER TABLE `product`
@@ -164,7 +203,6 @@ ALTER TABLE `product`
 ALTER TABLE `purchase`
   ADD PRIMARY KEY (`id`),
   ADD KEY `FK86i0stm7cqsglqptdvjij1k3m` (`user_id`);
-
 
 --
 -- Indices de la tabla `purchase_detail`
@@ -193,6 +231,12 @@ ALTER TABLE `user`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `captcha`
+--
+ALTER TABLE `captcha`
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `cart`
 --
 ALTER TABLE `cart`
@@ -202,6 +246,12 @@ ALTER TABLE `cart`
 -- AUTO_INCREMENT de la tabla `category`
 --
 ALTER TABLE `category`
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `pendent`
+--
+ALTER TABLE `pendent`
   MODIFY `id` bigint NOT NULL AUTO_INCREMENT;
 
 --
@@ -215,7 +265,6 @@ ALTER TABLE `product`
 --
 ALTER TABLE `purchase`
   MODIFY `id` bigint NOT NULL AUTO_INCREMENT;
-
 
 --
 -- AUTO_INCREMENT de la tabla `purchase_detail`
@@ -245,6 +294,13 @@ ALTER TABLE `user`
 ALTER TABLE `cart`
   ADD CONSTRAINT `FK3d704slv66tw6x5hmbm6p2x3u` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`),
   ADD CONSTRAINT `FKl70asp4l4w0jmbm1tqyofho4o` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
+
+--
+-- Filtros para la tabla `pendent`
+--
+ALTER TABLE `pendent`
+  ADD CONSTRAINT `FK9c2o0gxaajqepobgxjecdldsc` FOREIGN KEY (`captcha_id`) REFERENCES `captcha` (`id`),
+  ADD CONSTRAINT `FKkbutblfpnyda9coucfxkhb9xy` FOREIGN KEY (`id_captcha`) REFERENCES `captcha` (`id`);
 
 --
 -- Filtros para la tabla `product`

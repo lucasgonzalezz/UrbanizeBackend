@@ -47,28 +47,26 @@ public class PurchaseService {
     @Autowired
     PurchaseDetailService oPurchaseDetailService;
 
-    // Get purchase by ID
+    // Get order by ID
     public PurchaseEntity get(Long id) {
-        return oPurchaseRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Purchase not found"));
+        return oPurchaseRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Order not found"));
     }
 
-    // Get purchase by user ID
+    // Get order by user ID
     public Page<PurchaseEntity> findByIdUser(Long user_id, Pageable oPageable) {
         return oPurchaseRepository.findByUserId(user_id, oPageable);
     }
 
-    // Get page of orders
     public Page<PurchaseEntity> getPage(Pageable oPageable) {
         return oPurchaseRepository.findAll(oPageable);
     }
 
-    // Create a new purchase
     public PurchaseEntity getOneRandom() {
         Pageable oPageable = PageRequest.of((int) (Math.random() * oPurchaseRepository.count()), 1);
         return oPurchaseRepository.findAll(oPageable).getContent().get(0);
     }
 
-    // Generate purchase code
+    // Generate order code
     public String generateOrderCode() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
         String currentDate = LocalDateTime.now().format(formatter);
@@ -134,7 +132,7 @@ public class PurchaseService {
 
     }
 
-    // Cancel purchase
+    // Cancel order
     public Long cancelPurchase(Long id) {
         if (oPurchaseRepository.existsById(id)) {
             Page<PurchaseDetailEntity> purchaseDatils = oPurchaseDetailRepository.findByPurchaseId(id,
@@ -212,7 +210,7 @@ public class PurchaseService {
         return oPurchaseRepository.count();
     }
 
-    // Empty the purchase table
+    // Empty the order table
     @Transactional
     public Long empty() {
         oPurchaseRepository.deleteAll();
@@ -220,4 +218,5 @@ public class PurchaseService {
         oPurchaseRepository.flush();
         return oPurchaseRepository.count();
     }
+
 }
