@@ -15,11 +15,11 @@ public class CaptchaBean {
         this.username = username;
     }
 
-    public String getContrasenya() {
+    public String getPassword() {
         return password;
     }
 
-    public void setContrasenya(String password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 
