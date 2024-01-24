@@ -17,13 +17,11 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
     @NotBlank
     @Size(min = 3, max = 255)
     private String name;
 
-    @NotNull
-    @NotBlank
+    @NotNull//@NotBlank
     @Size(min = 3, max = 255)
     private String last_name1;
 
@@ -34,37 +32,27 @@ public class UserEntity {
     private LocalDate birth_date;
 
     @NotNull
-    @Size(min = 9, max = 9, message = "The phone number must have 9 characters")
-    @Pattern(regexp = "\\+?[0-9]+", message = "The phone number must contain only digits")
     private int phone_number;
 
-    @NotNull
     @NotBlank
     @Size(min = 9, max = 9, message = "The DNI must have 8 characters")
-    @Pattern(regexp = "\\d+", message = "The DNI must contain only digits")
     private String dni;
 
-    @NotNull
     @NotBlank
     @Size(min = 3, max = 255)
     private String city;
 
     @NotNull
-    @Min(value = 1000, message = "The postal code must be at least 1000")
-    @Max(value = 52999, message = "The postal code must be at most 52999")
     private int postal_code;
 
-    @NotNull
     @NotBlank
     @Size(min = 3, max = 255)
     private String address;
 
-    @NotNull
     @NotBlank
     @Size(min = 3, max = 255)
     private String email;
 
-    @NotNull
     @NotBlank
     @Size(min = 6, max = 15)
     private String username;
@@ -152,17 +140,17 @@ public class UserEntity {
      * @param password    The user's password.
      * @param role        The user's role.
      */
-    public UserEntity(String name, String lastName1, String lastName2, LocalDate birthDate, int phoneNumber, String dni,
-            int postalCode, String city, String address, String email, String username, String password,
+    public UserEntity(String name, String last_name1, String last_name2, LocalDate birthDate, int phone_number, String dni,
+            int postal_code, String city, String address, String email, String username, String password,
             Boolean role) {
         this.name = name;
-        this.last_name1 = lastName1;
-        this.last_name2 = lastName2;
+        this.last_name1 = last_name1;
+        this.last_name2 = last_name2;
         this.birth_date = birthDate;
-        this.phone_number = phoneNumber;
+        this.phone_number = phone_number;
         this.dni = dni;
         this.city = city;
-        this.postal_code = postalCode;
+        this.postal_code = postal_code;
         this.address = address;
         this.email = email;
         this.username = username;
@@ -222,17 +210,17 @@ public class UserEntity {
      *
      * @return The user's first last name.
      */
-    public String getLastName1() {
+    public String getLast_name1() {
         return last_name1;
     }
 
     /**
      * Set the user's first last name.
      *
-     * @param lastName1 The user's first last name.
+     * @param last_name1 The user's first last name.
      */
-    public void setLastName1(String lastName1) {
-        this.last_name1 = lastName1;
+    public void setLast_name1(String last_name1) {
+        this.last_name1 = last_name1;
     }
 
     /**
@@ -240,17 +228,17 @@ public class UserEntity {
      *
      * @return The user's second last name.
      */
-    public String getLastName2() {
+    public String getLast_name2() {
         return last_name2;
     }
 
     /**
      * Set the user's second last name.
      *
-     * @param lastName2 The user's second last name.
+     * @param last_name2 The user's second last name.
      */
-    public void setLastName2(String lastName2) {
-        this.last_name2 = lastName2;
+    public void setLast_name2(String last_name2) {
+        this.last_name2 = last_name2;
     }
 
     /**
@@ -258,17 +246,17 @@ public class UserEntity {
      *
      * @return The user's birth date.
      */
-    public LocalDate getBirthDate() {
+    public LocalDate getBirth_date() {
         return birth_date;
     }
 
     /**
      * Set the user's birth date.
      *
-     * @param birthDate The user's birth date.
+     * @param birth_date The user's birth date.
      */
-    public void setBirthDate(LocalDate birthDate) {
-        this.birth_date = birthDate;
+    public void setBirth_date(LocalDate birth_date) {
+        this.birth_date = birth_date;
     }
 
     /**
@@ -276,7 +264,7 @@ public class UserEntity {
      *
      * @return The user's phone number.
      */
-    public int getPhoneNumber() {
+    public int getPhone_number() {
         return phone_number;
     }
 
@@ -285,8 +273,8 @@ public class UserEntity {
      *
      * @param phoneNumber The user's phone number.
      */
-    public void setPhoneNumber(int phoneNumber) {
-        this.phone_number = phoneNumber;
+    public void setPhone_number(int phone_number) {
+        this.phone_number = phone_number;
     }
 
     /**
@@ -330,7 +318,7 @@ public class UserEntity {
      *
      * @return The user's postal code.
      */
-    public int getPostalCode() {
+    public int getPostal_code() {
         return postal_code;
     }
 
@@ -339,8 +327,8 @@ public class UserEntity {
      *
      * @param postalCode The user's postal code.
      */
-    public void setPostalCode(int postalCode) {
-        this.postal_code = postalCode;
+    public void setPostal_code(int postal_code) {
+        this.postal_code = postal_code;
     }
 
     /**

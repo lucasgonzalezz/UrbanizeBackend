@@ -73,6 +73,14 @@ public class UserGenerationHelper {
             "user19@example.com", "user20@example.com"
     };
 
+    private static final String[] aDni = {
+        "26882786H", "26882786H", "26882786H", "26882786H", "26882786H"
+};
+
+private static final int[] aPhoneNumber = {
+        640383838, 640383838, 640383838, 640383838, 640383838
+};
+
     public static String getRadomName() {
         return aNames[(int) (Math.random() * aNames.length)];
     }
@@ -90,11 +98,11 @@ public class UserGenerationHelper {
     }
 
     public static int getRandomPhoneNumber() {
-        return (int) (Math.random() * 1_000_000_000);
+        return aPhoneNumber[(int) (Math.random() * aPhoneNumber.length)];
     }
-
+    
     public static String getRandomDNI() {
-        return String.format("%08d", (int) (Math.random() * 100_000_000));
+        return aDni[(int) (Math.random() * aDni.length)];
     }
 
     public static String getRandomCity() {
@@ -116,9 +124,8 @@ public class UserGenerationHelper {
     public static String getRandomUsername() {
         String name = aNames[(int) (Math.random() * aNames.length)];
         String lastName1 = aLastname1[(int) (Math.random() * aLastname1.length)];
-        String lastName2 = aLastname2[(int) (Math.random() * aLastname2.length)];
 
-        return name + " " + lastName1 + " " + lastName2;
+        return name + " " + lastName1.substring(0, 3);
     }
 
 }

@@ -13,6 +13,8 @@ import com.ecommerce.urbanize.exception.ResourceNotFoundException;
 import com.ecommerce.urbanize.helper.CategoryDataGenerationHelper;
 import com.ecommerce.urbanize.repository.CategoryRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class CategoryService {
 
@@ -69,6 +71,7 @@ public class CategoryService {
         return oCategoryRepository.count();
     }
 
+    @Transactional
     // Empty the category table
     public Long empty() {
         oCategoryRepository.deleteAll();

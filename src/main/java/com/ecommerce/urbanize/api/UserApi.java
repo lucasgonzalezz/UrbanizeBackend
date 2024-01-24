@@ -74,7 +74,7 @@ public class UserApi {
     }
 
     // Populate database with random users
-    @GetMapping("/populate/{amount}")
+    @PostMapping("/populate/{amount}")
     public ResponseEntity<Long> populate(@PathVariable("amount") Integer amount) {
         return ResponseEntity.ok(oUserService.populate(amount));
     }
