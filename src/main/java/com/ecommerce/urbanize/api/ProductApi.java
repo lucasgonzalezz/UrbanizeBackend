@@ -1,7 +1,10 @@
 package com.ecommerce.urbanize.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ecommerce.urbanize.entity.ProductEntity;
+import com.ecommerce.urbanize.entity.UserEntity;
 import com.ecommerce.urbanize.service.ProductService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*", maxAge = 3600)
@@ -52,6 +56,13 @@ public class ProductApi {
     @DeleteMapping("/{id}")
     public ResponseEntity<Long> delete(@PathVariable("id") Long id) {
         return ResponseEntity.ok(oProductService.delete(id));
+    }
+
+       // Get a cantity of products using pagination
+    @GetMapping("")
+    public ResponseEntity<Page<ProductEntity>> getPage(
+            @PageableDefault(size = 30, sort = { "id" }, direction = Sort.Direction.ASC) Pageable oPageable) {
+        return ResponseEntity.ok(oProductService.getPage(oPageable));
     }
 
     // Populate database with random products

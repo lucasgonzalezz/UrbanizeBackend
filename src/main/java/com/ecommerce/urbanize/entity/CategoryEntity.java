@@ -87,21 +87,7 @@ public class CategoryEntity {
         this.name = name;
     }
 
-    /**
-     * Get the list of products associated with the category.
-     *
-     * @return The list of products associated with the category.
-     */
-    public List<ProductEntity> getProducts() {
-        return products;
-    }
-
-    /**
-     * Set the list of products associated with the category.
-     *
-     * @param products The list of products associated with the category.
-     */
-    public void setProducts(List<ProductEntity> products) {
-        this.products = products;
+    public int getProduct() {
+        return products.size();
     }
 }
