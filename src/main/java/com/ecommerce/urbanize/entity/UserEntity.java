@@ -17,43 +17,45 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
+    @NotNull
     @Size(min = 3, max = 255)
     private String name;
 
-    @NotNull//@NotBlank
+    @NotNull
     @Size(min = 3, max = 255)
     private String last_name1;
 
     @Size(min = 3, max = 255)
     private String last_name2;
 
+    @NotNull
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private LocalDate birth_date;
 
     @NotNull
     private int phone_number;
 
-    @NotBlank
-    @Size(min = 9, max = 9, message = "The DNI must have 8 characters")
+    @NotNull
+    @Size(min = 9, max = 9, message = "DNI must have 8 numbers followed by a letter")
+    @Pattern(regexp = "\\d{8}[a-zA-Z]", message = "DNI must have 8 numbers followed by a letter")
     private String dni;
 
-    @NotBlank
+    @NotNull
     @Size(min = 3, max = 255)
     private String city;
 
     @NotNull
     private int postal_code;
 
-    @NotBlank
+    @NotNull
     @Size(min = 3, max = 255)
     private String address;
 
-    @NotBlank
+    @NotNull
     @Size(min = 3, max = 255)
     private String email;
 
-    @NotBlank
+    @NotNull
     @Size(min = 6, max = 15)
     private String username;
 
@@ -126,21 +128,22 @@ public class UserEntity {
     /**
      * Constructor with parameters for partial entity initialization.
      *
-     * @param name        The user's first name.
-     * @param lastName1   The user's first last name.
-     * @param lastName2   The user's second last name.
-     * @param birthDate   The user's birth date.
-     * @param phoneNumber The user's phone number.
-     * @param dni         The user's DNI.
-     * @param postalCode  The user's postal code.
-     * @param city        The user's city.
-     * @param address     The user's address.
-     * @param email       The user's email address.
-     * @param username    The user's username.
-     * @param password    The user's password.
-     * @param role        The user's role.
+     * @param name         The user's first name.
+     * @param last_name1   The user's first last name.
+     * @param last_name2   The user's second last name.
+     * @param birth_date   The user's birth date.
+     * @param phone_number The user's phone number.
+     * @param dni          The user's DNI.
+     * @param postal_code  The user's postal code.
+     * @param city         The user's city.
+     * @param address      The user's address.
+     * @param email        The user's email address.
+     * @param username     The user's username.
+     * @param password     The user's password.
+     * @param role         The user's role.
      */
-    public UserEntity(String name, String last_name1, String last_name2, LocalDate birthDate, int phone_number, String dni,
+    public UserEntity(String name, String last_name1, String last_name2, LocalDate birthDate, int phone_number,
+            String dni,
             int postal_code, String city, String address, String email, String username, String password,
             Boolean role) {
         this.name = name;
@@ -271,7 +274,7 @@ public class UserEntity {
     /**
      * Set the user's phone number.
      *
-     * @param phoneNumber The user's phone number.
+     * @param phone_number The user's phone number.
      */
     public void setPhone_number(int phone_number) {
         this.phone_number = phone_number;
@@ -325,7 +328,7 @@ public class UserEntity {
     /**
      * Set the user's postal code.
      *
-     * @param postalCode The user's postal code.
+     * @param postal_Code The user's postal code.
      */
     public void setPostal_code(int postal_code) {
         this.postal_code = postal_code;
@@ -422,30 +425,33 @@ public class UserEntity {
     }
 
     /**
-     * Get the list of user's orders.
+     * Returns the number of orders associated with this category.
+     * Uses the size of the orders collection.
      *
-     * @return The list of user's orders.
+     * @return The number of orders associated with the category.
      */
-    public List<PurchaseEntity> getOrders() {
-        return orders;
+    public int getOrders() {
+        return orders.size();
     }
 
     /**
-     * Get the list of user's ratings.
+     * Returns the number of ratings associated with this category.
+     * Uses the size of the ratings collection.
      *
-     * @return The list of user's ratings.
+     * @return The number of ratings associated with the category.
      */
-    public List<RatingEntity> getRatings() {
-        return ratings;
+    public int getRatings() {
+        return ratings.size();
     }
 
     /**
-     * Get the list of user's carts.
+     * Returns the number of carts associated with this category.
+     * Uses the size of the carts collection.
      *
-     * @return The list of user's carts.
+     * @return The number of carts associated with the category.
      */
-    public List<CartEntity> getCarts() {
-        return carts;
+    public int getCarts() {
+        return carts.size();
     }
 
 }

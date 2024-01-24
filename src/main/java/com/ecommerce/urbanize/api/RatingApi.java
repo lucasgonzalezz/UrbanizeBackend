@@ -73,13 +73,13 @@ public class RatingApi {
     }
 
     // Populate the rating table
-    @GetMapping("/populate/{amount}")
+    @PostMapping("/populate/{amount}")
     public ResponseEntity<Long> populate(@PathVariable("amount") Integer amount) {
         return ResponseEntity.ok(oRatingService.populate(amount));
     }
 
     // Empty the rating table
-    @GetMapping("/empty")
+    @DeleteMapping("/empty")
     public ResponseEntity<Long> empty() {
         return ResponseEntity.ok(oRatingService.empty());
     }

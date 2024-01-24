@@ -87,7 +87,14 @@ public class CategoryEntity {
         this.name = name;
     }
 
+    /**
+     * Returns the number of products associated with this category.
+     * Uses the size of the products collection.
+     *
+     * @return The number of products associated with the category.
+     */
     public int getProduct() {
         return products.size();
     }
+
 }
