@@ -5,7 +5,26 @@ import java.util.Random;
 public class ProductDataGenerationHelper {
 
     private static final String[] productNames = {
-            "ProductA", "ProductB", "ProductC", "ProductD", "ProductE"
+            "StreetFlex Joggers",
+            "UrbanPulse Hoodie",
+            "CityChic Bomber Jacket",
+            "GraffitiVibe T-Shirt",
+            "MetroStyle Denim Jeans",
+            "Concrete Jungle Sneakers",
+            "SkateSoul Skateboard Shorts",
+            "GraffTag Snapback Cap",
+            "Cityscape Leggings",
+            "SubwayStrut High-Tops",
+            "VibeCheck Graphic Tee",
+            "MetroMotion Cargo Pants",
+            "CitySlicker Windbreaker",
+            "BrickLane Beanie",
+            "UrbanBeat Track Jacket",
+            "GraffitiGroove Backpack",
+            "StreetSwag Sunglasses",
+            "MetroMesh Sneaker Socks",
+            "PavementPulse Capri Pants",
+            "AlleyArt Hooded Dress"
     };
 
     private static final String[] sizes = {

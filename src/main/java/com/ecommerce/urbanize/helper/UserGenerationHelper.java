@@ -74,12 +74,15 @@ public class UserGenerationHelper {
     };
 
     private static final String[] aDni = {
-        "26882786H", "26882786H", "26882786H", "26882786H", "26882786H"
-};
+            "24568345H", "25478136K", "26547245L", "24789653B", "57896340A", "25478963C", "87456321D", "36985214N",
+            "14785236M", "12345678Z", "98765432Y", "45678912X", "45612378P", "78945612Q", "12345678R", "45612378S",
+            "78945612T", "12345678U", "45612378V", "78945612W"
+    };
 
-private static final int[] aPhoneNumber = {
-        640383838, 640383838, 640383838, 640383838, 640383838
-};
+    private static final int[] aPhoneNumber = {
+            64023587, 640687541, 640942763, 641356829, 641789523, 642104567, 642539821, 642897345, 643215678, 643689012,
+            644075321, 644532198, 644987135, 645320987, 645708123, 646198234, 646592381, 647025816, 647312456, 647865432
+    };
 
     public static String getRadomName() {
         return aNames[(int) (Math.random() * aNames.length)];
@@ -100,7 +103,7 @@ private static final int[] aPhoneNumber = {
     public static int getRandomPhoneNumber() {
         return aPhoneNumber[(int) (Math.random() * aPhoneNumber.length)];
     }
-    
+
     public static String getRandomDNI() {
         return aDni[(int) (Math.random() * aDni.length)];
     }
