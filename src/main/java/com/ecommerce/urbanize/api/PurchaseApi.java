@@ -3,16 +3,18 @@ package com.ecommerce.urbanize.api;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,15 +22,23 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ecommerce.urbanize.entity.CartEntity;
 import com.ecommerce.urbanize.entity.PurchaseEntity;
 import com.ecommerce.urbanize.entity.UserEntity;
+import com.ecommerce.urbanize.service.CartService;
 import com.ecommerce.urbanize.service.PurchaseService;
+import com.ecommerce.urbanize.service.UserService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/order")
+@RequestMapping("/purchase")
 public class PurchaseApi {
 
     @Autowired
     PurchaseService oPurchaseService;
+
+    @Autowired
+    CartService oCartService;
+
+    @Autowired
+    UserService oUserService;
 
     // Get purchase by ID
     @GetMapping("/{id}")
@@ -57,31 +67,28 @@ public class PurchaseApi {
     }
 
     // Make a single cart purchase
-    @PostMapping("/makeSingleCartPurchase")
-    public ResponseEntity<PurchaseEntity> makeSingleCartPurchase(
-            @RequestBody CartEntity oCartEntity,
-            @RequestParam Long user_id) {
-        UserEntity user = new UserEntity();
-        user.setId(user_id);
+    @PostMapping("/makeSingleCartPurchase/{user_id}/{cart_id}")
+    public ResponseEntity<PurchaseEntity> makeSingleCartPurchase(@PathVariable Long user_id,
+            @PathVariable Long cart_id) {
+        UserEntity user = oUserService.get(user_id);
+        CartEntity cart = oCartService.get(cart_id);
 
-        PurchaseEntity purchase = oPurchaseService.makeSingleCartPurchase(oCartEntity, user);
+        PurchaseEntity purchase = oPurchaseService.makeSingleCartPurchase(cart, user);
+
         return new ResponseEntity<>(purchase, HttpStatus.CREATED);
     }
 
     // Make purchase of all carts
-    @PostMapping("/makeAllCartPurchase")
-    public ResponseEntity<PurchaseEntity> makeAllCartPurchase(
-            @RequestBody List<CartEntity> carts,
-            @RequestParam Long user_id) {
-        UserEntity user = new UserEntity();
-        user.setId(user_id);
-
+    @PostMapping("/makeAllCartPurchase/{user_id}")
+    public ResponseEntity<PurchaseEntity> makeAllCartPurchase(@PathVariable Long user_id) {
+        UserEntity user = oUserService.get(user_id);
+        List<CartEntity> carts = oCartService.getCartByUser(user_id);
         PurchaseEntity purchase = oPurchaseService.makeAllCartPurchase(carts, user);
         return new ResponseEntity<>(purchase, HttpStatus.CREATED);
     }
 
     // Delete purchase by ID
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{purchase_id}")
     public ResponseEntity<Long> cancelPurchase(@PathVariable("purchase_id") Long purchase_id) {
         Long cancelledIdPurchase = oPurchaseService.cancelPurchase(purchase_id);
         return new ResponseEntity<>(cancelledIdPurchase, HttpStatus.OK);

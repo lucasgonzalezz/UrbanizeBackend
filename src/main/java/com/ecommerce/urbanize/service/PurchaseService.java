@@ -77,8 +77,21 @@ public class PurchaseService {
     // Make a single cart purchase
     @Transactional
     public PurchaseEntity makeSingleCartPurchase(CartEntity oCartEntity, UserEntity oUserEntity) {
+        
         PurchaseEntity oPurchaseEntity = new PurchaseEntity();
+
+        oPurchaseEntity.setStatus("Pendente");
+        oPurchaseEntity.setDateBill(LocalDate.now());
+        oPurchaseEntity.setDeliveryDate(LocalDate.now().plusDays(7));
+        oPurchaseEntity.setNumBill(1);
+        oPurchaseEntity.setPurchaseCode(generateOrderCode());
+        oPurchaseEntity.setPurchaseDate(LocalDate.now());
+        oPurchaseEntity.setUser(oUserEntity);
+
+        oPurchaseRepository.save(oPurchaseEntity);
+
         PurchaseDetailEntity oPurchaseDetailEntity = new PurchaseDetailEntity();
+    
         oPurchaseDetailEntity.setId(null);
         oPurchaseDetailEntity.setProduct(oCartEntity.getProduct());
         oPurchaseDetailEntity.setPurchase(oPurchaseEntity);
@@ -92,17 +105,23 @@ public class PurchaseService {
 
         oCartService.delete(oCartEntity.getId());
 
-        oPurchaseEntity.setUser(oUserEntity);
-        oPurchaseEntity.setPurchaseDate(LocalDate.now());
-        oPurchaseEntity.setPurchaseCode(generateOrderCode());
-
-        return oPurchaseRepository.save(oPurchaseEntity);
+        return oPurchaseEntity;
     }
 
     // Make purchase of all carts
     @Transactional
     public PurchaseEntity makeAllCartPurchase(List<CartEntity> carts, UserEntity oUserEntity) {
         PurchaseEntity oPurchaseEntity = new PurchaseEntity();
+
+        oPurchaseEntity.setStatus("Pendente");
+        oPurchaseEntity.setDateBill(LocalDate.now());
+        oPurchaseEntity.setDeliveryDate(LocalDate.now().plusDays(3));
+        oPurchaseEntity.setNumBill(1);
+        oPurchaseEntity.setPurchaseCode(generateOrderCode());
+        oPurchaseEntity.setPurchaseDate(LocalDate.now());
+        oPurchaseEntity.setUser(oUserEntity);
+
+        oPurchaseRepository.save(oPurchaseEntity);
 
         carts = oCartService.getCartByUser(oUserEntity.getId());
 
@@ -124,12 +143,7 @@ public class PurchaseService {
 
         oCartService.deleteByUser(oUserEntity.getId());
 
-        oPurchaseEntity.setUser(oUserEntity);
-        oPurchaseEntity.setPurchaseDate(LocalDate.now());
-        oPurchaseEntity.setPurchaseCode(generateOrderCode());
-
-        return oPurchaseRepository.save(oPurchaseEntity);
-
+        return oPurchaseEntity;
     }
 
     // Cancel order

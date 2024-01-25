@@ -25,6 +25,7 @@ public interface CartRepository extends JpaRepository<CartEntity, Long> {
     Double calculateTotalCartCost(Long user_id);
 
     // Remove all carts for a specific user
+    @Modifying
     @Query(value = "DELETE FROM cart WHERE user_id = ?1", nativeQuery = true)
     void deleteByIdUser(Long user_id);
 

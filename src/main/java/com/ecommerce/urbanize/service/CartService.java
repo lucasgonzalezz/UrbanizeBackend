@@ -65,7 +65,8 @@ public class CartService {
         if (cartFromDatabase.isPresent()) {
             CartEntity cart = cartFromDatabase.get();
             cart.setAmount(cart.getAmount() + oCartEntity.getAmount());
-            return oCartRepository.save(oCartEntity).getId();
+            oCartRepository.save(cart);
+            return cart.getId();
         } else {
             oCartEntity.setId(null);
             oCartEntity.setUser(oUserEntity);
