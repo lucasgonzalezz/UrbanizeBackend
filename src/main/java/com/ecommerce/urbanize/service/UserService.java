@@ -1,16 +1,19 @@
 package com.ecommerce.urbanize.service;
 
 import java.time.LocalDate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.ecommerce.urbanize.entity.UserEntity;
 import com.ecommerce.urbanize.exception.ResourceNotFoundException;
-import com.ecommerce.urbanize.helper.DataGenerationHelper;
+import com.ecommerce.urbanize.helper.UserGenerationHelper;
 import com.ecommerce.urbanize.repository.UserRepository;
+
 import jakarta.servlet.http.HttpServletRequest;
 
 @Service
@@ -73,17 +76,17 @@ public class UserService {
     public Long populate(Integer amount) {
         for (int i = 0; i < amount; i++) {
             // Generate random user data
-            String name = DataGenerationHelper.getRadomName();
-            String lastName1 = DataGenerationHelper.getRadomLastName1();
-            String lastName2 = DataGenerationHelper.getRadomLastName2();
-            LocalDate birthDate = DataGenerationHelper.getRandomBirthDate();
-            int phoneNumber = DataGenerationHelper.getRandomPhoneNumber();
-            String dni = DataGenerationHelper.getRandomDNI();
-            int postalCode = DataGenerationHelper.getRandomPostalCode();
-            String city = DataGenerationHelper.getRandomCity();
-            String address = DataGenerationHelper.getRandomAddress();
-            String email = DataGenerationHelper.getRandomEmail();
-            String username = DataGenerationHelper.getRandomUsername();
+            String name = UserGenerationHelper.getRadomName();
+            String lastName1 = UserGenerationHelper.getRadomLastName1();
+            String lastName2 = UserGenerationHelper.getRadomLastName2();
+            LocalDate birthDate = UserGenerationHelper.getRandomBirthDate();
+            int phoneNumber = UserGenerationHelper.getRandomPhoneNumber();
+            String dni = UserGenerationHelper.getRandomDNI();
+            int postalCode = UserGenerationHelper.getRandomPostalCode();
+            String city = UserGenerationHelper.getRandomCity();
+            String address = UserGenerationHelper.getRandomAddress();
+            String email = UserGenerationHelper.getRandomEmail();
+            String username = UserGenerationHelper.getRandomUsername();
             // Save the user to the repository
             oUserRepository.save(new UserEntity(name, lastName1, lastName2, birthDate, phoneNumber, dni, postalCode,
                     city, address, email, username, password, true));
@@ -92,13 +95,13 @@ public class UserService {
     }
 
     // Get users with the most orders
-    public Page<UserEntity> getUsersWithMostOrders(Pageable oPageable) {
-        return oUserRepository.findUsersByOrderDesc(oPageable);
+    public Page<UserEntity> getUsersWithMostPurchases(Pageable oPageable) {
+        return oUserRepository.findUsersByPurchaseDesc(oPageable);
     }
 
     // Get users with the fewest orders
-    public Page<UserEntity> getUsersWithFewestOrders(Pageable oPageable) {
-        return oUserRepository.findUsersByOrderAsc(oPageable);
+    public Page<UserEntity> getUsersWithFewestPurchases(Pageable oPageable) {
+        return oUserRepository.findUsersByPurchaseAsc(oPageable);
     }
 
     // Get users with the most ratings
@@ -106,21 +109,21 @@ public class UserService {
         return oUserRepository.findUsersByRatingDesc(oPageable);
     }
 
-      // Empty the user table and add two sample users
-      @Transactional
-      public Long empty() {
-          oUserRepository.deleteAll();
-          oUserRepository.resetAutoIncrement();
-          // Add an admin user
-          UserEntity userAdmin = new UserEntity(1L, "Lucas", "Gonzalez", "Rozalen", LocalDate.of(2004, 03, 21),
-                  640383838, "26882786H", 46022, "Valencia", "Calle Duqe de Gaeta", "lucgr04@gmail.com", "lucgr",
-                  password, true);
-          oUserRepository.save(userAdmin);
-          // Add a normal user
-          UserEntity userNormal = new UserEntity(2L, "Blanca", "Pérez", "García", LocalDate.of(1995, 6, 15),
-                  555555555, "12345678A", 28001, "Madrid", "Calle Gran Vía", "blanca@gmail.com", "blancaizm",
-                  password, false);
-          oUserRepository.save(userNormal);
-          return oUserRepository.count();
-      }
+    // Empty the user table and add two sample users
+    @Transactional
+    public Long empty() {
+        oUserRepository.deleteAll();
+        oUserRepository.resetAutoIncrement();
+        // Add an admin user
+        UserEntity userAdmin = new UserEntity(1L, "Lucas", "Gonzalez", "Rozalen", LocalDate.of(2004, 03, 21),
+                640383838, "26882786H", 46022, "Valencia", "Calle Duqe de Gaeta", "lucgr04@gmail.com", "lucgrgon",
+                password, true);
+        oUserRepository.save(userAdmin);
+        // Add a normal user
+        UserEntity userNormal = new UserEntity(2L, "Blanca", "Pérez", "García", LocalDate.of(1995, 6, 15),
+                555555555, "12345678A", 28001, "Madrid", "Calle Gran Vía", "blanca@gmail.com", "blanqui",
+                password, false);
+        oUserRepository.save(userNormal);
+        return oUserRepository.count();
+    }
 }

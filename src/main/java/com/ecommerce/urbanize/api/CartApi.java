@@ -3,11 +3,15 @@ package com.ecommerce.urbanize.api;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+
 import org.springframework.data.web.PageableDefault;
+
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,16 +40,16 @@ public class CartApi {
     }
 
     // Get cart by user ID
-    @GetMapping("/byUser/{idUser}")
-    public ResponseEntity<List<CartEntity>> getByUser(@PathVariable("idUser") Long idUser) {
-        return ResponseEntity.ok(oCartService.getByUser(idUser));
+    @GetMapping("/byUser/{user_id}")
+    public ResponseEntity<List<CartEntity>> getCartByUser(@PathVariable("user_id") Long user_id) {
+        return ResponseEntity.ok(oCartService.getCartByUser(user_id));
     }
 
     // Get cart by user ID and product ID
-    @GetMapping("/byUserAndProduct/{idUser}/{idProduct}")
-    public ResponseEntity<CartEntity> getByUserAndProduct(@PathVariable("idUser") Long idUser,
-            @PathVariable("idProduct") Long idProduct) {
-        return ResponseEntity.ok(oCartService.getByUserAndProduct(idUser, idProduct));
+    @GetMapping("/byUserAndProduct/{user_id}/{product_id}")
+    public ResponseEntity<CartEntity> getByUserAndProduct(@PathVariable("user_id") Long user_id,
+            @PathVariable("product_id") Long product_id) {
+        return ResponseEntity.ok(oCartService.getByUserAndProduct(user_id, product_id));
     }
 
     // Create a new cart
@@ -68,24 +72,29 @@ public class CartApi {
 
     // Get page of carts
     @GetMapping("")
-    public ResponseEntity<Page<CartEntity>> getPage(@PageableDefault(size = 30, sort = {"id"}, direction = Sort.Direction.ASC) Pageable oPageable) {
+    public ResponseEntity<Page<CartEntity>> getPage(
+            @PageableDefault(size = 30, sort = { "id" }, direction = Sort.Direction.ASC) Pageable oPageable) {
         return ResponseEntity.ok(oCartService.getPage(oPageable));
     }
 
-    // poulate
+    // Poulate database with random carts
+    @PostMapping("/populate/{amount}")
+    public ResponseEntity<Long> populate(@PathVariable("amount") Integer amount) {
+        return ResponseEntity.ok(oCartService.populate(amount));
+    }
 
-    // empty
-    @GetMapping("/empty")
+    // Empty the cart table
+    @DeleteMapping("/empty")
     public ResponseEntity<Long> empty() {
         return ResponseEntity.ok(oCartService.empty());
     }
 
-    // delete all carts for a specific user
+    // Delete all carts for a specific user
 
-    // get all carts for a specific user
-    @GetMapping("/byUser/{idUser}")
-    public ResponseEntity<List<CartEntity>> getAllByUser(@PathVariable("idUser") Long idUser) {
-        return ResponseEntity.ok(oCartService.getAllByUser(idUser));
- 
+    // Get all carts for a specific user
+    @GetMapping("/allByUser/{user_id}")
+    public ResponseEntity<List<CartEntity>> getAllByUser(@PathVariable("user_id") Long user_id) {
+        return ResponseEntity.ok(oCartService.getAllByUser(user_id));
+
     }
 }

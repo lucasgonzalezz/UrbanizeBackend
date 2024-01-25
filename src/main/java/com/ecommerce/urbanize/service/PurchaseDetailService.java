@@ -5,9 +5,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 import com.ecommerce.urbanize.entity.PurchaseDetailEntity;
 import com.ecommerce.urbanize.exception.ResourceNotFoundException;
 import com.ecommerce.urbanize.repository.PurchaseDetailRepository;
+
 import jakarta.servlet.http.HttpServletRequest;
 
 @Service
@@ -18,6 +20,12 @@ public class PurchaseDetailService {
 
     @Autowired
     HttpServletRequest oHttpServletRequest;
+
+    //@Autowired
+    //ProductService oProductService;
+
+    //@Autowired  
+    //PurchaseService oPurchaseService;
 
     // Get purchase detail by ID
     public PurchaseDetailEntity get(Long id) {
@@ -54,18 +62,18 @@ public class PurchaseDetailService {
     }
 
     // Find purchase details by order ID
-    public Page<PurchaseDetailEntity> findByIdOrder(Long idOrder, Pageable pageable) {
-        return oPurchaseDetailRepository.findByIdOrder(idOrder, pageable);
+    public Page<PurchaseDetailEntity> findByIdOrder(Long order_id, Pageable pageable) {
+        return oPurchaseDetailRepository.findByPurchaseId(order_id, pageable);
     }
 
     // Find purchase details by product ID
-    public Page<PurchaseDetailEntity> findByIdProduct(Long idProduct, Pageable pageable) {
-        return oPurchaseDetailRepository.findByIdProduct(idProduct, pageable);
+    public Page<PurchaseDetailEntity> findByIdProduct(Long product_id, Pageable pageable) {
+        return oPurchaseDetailRepository.findByProductId(product_id, pageable);
     }
 
     // Find purchase details by both order and product ID
-    public Page<PurchaseDetailEntity> findByIdOrderAndIdProduct(Long idOrder, Long idProduct, Pageable pageable) {
-        return oPurchaseDetailRepository.findByIdOrderAndIdProduct(idOrder, idProduct, pageable);
+    public Page<PurchaseDetailEntity> findByIdOrderAndIdProduct(Long order_id, Long product_id, Pageable pageable) {
+        return oPurchaseDetailRepository.findByPurchaseIdAndProductId(order_id, product_id, pageable);
     }
 
     // Order purchase details by price in descending order
@@ -78,8 +86,27 @@ public class PurchaseDetailService {
         return oPurchaseDetailRepository.findAllByPriceAsc(pageable);
     }
 
+    /* 
+        // Populate the purchase detail table
+    public Long populate(Integer amount) {
+        for (int i = 0; i < amount; i++) {
+            // Generate random purchase detail data
+            int amountValue = PurchaseDetailDataGenerationHelper.getRandomAmount();
+            int priceValue = PurchaseDetailDataGenerationHelper.getRandomPrice();
+            // For simplicity, assuming you have methods to get random ProductEntity and
+            // PurchaseEntity
+            ProductEntity product = oProductService.getOneRandom();
+            PurchaseEntity purchase = oPurchaseService.getOneRandom();
+
+            // Save the purchase detail to the repository
+            oPurchaseDetailRepository.save(new PurchaseDetailEntity(amountValue, priceValue, product, purchase));
+        }
+        return oPurchaseDetailRepository.count();
+    }
+    */
+
     // Empty the purchase detail table
-    public Long emptyTable() {
+    public Long empty() {
         oPurchaseDetailRepository.deleteAll();
         oPurchaseDetailRepository.resetAutoIncrement();
         oPurchaseDetailRepository.flush();

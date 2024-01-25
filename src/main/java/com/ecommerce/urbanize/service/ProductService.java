@@ -6,10 +6,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.ecommerce.urbanize.entity.CategoryEntity;
 import com.ecommerce.urbanize.entity.ProductEntity;
 import com.ecommerce.urbanize.exception.ResourceNotFoundException;
+import com.ecommerce.urbanize.helper.ProductDataGenerationHelper;
 import com.ecommerce.urbanize.repository.ProductRepository;
-import jakarta.servlet.http.HttpServletRequest;
 
 @Service
 public class ProductService {
@@ -18,7 +20,7 @@ public class ProductService {
     private ProductRepository oProductRepository;
 
     @Autowired
-    private HttpServletRequest oHttpServletRequest;
+    private CategoryService oCategoryService;
 
     // Get product by ID
     public ProductEntity get(Long id) {
@@ -49,20 +51,22 @@ public class ProductService {
 
     // Update product stock and check if depleted
     @Transactional
-    public ProductEntity updateStock(Long id, int quantity) {
-        ProductEntity product = oProductRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+    public void updateStock(ProductEntity oProductEntity, int amount) {
+        ProductEntity productFound = oProductRepository.findById(oProductEntity.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Error: Product not found."));
 
-        int updatedStock = product.getStock() - quantity;
-        if (updatedStock < 0) {
-            // Stock is depleted
-            throw new RuntimeException("Insufficient stock for product with ID: " + id);
+        if (productFound != null) {
+            int currentStock = productFound.getStock();
+            int newStock = currentStock - amount;
+
+            if (newStock < 0) {
+                // Si no hay suficiente stock, lanzar una excepción o mostrar un mensaje
+                throw new IllegalStateException("There is not enough stock to buy this shirt.");
+            }
+
+            productFound.setStock(newStock);
+            oProductRepository.save(productFound);
         }
-
-        product.setStock(updatedStock);
-        oProductRepository.save(product);
-
-        return product;
     }
 
     // Get a random product
@@ -72,8 +76,8 @@ public class ProductService {
     }
 
     // Get products by category ID
-    public Page<ProductEntity> getByCategory(Long idCategory, Pageable oPageable) {
-        return oProductRepository.findByIdCategory(idCategory, oPageable);
+    public Page<ProductEntity> getByCategory(Long category_id, Pageable oPageable) {
+        return oProductRepository.findByCategoryId(category_id, oPageable);
     }
 
     // Get products by size
@@ -92,8 +96,25 @@ public class ProductService {
     }
 
     // Get products by price and category descending
-    public Page<ProductEntity> getByPriceDescAndIdCategory(Long idCategory, Pageable oPageable) {
-        return oProductRepository.findByPriceDescAndIdCategory(idCategory, oPageable);
+    public Page<ProductEntity> getByPriceDescAndIdCategory(Long category_id, Pageable oPageable) {
+        return oProductRepository.findByPriceDescAndIdCategory(category_id, oPageable);
+    }
+
+    // Populate the product table
+    public Long populate(Integer amount) {
+        for (int i = 0; i < amount; i++) {
+            // Generate random product data
+            String productName = ProductDataGenerationHelper.getRandomProductName();
+            int stock = ProductDataGenerationHelper.getRandomStock();
+            String size = ProductDataGenerationHelper.getRandomSize();
+            int price = ProductDataGenerationHelper.getRandomPrice();
+            // For simplicity, assuming you have a method to get a random CategoryEntity
+            CategoryEntity category = oCategoryService.getOneRandom();
+
+            // Save the product to the repository
+            oProductRepository.save(new ProductEntity(productName, stock, size, price, category));
+        }
+        return oProductRepository.count();
     }
 
     // Empty the product table

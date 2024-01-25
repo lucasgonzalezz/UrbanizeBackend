@@ -1,13 +1,7 @@
 package com.ecommerce.urbanize.entity;
 
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import jakarta.persistence.GenerationType;
 
 @Entity
 @Table(name = "cart")
@@ -20,73 +14,117 @@ public class CartEntity {
     @NotNull
     private int amount;
 
-    @NotNull
-    private double price;
-
     @ManyToOne
-    @JoinColumn(name = "idUser")
+    @JoinColumn(name = "user_id")
     private UserEntity user;
 
     @ManyToOne
-    @JoinColumn(name = "idProduct")
+    @JoinColumn(name = "product_id")
     private ProductEntity product;
 
+    /**
+     * Default constructor.
+     */
     public CartEntity() {
     }
 
-    public CartEntity(Long id, int amount, double price, UserEntity user, ProductEntity product) {
+    /**
+     * Constructor with parameters for full entity initialization.
+     *
+     * @param id      The cart's ID.
+     * @param amount  The cart's amount.
+     * @param user    The user associated with the cart.
+     * @param product The product in the cart.
+     */
+    public CartEntity(Long id, int amount, UserEntity user, ProductEntity product) {
         this.id = id;
         this.amount = amount;
-        this.price = price;
         this.user = user;
         this.product = product;
     }
 
-    public CartEntity(int amount, double price, UserEntity user, ProductEntity product) {
+    /**
+     * Constructor with parameters for partial entity initialization.
+     *
+     * @param amount  The cart's amount.
+     * @param user    The user associated with the cart.
+     * @param product The product in the cart.
+     */
+    public CartEntity(int amount, UserEntity user, ProductEntity product) {
         this.amount = amount;
-        this.price = price;
         this.user = user;
         this.product = product;
     }
 
+    /**
+     * Get the cart's ID.
+     *
+     * @return The cart's ID.
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     * Set the cart's ID.
+     *
+     * @param id The cart's ID.
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     * Get the cart's amount.
+     *
+     * @return The cart's amount.
+     */
     public int getAmount() {
         return amount;
     }
 
+    /**
+     * Set the cart's amount.
+     *
+     * @param amount The cart's amount.
+     */
     public void setAmount(int amount) {
         this.amount = amount;
     }
 
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
+    /**
+     * Get the user associated with the cart.
+     *
+     * @return The user associated with the cart.
+     */
     public UserEntity getUser() {
         return user;
     }
 
+    /**
+     * Set the user associated with the cart.
+     *
+     * @param user The user associated with the cart.
+     */
     public void setUser(UserEntity user) {
         this.user = user;
     }
 
+    /**
+     * Get the product in the cart.
+     *
+     * @return The product in the cart.
+     */
     public ProductEntity getProduct() {
         return product;
     }
 
+    /**
+     * Set the product in the cart.
+     *
+     * @param product The product in the cart.
+     */
     public void setProduct(ProductEntity product) {
         this.product = product;
     }
-
 }

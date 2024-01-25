@@ -1,24 +1,25 @@
 package com.ecommerce.urbanize.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+
 import org.springframework.stereotype.Service;
+
 import com.ecommerce.urbanize.entity.CategoryEntity;
 import com.ecommerce.urbanize.exception.ResourceNotFoundException;
+import com.ecommerce.urbanize.helper.CategoryDataGenerationHelper;
 import com.ecommerce.urbanize.repository.CategoryRepository;
-import jakarta.servlet.http.HttpServletRequest;
 
+import jakarta.transaction.Transactional;
 
 @Service
 public class CategoryService {
 
     @Autowired
     private CategoryRepository oCategoryRepository;
-
-    @Autowired
-    private HttpServletRequest oHttpServletRequest;
 
     // Get category by ID
     public CategoryEntity get(Long id) {
@@ -58,6 +59,19 @@ public class CategoryService {
         return oCategoryRepository.findByQuantityProduct(oPageable);
     }
 
+    // Populate database with random categories
+     public Long populate(Integer amount) {
+        for (int i = 0; i < amount; i++) {
+            // Generate random category data
+            String categoryName = CategoryDataGenerationHelper.getRandomCategoryName();
+
+            // Save the category to the repository
+            oCategoryRepository.save(new CategoryEntity(categoryName));
+        }
+        return oCategoryRepository.count();
+    }
+
+    @Transactional
     // Empty the category table
     public Long empty() {
         oCategoryRepository.deleteAll();

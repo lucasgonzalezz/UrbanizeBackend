@@ -2,16 +2,21 @@ package com.ecommerce.urbanize.service;
 
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 import com.ecommerce.urbanize.entity.CartEntity;
 import com.ecommerce.urbanize.entity.UserEntity;
 import com.ecommerce.urbanize.entity.ProductEntity;
 import com.ecommerce.urbanize.exception.ResourceNotFoundException;
+import com.ecommerce.urbanize.helper.CartDataGenerationHelper;
 import com.ecommerce.urbanize.repository.CartRepository;
+
 import jakarta.servlet.http.HttpServletRequest;
+
 import jakarta.transaction.Transactional;
 
 @Service
@@ -35,13 +40,13 @@ public class CartService {
     }
 
     // Get cart by user ID
-    public List<CartEntity> getByUser(Long idUser) {
-        return oCartRepository.findByIdUser(idUser);
+    public List<CartEntity> getCartByUser(Long user_id) {
+        return oCartRepository.findByUserId(user_id);
     }
 
     // Get cart by user ID and product ID
-    public CartEntity getByUserAndProduct(Long idUser, Long idProduct) {
-        return oCartRepository.findByIdUserAndIdProduct(idUser, idProduct)
+    public CartEntity getByUserAndProduct(Long user_id, Long product_id) {
+        return oCartRepository.findByUserIdAndProductId(user_id, product_id)
                 .orElseThrow(() -> new ResourceNotFoundException("Cart not found"));
     }
 
@@ -55,18 +60,16 @@ public class CartService {
         UserEntity oUserEntity = oUserService.get(oCartEntity.getUser().getId());
         ProductEntity oProductEntity = oProductService.get(oCartEntity.getProduct().getId());
 
-        Optional<CartEntity> cartFromDatabase = oCartRepository.findByIdUserAndIdProduct(oUserEntity.getId(),
+        Optional<CartEntity> cartFromDatabase = oCartRepository.findByUserIdAndProductId(oUserEntity.getId(),
                 oProductEntity.getId());
         if (cartFromDatabase.isPresent()) {
             CartEntity cart = cartFromDatabase.get();
             cart.setAmount(cart.getAmount() + oCartEntity.getAmount());
-            cart.setPrice(cart.getAmount() * cart.getProduct().getPrice());
-            return cart.getId();
+            return oCartRepository.save(oCartEntity).getId();
         } else {
             oCartEntity.setId(null);
             oCartEntity.setUser(oUserEntity);
             oCartEntity.setProduct(oProductEntity);
-            oCartEntity.setPrice(oProductEntity.getPrice() * oCartEntity.getAmount());
             return oCartRepository.save(oCartEntity).getId();
         }
     }
@@ -78,10 +81,6 @@ public class CartService {
         oCartEntity.setUser(oCartEntityFromDatabase.getUser());
         oCartEntity.setProduct(oCartEntityFromDatabase.getProduct());
 
-        int newAmount = oCartEntity.getAmount();
-        double unitPrice = oCartEntity.getProduct().getPrice();
-        oCartEntity.setPrice(newAmount * unitPrice);
-
         return oCartRepository.save(oCartEntity);
     }
 
@@ -92,13 +91,28 @@ public class CartService {
     }
 
     // Delete all carts for a specific user
-    public void deleteByUser(Long idUser) {
-        oCartRepository.deleteByIdUser(idUser);
+    public void deleteByUser(Long user_id) {
+        oCartRepository.deleteByIdUser(user_id);
     }
 
     // Get all carts for a specific user
-    public List<CartEntity> getAllByUser(Long idUser) {
-        return oCartRepository.findAllByIdUser(idUser);
+    public List<CartEntity> getAllByUser(Long user_id) {
+        return oCartRepository.findAllByIdUser(user_id);
+    }
+
+    // Populate database with random carts
+    public Long populate(Integer amount) {
+        for (int i = 0; i < amount; i++) {
+            // Generate random cart data
+            int amountInCart = CartDataGenerationHelper.getRandomAmount();
+            // Get random user and product from repositories
+            UserEntity randomUser = oUserService.getOneRandom();
+            ProductEntity randomProduct = oProductService.getOneRandom();
+
+            // Save the cart to the repository
+            oCartRepository.save(new CartEntity(amountInCart, randomUser, randomProduct));
+        }
+        return oCartRepository.count();
     }
 
     // Empty the cart table
