@@ -1,9 +1,11 @@
 package com.ecommerce.urbanize.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+
 import org.springframework.stereotype.Service;
 
 import com.ecommerce.urbanize.entity.PurchaseDetailEntity;
@@ -20,12 +22,6 @@ public class PurchaseDetailService {
 
     @Autowired
     HttpServletRequest oHttpServletRequest;
-
-    //@Autowired
-    //ProductService oProductService;
-
-    //@Autowired  
-    //PurchaseService oPurchaseService;
 
     // Get purchase detail by ID
     public PurchaseDetailEntity get(Long id) {
@@ -85,25 +81,6 @@ public class PurchaseDetailService {
     public Page<PurchaseDetailEntity> findAllByPriceAsc(Pageable pageable) {
         return oPurchaseDetailRepository.findAllByPriceAsc(pageable);
     }
-
-    /* 
-        // Populate the purchase detail table
-    public Long populate(Integer amount) {
-        for (int i = 0; i < amount; i++) {
-            // Generate random purchase detail data
-            int amountValue = PurchaseDetailDataGenerationHelper.getRandomAmount();
-            int priceValue = PurchaseDetailDataGenerationHelper.getRandomPrice();
-            // For simplicity, assuming you have methods to get random ProductEntity and
-            // PurchaseEntity
-            ProductEntity product = oProductService.getOneRandom();
-            PurchaseEntity purchase = oPurchaseService.getOneRandom();
-
-            // Save the purchase detail to the repository
-            oPurchaseDetailRepository.save(new PurchaseDetailEntity(amountValue, priceValue, product, purchase));
-        }
-        return oPurchaseDetailRepository.count();
-    }
-    */
 
     // Empty the purchase detail table
     public Long empty() {

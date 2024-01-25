@@ -89,14 +89,6 @@ public class PurchaseDetailApi {
             @PageableDefault(size = 30, sort = { "id" }, direction = Sort.Direction.ASC) Pageable oPageable) {
         return ResponseEntity.ok(oPurchaseDetailService.getPage(oPageable));
     }
-
-    /* 
-    Populate the purchase detail table
-    @GetMapping("/populate/{amount}")
-    public ResponseEntity<Long> populate(@PathVariable("amount") Integer amount) {
-       return ResponseEntity.ok(oPurchaseDetailService.populate(amount));
-    }
-    */
     
     // Empty the purchase detail table
     @DeleteMapping("/empty")

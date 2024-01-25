@@ -19,8 +19,11 @@ import com.ecommerce.urbanize.entity.ProductEntity;
 import com.ecommerce.urbanize.entity.PurchaseDetailEntity;
 import com.ecommerce.urbanize.entity.PurchaseEntity;
 import com.ecommerce.urbanize.entity.UserEntity;
+
 import com.ecommerce.urbanize.exception.ResourceNotFoundException;
+
 import com.ecommerce.urbanize.helper.PurchaseDataGenerationHelper;
+
 import com.ecommerce.urbanize.repository.PurchaseRepository;
 import com.ecommerce.urbanize.repository.PurchaseDetailRepository;
 
@@ -80,9 +83,9 @@ public class PurchaseService {
         
         PurchaseEntity oPurchaseEntity = new PurchaseEntity();
 
-        oPurchaseEntity.setStatus("Pendente");
+        oPurchaseEntity.setStatus("Pendent");
         oPurchaseEntity.setDateBill(LocalDate.now());
-        oPurchaseEntity.setDeliveryDate(LocalDate.now().plusDays(7));
+        oPurchaseEntity.setDeliveryDate(LocalDate.now().plusDays(3));
         oPurchaseEntity.setNumBill(1);
         oPurchaseEntity.setPurchaseCode(generateOrderCode());
         oPurchaseEntity.setPurchaseDate(LocalDate.now());
@@ -113,7 +116,7 @@ public class PurchaseService {
     public PurchaseEntity makeAllCartPurchase(List<CartEntity> carts, UserEntity oUserEntity) {
         PurchaseEntity oPurchaseEntity = new PurchaseEntity();
 
-        oPurchaseEntity.setStatus("Pendente");
+        oPurchaseEntity.setStatus("Pendent");
         oPurchaseEntity.setDateBill(LocalDate.now());
         oPurchaseEntity.setDeliveryDate(LocalDate.now().plusDays(3));
         oPurchaseEntity.setNumBill(1);
