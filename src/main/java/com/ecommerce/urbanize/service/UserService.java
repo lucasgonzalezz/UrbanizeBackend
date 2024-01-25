@@ -29,6 +29,9 @@ public class UserService {
     @Autowired
     HttpServletRequest oHttpServletRequest;
 
+    @Autowired
+    SessionService oSessionService;
+
     // Get user by ID
     public UserEntity get(Long id) {
         return oUserRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found"));
@@ -42,11 +45,13 @@ public class UserService {
 
     // Get a page of users
     public Page<UserEntity> getPage(Pageable oPageable) {
+        oSessionService.onlyAdmins();
         return oUserRepository.findAll(oPageable);
     }
 
     // Create a new user
     public Long create(UserEntity oUserEntity) {
+        oSessionService.onlyAdmins();
         oUserEntity.setId(null);
         oUserEntity.setPassword(password);
         return oUserRepository.save(oUserEntity).getId();
@@ -54,6 +59,7 @@ public class UserService {
 
     // Update an existing user
     public UserEntity update(UserEntity oUserEntity) {
+        oSessionService.onlyAdminsOrUsersWithTheirData(oUserEntity.getId());
         UserEntity oUserEntityFromDatabase = this.get(oUserEntity.getId());
         oUserEntity.setPassword(oUserEntityFromDatabase.getPassword());
         oUserEntity.setRole(oUserEntityFromDatabase.getRole());
@@ -62,6 +68,7 @@ public class UserService {
 
     // Delete a user by ID
     public Long delete(Long id) {
+        oSessionService.onlyAdmins();
         oUserRepository.deleteById(id);
         return id;
     }
@@ -74,6 +81,7 @@ public class UserService {
 
     // Populate the database with random users
     public Long populate(Integer amount) {
+        oSessionService.onlyAdmins();
         for (int i = 0; i < amount; i++) {
             // Generate random user data
             String name = UserGenerationHelper.getRadomName();
@@ -96,22 +104,26 @@ public class UserService {
 
     // Get users with the most orders
     public Page<UserEntity> getUsersWithMostPurchases(Pageable oPageable) {
+        oSessionService.onlyAdmins();
         return oUserRepository.findUsersByPurchaseDesc(oPageable);
     }
 
     // Get users with the fewest orders
     public Page<UserEntity> getUsersWithFewestPurchases(Pageable oPageable) {
+        oSessionService.onlyAdmins();
         return oUserRepository.findUsersByPurchaseAsc(oPageable);
     }
 
     // Get users with the most ratings
     public Page<UserEntity> getUsersWithMostRatings(Pageable oPageable) {
+        oSessionService.onlyAdmins();
         return oUserRepository.findUsersByRatingDesc(oPageable);
     }
 
     // Empty the user table and add two sample users
     @Transactional
     public Long empty() {
+        oSessionService.onlyAdmins();
         oUserRepository.deleteAll();
         oUserRepository.resetAutoIncrement();
         // Add an admin user

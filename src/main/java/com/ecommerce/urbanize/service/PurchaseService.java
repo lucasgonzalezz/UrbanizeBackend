@@ -50,6 +50,9 @@ public class PurchaseService {
     @Autowired
     PurchaseDetailService oPurchaseDetailService;
 
+    @Autowired
+    SessionService oSessionService;
+
     // Get order by ID
     public PurchaseEntity get(Long id) {
         return oPurchaseRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Order not found"));
@@ -57,10 +60,12 @@ public class PurchaseService {
 
     // Get order by user ID
     public Page<PurchaseEntity> findByIdUser(Long user_id, Pageable oPageable) {
+        oSessionService.onlyAdminsOrUsersWithTheirData(user_id);
         return oPurchaseRepository.findByUserId(user_id, oPageable);
     }
 
     public Page<PurchaseEntity> getPage(Pageable oPageable) {
+        oSessionService.onlyAdminsOrUsers();
         return oPurchaseRepository.findAll(oPageable);
     }
 
@@ -80,7 +85,9 @@ public class PurchaseService {
     // Make a single cart purchase
     @Transactional
     public PurchaseEntity makeSingleCartPurchase(CartEntity oCartEntity, UserEntity oUserEntity) {
-        
+
+        oSessionService.onlyAdminsOrUsersWithTheirData(oUserEntity.getId());
+
         PurchaseEntity oPurchaseEntity = new PurchaseEntity();
 
         oPurchaseEntity.setStatus("Pendent");
@@ -94,7 +101,7 @@ public class PurchaseService {
         oPurchaseRepository.save(oPurchaseEntity);
 
         PurchaseDetailEntity oPurchaseDetailEntity = new PurchaseDetailEntity();
-    
+
         oPurchaseDetailEntity.setId(null);
         oPurchaseDetailEntity.setProduct(oCartEntity.getProduct());
         oPurchaseDetailEntity.setPurchase(oPurchaseEntity);
@@ -114,6 +121,9 @@ public class PurchaseService {
     // Make purchase of all carts
     @Transactional
     public PurchaseEntity makeAllCartPurchase(List<CartEntity> carts, UserEntity oUserEntity) {
+
+        oSessionService.onlyAdminsOrUsersWithTheirData(oUserEntity.getId());
+
         PurchaseEntity oPurchaseEntity = new PurchaseEntity();
 
         oPurchaseEntity.setStatus("Pendent");
@@ -151,6 +161,9 @@ public class PurchaseService {
 
     // Cancel order
     public Long cancelPurchase(Long id) {
+        PurchaseEntity purchase = oPurchaseRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Error: Purchase not found."));
+        oSessionService.onlyAdminsOrUsersWithTheirData(purchase.getUser().getId());
         if (oPurchaseRepository.existsById(id)) {
             Page<PurchaseDetailEntity> purchaseDatils = oPurchaseDetailRepository.findByPurchaseId(id,
                     PageRequest.of(0, 1000));
@@ -163,22 +176,25 @@ public class PurchaseService {
             oPurchaseRepository.deleteById(id);
             return id;
         } else {
-            throw new ResourceNotFoundException("Error: La compra no existe.");
+            throw new ResourceNotFoundException("Error: Purchase not found.");
         }
     }
 
     // Find purchases, ordered by the newest first
     public Page<PurchaseEntity> findByNewestPurchase(Pageable oPageable) {
+        oSessionService.onlyAdmins();
         return oPurchaseRepository.findByNewestPurchase(oPageable);
     }
 
     // Find purchases, ordered by the oldest first
     public Page<PurchaseEntity> findByOldestPurchase(Pageable oPageable) {
+        oSessionService.onlyAdmins();
         return oPurchaseRepository.findByOldestPurchase(oPageable);
     }
 
     // Find purchases by purchase code (using LIKE)
     public Page<PurchaseEntity> findByPurchaseCode(String purchaseCode, Pageable oPageable) {
+        oSessionService.onlyAdmins();
         return oPurchaseRepository.findByPurchaseCode(purchaseCode, oPageable);
     }
 
@@ -189,26 +205,31 @@ public class PurchaseService {
 
     // Find total purchase by ID
     public Double findTotalPurchaseById(Long id) {
+        oSessionService.onlyAdmins();
         return oPurchaseRepository.findTotalPurchaseById(id);
     }
 
     // Find total purchase by user ID and purchase ID
     public Double findTotalPurchaseByUserIdAndPurchaseId(Long user_id, Long purchase_id) {
+        oSessionService.onlyAdminsOrUsersWithTheirData(user_id);
         return oPurchaseRepository.findTotalPurchaseByUserIdAndPurchaseId(user_id, purchase_id);
     }
 
     // Find purchases by user ID, ordered by the most expensive first
     public Page<PurchaseEntity> findPurchasesMostExpensiveByIdUser(Long user_id, Pageable oPageable) {
+        oSessionService.onlyAdminsOrUsersWithTheirData(user_id);
         return oPurchaseRepository.findPurchasesMostExpensiveByUserId(user_id, oPageable);
     }
 
     // Find purchases by user ID, ordered by the cheapest first
     public Page<PurchaseEntity> findPurchasesMostCheapestByIdUser(Long user_id, Pageable oPageable) {
+        oSessionService.onlyAdminsOrUsersWithTheirData(user_id);
         return oPurchaseRepository.findPurchasesMostCheapestByUserId(user_id, oPageable);
     }
 
     // Populate the database with random purchases
     public Long populate(Integer amount) {
+        oSessionService.onlyAdmins();
         for (int i = 0; i < amount; i++) {
             // Generate random purchase data
             LocalDate purchaseDate = PurchaseDataGenerationHelper.getRandomDate();
@@ -230,6 +251,7 @@ public class PurchaseService {
     // Empty the order table
     @Transactional
     public Long empty() {
+        oSessionService.onlyAdmins();
         oPurchaseRepository.deleteAll();
         oPurchaseRepository.resetAutoIncrement();
         oPurchaseRepository.flush();

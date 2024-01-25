@@ -34,6 +34,9 @@ public class RatingService {
     @Autowired
     ProductService oProductService;
 
+    @Autowired
+    SessionService oSessionService;
+
     // Get rating by ID
     public RatingEntity get(Long id) {
         return oRatingRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Rating not found"));
@@ -41,12 +44,14 @@ public class RatingService {
 
     // Get a page of ratings
     public Page<RatingEntity> getPage(Pageable oPageable) {
+        oSessionService.onlyAdminsOrUsers();
         return oRatingRepository.findAll(oPageable);
     }
 
     // Create a new rating or update an existing one for a product and user
     // combination
     public Long create(RatingEntity oRatingEntity) {
+        oSessionService.onlyAdminsOrUsersWithTheirData(oRatingEntity.getUser().getId());
         Optional<RatingEntity> ratingFromDatabase = oRatingRepository
                 .findByProductIdAndUserId(oRatingEntity.getProduct().getId(), oRatingEntity.getUser().getId());
         if (ratingFromDatabase.isPresent()) {
@@ -62,6 +67,7 @@ public class RatingService {
 
     // Update an existing rating
     public RatingEntity update(RatingEntity oRatingEntity) {
+        oSessionService.onlyAdminsOrUsersWithTheirData(oRatingEntity.getUser().getId());
         RatingEntity ratingEntityFromDatabase = this.get(oRatingEntity.getId());
         oRatingEntity.setDate(ratingEntityFromDatabase.getDate());
         return oRatingRepository.save(oRatingEntity);
@@ -69,6 +75,8 @@ public class RatingService {
 
     // Delete a rating by ID
     public Long delete(Long id) {
+        RatingEntity oRatingEntity = this.get(id);
+        oSessionService.onlyAdminsOrUsersWithTheirData(oRatingEntity.getUser().getId());
         oRatingRepository.deleteById(id);
         return id;
     }
@@ -81,66 +89,79 @@ public class RatingService {
 
     // Get ratings by product ID
     public Page<RatingEntity> findByIdProduct(Long product_id, Pageable pageable) {
+        oSessionService.onlyAdminsOrUsers();
         return oRatingRepository.findByProductId(product_id, pageable);
     }
 
     // Get ratings by user ID
     public Page<RatingEntity> findByIdUser(Long user_id, Pageable pageable) {
+        oSessionService.onlyAdminsOrUsers();
         return oRatingRepository.findByUserId(user_id, pageable);
     }
 
     // Get a rating for a specific product and user
     public Optional<RatingEntity> findByIdProductAndIdUser(Long product_id, Long user_id) {
+        oSessionService.onlyAdminsOrUsers();
         return oRatingRepository.findByProductIdAndUserId(product_id, user_id);
     }
 
     // Get average rating for a product
     public Double getAverageRating(Long product_id) {
+        oSessionService.onlyAdminsOrUsers();
         return oRatingRepository.getAverageRating(product_id);
     }
 
     // Get ratings sorted by lowest punctuation
     public Page<RatingEntity> getRatingByLowestPunctuation(Long product_id, Pageable pageable) {
+        oSessionService.onlyAdminsOrUsers();
         return oRatingRepository.getRatingByLowestPunctuation(product_id, pageable);
     }
 
     // Get ratings sorted by highest punctuation
     public Page<RatingEntity> getRatingByHighestPunctuation(Long product_id, Pageable pageable) {
+        oSessionService.onlyAdminsOrUsers();
         return oRatingRepository.getRatingByHighestPunctuation(product_id, pageable);
     }
 
     // Get ratings sorted by newest
     public Page<RatingEntity> getRatingByNewest(Long product_id, Pageable pageable) {
+        oSessionService.onlyAdminsOrUsers();
         return oRatingRepository.getRatingByNewest(product_id, pageable);
     }
 
     // Get ratings sorted by oldest
     public Page<RatingEntity> getRatingByOldest(Long product_id, Pageable pageable) {
+        oSessionService.onlyAdminsOrUsers();
         return oRatingRepository.getRatingByOldest(product_id, pageable);
     }
 
     // Get ratings by user with lowest punctuation
     public Page<RatingEntity> getRatingByLowestPunctuationOfUsers(Long user_id, Pageable pageable) {
+        oSessionService.onlyAdminsOrUsers();
         return oRatingRepository.getRatingByLowestPunctuationOfUsers(user_id, pageable);
     }
 
     // Get ratings by user with highest punctuation
     public Page<RatingEntity> getRatingByHighestPunctuationOfUsers(Long user_id, Pageable pageable) {
+        oSessionService.onlyAdminsOrUsers();
         return oRatingRepository.getRatingByHighestPunctuationOfUsers(user_id, pageable);
     }
 
     // Get ratings by user sorted by newest
     public Page<RatingEntity> getRatingByNewestOfUsers(Long user_id, Pageable pageable) {
+        oSessionService.onlyAdminsOrUsers();
         return oRatingRepository.getRatingByNewestOfUsers(user_id, pageable);
     }
 
     // Get ratings by user sorted by oldest
     public Page<RatingEntity> getRatingByOldestOfUsers(Long user_id, Pageable pageable) {
+        oSessionService.onlyAdminsOrUsers();
         return oRatingRepository.getRatingByOldestOfUsers(user_id, pageable);
     }
 
     // Populate the database with random ratings
     public Long populate(Integer amount) {
+        oSessionService.onlyAdmins();
         for (int i = 0; i < amount; i++) {
             // Generate random rating data
             String title = RatingGenerationHelper.getRandomTitle();
@@ -161,6 +182,7 @@ public class RatingService {
     // Empty the rating table
     @Transactional
     public Long empty() {
+        oSessionService.onlyAdmins();
         oRatingRepository.deleteAll();
         oRatingRepository.resetAutoIncrement();
         oRatingRepository.flush();

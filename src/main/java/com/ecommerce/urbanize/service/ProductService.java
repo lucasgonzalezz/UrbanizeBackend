@@ -17,10 +17,13 @@ import com.ecommerce.urbanize.repository.ProductRepository;
 public class ProductService {
 
     @Autowired
-    private ProductRepository oProductRepository;
+    ProductRepository oProductRepository;
 
     @Autowired
-    private CategoryService oCategoryService;
+    CategoryService oCategoryService;
+
+    @Autowired
+    SessionService oSessionService;
 
     // Get product by ID
     public ProductEntity get(Long id) {
@@ -29,22 +32,26 @@ public class ProductService {
 
     // Get a page of products
     public Page<ProductEntity> getPage(Pageable oPageable) {
+        oSessionService.onlyAdmins();
         return oProductRepository.findAll(oPageable);
     }
 
     // Create a new product
     public Long create(ProductEntity oProductEntity) {
+        oSessionService.onlyAdmins();
         oProductEntity.setId(null);
         return oProductRepository.save(oProductEntity).getId();
     }
 
     // Update an existing product
     public ProductEntity update(ProductEntity oProductEntity) {
+        oSessionService.onlyAdmins();
         return oProductRepository.save(oProductEntity);
     }
 
     // Delete an existing product
     public Long delete(Long id) {
+        oSessionService.onlyAdmins();
         oProductRepository.deleteById(id);
         return id;
     }
@@ -77,31 +84,37 @@ public class ProductService {
 
     // Get products by category ID
     public Page<ProductEntity> getByCategory(Long category_id, Pageable oPageable) {
+        oSessionService.onlyAdmins();
         return oProductRepository.findByCategoryId(category_id, oPageable);
     }
 
     // Get products by size
     public Page<ProductEntity> getBySize(String size, Pageable oPageable) {
+        oSessionService.onlyAdmins();
         return oProductRepository.findBySize(size, oPageable);
     }
 
     // Get products by stock descending
     public Page<ProductEntity> getByStockDesc(Pageable oPageable) {
+        oSessionService.onlyAdmins();
         return oProductRepository.findByStockDesc(oPageable);
     }
 
     // Get products by price descending
     public Page<ProductEntity> getByPriceDesc(Pageable oPageable) {
+        oSessionService.onlyAdmins();
         return oProductRepository.findByPriceDesc(oPageable);
     }
 
     // Get products by price and category descending
     public Page<ProductEntity> getByPriceDescAndIdCategory(Long category_id, Pageable oPageable) {
+        oSessionService.onlyAdmins();
         return oProductRepository.findByPriceDescAndIdCategory(category_id, oPageable);
     }
 
     // Populate the product table
     public Long populate(Integer amount) {
+        oSessionService.onlyAdmins();
         for (int i = 0; i < amount; i++) {
             // Generate random product data
             String productName = ProductDataGenerationHelper.getRandomProductName();
@@ -120,6 +133,7 @@ public class ProductService {
     // Empty the product table
     @Transactional
     public Long empty() {
+        oSessionService.onlyAdmins();
         oProductRepository.deleteAll();
         oProductRepository.resetAutoIncrement();
         oProductRepository.flush();

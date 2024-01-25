@@ -34,6 +34,9 @@ public class CartService {
     @Autowired
     UserService oUserService;
 
+    @Autowired
+    SessionService oSessionService;
+
     // Get cart by ID
     public CartEntity get(Long id) {
         return oCartRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Cart not found"));
@@ -41,22 +44,26 @@ public class CartService {
 
     // Get cart by user ID
     public List<CartEntity> getCartByUser(Long user_id) {
+        oSessionService.onlyAdminsOrUsersWithTheirData(user_id);
         return oCartRepository.findByUserId(user_id);
     }
 
     // Get cart by user ID and product ID
     public CartEntity getByUserAndProduct(Long user_id, Long product_id) {
+        oSessionService.onlyAdminsOrUsersWithTheirData(user_id);
         return oCartRepository.findByUserIdAndProductId(user_id, product_id)
                 .orElseThrow(() -> new ResourceNotFoundException("Cart not found"));
     }
 
     // Get page of carts
     public Page<CartEntity> getPage(Pageable oPageable) {
+        oSessionService.onlyAdminsOrUsers();
         return oCartRepository.findAll(oPageable);
     }
 
     // Create a new cart
     public Long create(CartEntity oCartEntity) {
+        oSessionService.onlyAdminsOrUsersWithTheirData(oCartEntity.getUser().getId());
         UserEntity oUserEntity = oUserService.get(oCartEntity.getUser().getId());
         ProductEntity oProductEntity = oProductService.get(oCartEntity.getProduct().getId());
 
@@ -79,6 +86,7 @@ public class CartService {
     public CartEntity update(CartEntity oCartEntity) {
 
         CartEntity oCartEntityFromDatabase = this.get(oCartEntity.getId());
+        oSessionService.onlyAdminsOrUsersWithTheirData(oCartEntityFromDatabase.getUser().getId());
         oCartEntity.setUser(oCartEntityFromDatabase.getUser());
         oCartEntity.setProduct(oCartEntityFromDatabase.getProduct());
 
@@ -87,22 +95,32 @@ public class CartService {
 
     // Delete a cart by ID
     public Long delete(Long id) {
-        oCartRepository.deleteById(id);
-        return id;
+        CartEntity oCartEntityFromDatabase = this.get(id);
+        oSessionService.onlyAdminsOrUsersWithTheirData(oCartEntityFromDatabase.getUser().getId());
+        if (oCartRepository.existsById(id)) {
+            oCartRepository.deleteById(id);
+            return id;
+        } else {
+            throw new ResourceNotFoundException("Error: El cart not found.");
+        }
     }
 
     // Delete all carts for a specific user
+    @Transactional
     public void deleteByUser(Long user_id) {
+        oSessionService.onlyAdminsOrUsersWithTheirData(user_id);
         oCartRepository.deleteByIdUser(user_id);
     }
 
     // Get all carts for a specific user
     public List<CartEntity> getAllByUser(Long user_id) {
+        oSessionService.onlyAdminsOrUsersWithTheirData(user_id);
         return oCartRepository.findAllByIdUser(user_id);
     }
 
     // Populate database with random carts
     public Long populate(Integer amount) {
+        oSessionService.onlyAdmins();
         for (int i = 0; i < amount; i++) {
             // Generate random cart data
             int amountInCart = CartDataGenerationHelper.getRandomAmount();
@@ -119,6 +137,7 @@ public class CartService {
     // Empty the cart table
     @Transactional
     public Long empty() {
+        oSessionService.onlyAdmins();
         oCartRepository.deleteAll();
         oCartRepository.resetAutoIncrement();
         oCartRepository.flush();
