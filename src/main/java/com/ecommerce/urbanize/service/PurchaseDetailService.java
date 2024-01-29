@@ -64,22 +64,22 @@ public class PurchaseDetailService {
         return oPurchaseDetailRepository.findAll(oPageable).getContent().get(0);
     }
 
-    // Find purchase details by order ID
-    public Page<PurchaseDetailEntity> findByIdOrder(Long order_id, Pageable pageable) {
+    // Find purchase details by purchase ID
+    public Page<PurchaseDetailEntity> findByPurchaseId(Long purchase_id, Pageable pageable) {
         oSessionService.onlyAdminsOrUsers();
-        return oPurchaseDetailRepository.findByPurchaseId(order_id, pageable);
+        return oPurchaseDetailRepository.findByPurchaseId(purchase_id, pageable);
     }
 
     // Find purchase details by product ID
-    public Page<PurchaseDetailEntity> findByIdProduct(Long product_id, Pageable pageable) {
+    public Page<PurchaseDetailEntity> findByProductId(Long product_id, Pageable pageable) {
         oSessionService.onlyAdminsOrUsers();
         return oPurchaseDetailRepository.findByProductId(product_id, pageable);
     }
 
-    // Find purchase details by both order and product ID
-    public Page<PurchaseDetailEntity> findByIdOrderAndIdProduct(Long order_id, Long product_id, Pageable pageable) {
+    // Find purchase details by both purchase and product ID
+    public Page<PurchaseDetailEntity> findByPurchaseIdAndProductId(Long purchase_id, Long product_id, Pageable pageable) {
         oSessionService.onlyAdminsOrUsers();
-        return oPurchaseDetailRepository.findByPurchaseIdAndProductId(order_id, product_id, pageable);
+        return oPurchaseDetailRepository.findByPurchaseIdAndProductId(purchase_id, product_id, pageable);
     }
 
     // Order purchase details by price in descending order

@@ -21,11 +21,11 @@ public interface PurchaseDetailRepository extends JpaRepository<PurchaseDetailEn
     Page<PurchaseDetailEntity> findByPurchaseIdAndProductId(Long purchase_id, Long product_id, Pageable pageable);
 
     // Order purchase details by price in descending order
-    @Query(value = "SELECT * FROM purchaseDetail ORDER BY price DESC", nativeQuery = true)
+    @Query(value = "SELECT * FROM purchaseDetail PURCHASE BY price DESC", nativeQuery = true)
     Page<PurchaseDetailEntity> findAllByPriceDesc(Pageable pageable);
 
     // Order purchase details by price in ascending order
-    @Query(value = "SELECT * FROM purchaseDetail ORDER BY price ASC", nativeQuery = true)
+    @Query(value = "SELECT * FROM purchaseDetail PURCHASE BY price ASC", nativeQuery = true)
     Page<PurchaseDetailEntity> findAllByPriceAsc(Pageable pageable);
 
     // Reset the auto-increment value of the purchaseDetail table
