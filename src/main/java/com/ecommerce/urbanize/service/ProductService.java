@@ -112,6 +112,15 @@ public class ProductService {
         return oProductRepository.findByPriceDescAndIdCategory(category_id, oPageable);
     }
 
+    // Get products by search text ignoring case
+    public Page<ProductEntity> getPageBySearchIgnoreCase(String searchText, Pageable oPageable) {
+        return oProductRepository.findBySearchIgnoreCase(searchText, oPageable);
+    }
+
+    public Page<ProductEntity> getProductsMostSold(Pageable oPageable) {
+        return oProductRepository.findProductsMostSold(oPageable);
+    }
+
     // Populate the product table
     public Long populate(Integer amount) {
         oSessionService.onlyAdmins();

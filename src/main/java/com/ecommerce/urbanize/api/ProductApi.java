@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import org.springframework.data.web.PageableDefault;
-
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ecommerce.urbanize.entity.ProductEntity;
@@ -61,7 +62,7 @@ public class ProductApi {
         return ResponseEntity.ok(oProductService.delete(id));
     }
 
-       // Get a cantity of products using pagination
+    // Get a cantity of products using pagination
     @GetMapping("")
     public ResponseEntity<Page<ProductEntity>> getPage(
             @PageableDefault(size = 30, sort = { "id" }, direction = Sort.Direction.ASC) Pageable oPageable) {
@@ -102,6 +103,23 @@ public class ProductApi {
     @GetMapping("/byPrice/{price}")
     public ResponseEntity<Iterable<ProductEntity>> getByPrice(@PathVariable("price") String price, Pageable oPageable) {
         return ResponseEntity.ok(oProductService.getByPriceDesc(oPageable));
+    }
+
+    // Get products most sold
+    @GetMapping("/mostSold")
+    public ResponseEntity<Page<ProductEntity>> getProductsMostSold(
+            @PageableDefault(size = 10, sort = { "id" }, direction = Sort.Direction.ASC) Pageable pageable) {
+        Page<ProductEntity> products = oProductService.getProductsMostSold(pageable);
+        return new ResponseEntity<>(products, HttpStatus.OK);
+    }
+
+    // Get products by search text ignoring case
+    @GetMapping("/search")
+    public ResponseEntity<Page<ProductEntity>> searchProducts(
+            @RequestParam String searchText,
+            @PageableDefault(size = 10, sort = { "id" }, direction = Sort.Direction.ASC) Pageable pageable) {
+        Page<ProductEntity> products = oProductService.getPageBySearchIgnoreCase(searchText, pageable);
+        return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
     // Get products by price and category descending

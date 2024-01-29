@@ -105,13 +105,6 @@ public class CartService {
         }
     }
 
-    // Delete all carts for a specific user
-    @Transactional
-    public void deleteByUser(Long user_id) {
-        oSessionService.onlyAdminsOrUsersWithTheirData(user_id);
-        oCartRepository.deleteByIdUser(user_id);
-    }
-
     // Get all carts for a specific user
     public List<CartEntity> getAllByUser(Long user_id) {
         oSessionService.onlyAdminsOrUsersWithTheirData(user_id);
@@ -132,6 +125,23 @@ public class CartService {
             oCartRepository.save(new CartEntity(amountInCart, randomUser, randomProduct));
         }
         return oCartRepository.count();
+    }
+
+    // Calculate the cost of a specific cart
+    public Double calculateCartCost(Long id) {
+        return oCartRepository.calculateCartCost(id);
+    }
+
+    // Calculate the total cost of all carts for a specific user
+    public Double calculateTotalCartCost(Long user_id) {
+        return oCartRepository.calculateTotalCartCost(user_id);
+    }
+
+    // Remove all carts for a specific user
+    @Transactional
+    public void deleteByUserId(Long user_id) {
+        oSessionService.onlyAdminsOrUsersWithTheirData(user_id);
+        oCartRepository.deleteByUserId(user_id);
     }
 
     // Empty the cart table

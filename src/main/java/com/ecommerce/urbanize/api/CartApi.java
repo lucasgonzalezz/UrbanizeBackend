@@ -90,6 +90,23 @@ public class CartApi {
     }
 
     // Delete all carts for a specific user
+    @DeleteMapping("/user/{user_id}")
+    public ResponseEntity<Long> deleteCarritoByUsuario(@PathVariable("usuarioId") Long usuarioId) {
+        oCartService.deleteByUserId(usuarioId);
+        return ResponseEntity.ok(usuarioId);
+    }
+
+    // Calculate the cost of a specific cart
+    @GetMapping("/cost/{cart_id}")
+    public ResponseEntity<Double> calculateCartCost(@PathVariable("cart_id") Long cart_id) {
+        return ResponseEntity.ok(oCartService.calculateCartCost(cart_id));
+    }
+
+    // Calculate the total cost of all carts for a specific user
+    @GetMapping("/totalCost/{user_id}")
+    public ResponseEntity<Double> calculateTotalCartCost(@PathVariable("user_id") Long user_id) {
+        return ResponseEntity.ok(oCartService.calculateTotalCartCost(user_id));
+    }
 
     // Get all carts for a specific user
     @GetMapping("/allByUser/{user_id}")
