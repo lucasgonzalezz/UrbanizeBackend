@@ -20,7 +20,7 @@ import jakarta.servlet.http.HttpServletRequest;
 public class UserService {
 
     // Default password for user accounts
-    private final String password = "82B9AA49C5C0CF486ABFAE9346457D4665275D3E0E3147D8E61F04FE126A7B67";
+    private final String password = "B221D9DBB083A7F33428D7C2A3C3198AE925614D70210E28716CCAA7CD4DDB79";
 
     // Autowired repository and HTTPServletRequest
     @Autowired

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ecommerce.urbanize.bean.CaptchaBean;
 import com.ecommerce.urbanize.bean.CaptchaResponseBean;
+import com.ecommerce.urbanize.bean.UserBean;
 import com.ecommerce.urbanize.service.SessionService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*", maxAge = 3600)
@@ -19,17 +20,23 @@ import com.ecommerce.urbanize.service.SessionService;
 public class SessionController {
 
     @Autowired
-    SessionService sessionService;
+    SessionService oSessionService;
 
     // Endpoint for pre-login operations, such as captcha generation
     @GetMapping("/prelogin")
     public ResponseEntity<CaptchaResponseBean> prelogin() {
-        return ResponseEntity.ok(sessionService.prelogin());
+        return ResponseEntity.ok(oSessionService.prelogin());
+    }
+
+    // Endpoint for handling login with captcha verification
+    @PostMapping("/loginCaptcha")
+    public ResponseEntity<String> loginCaptcha(@RequestBody CaptchaBean oCaptchaBean) {
+        return ResponseEntity.ok(oSessionService.loginCaptcha(oCaptchaBean));
     }
 
     // Endpoint for handling login with captcha verification
     @PostMapping("/login")
-    public ResponseEntity<String> loginCaptcha(@RequestBody CaptchaBean captchaBean) {
-        return ResponseEntity.ok(sessionService.loginCaptcha(captchaBean));
+    public ResponseEntity<String> login(@RequestBody UserBean userBean) {
+        return ResponseEntity.ok(oSessionService.login(userBean));
     }
 }

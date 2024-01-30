@@ -18,6 +18,7 @@ import com.ecommerce.urbanize.helper.JWTHelper;
 import com.ecommerce.urbanize.repository.CaptchaRepository;
 import com.ecommerce.urbanize.repository.PendentRepository;
 import com.ecommerce.urbanize.repository.UserRepository;
+import com.ecommerce.urbanize.bean.UserBean;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -100,6 +101,12 @@ public class SessionService {
         } else {
             throw new UnauthorizedException("User not found");
         }
+    }
+
+    // Login without captcha verification
+    public String login(UserBean oUsuarioBean) {
+        userRepository.findByUsernameAndPassword(oUsuarioBean.getUsername(), oUsuarioBean.getPassword()).orElseThrow(() -> new ResourceNotFoundException("Usuario o contraseña incorrectos"));
+        return JWTHelper.generateJWT(oUsuarioBean.getUsername());
     }
 
     // Get the username from the current session
