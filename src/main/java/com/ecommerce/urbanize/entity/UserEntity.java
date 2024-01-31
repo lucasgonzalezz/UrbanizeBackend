@@ -69,7 +69,7 @@ public class UserEntity {
     private Boolean role = false;
 
     @OneToMany(mappedBy = "user", fetch = jakarta.persistence.FetchType.LAZY)
-    private List<PurchaseEntity> orders;
+    private List<PurchaseEntity> purchases;
 
     @OneToMany(mappedBy = "user", fetch = jakarta.persistence.FetchType.LAZY)
     private List<RatingEntity> ratings;
@@ -81,7 +81,7 @@ public class UserEntity {
      * Default constructor initializes lists.
      */
     public UserEntity() {
-        orders = new ArrayList<>();
+        purchases = new ArrayList<>();
         ratings = new ArrayList<>();
         carts = new ArrayList<>();
     }
@@ -430,8 +430,8 @@ public class UserEntity {
      *
      * @return The number of orders associated with the category.
      */
-    public int getOrders() {
-        return orders.size();
+    public int getPurchases() {
+        return purchases.size();
     }
 
     /**
