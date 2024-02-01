@@ -28,8 +28,6 @@ public class UserEntity {
     @Size(min = 3, max = 255)
     private String last_name2;
 
-    @NotNull
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private LocalDate birth_date;
 
     @NotNull
