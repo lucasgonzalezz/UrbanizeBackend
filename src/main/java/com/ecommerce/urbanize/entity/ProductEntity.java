@@ -29,8 +29,7 @@ public class ProductEntity {
     @NotNull
     private int price;
 
-    @Lob
-    private byte[] image;
+    private String image;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
@@ -53,7 +52,7 @@ public class ProductEntity {
      * @param image    The product's image.
      * @param category The product's category.
      */
-    public ProductEntity(Long id, String name, int stock, String size, int price, byte[] image,
+    public ProductEntity(Long id, String name, int stock, String size, int price, String image,
             CategoryEntity category) {
         this.id = id;
         this.name = name;
@@ -92,7 +91,7 @@ public class ProductEntity {
      * @param image    The product's image.
      * @param category The product's category.
      */
-    public ProductEntity(String name, int stock, String size, int price, byte[] image, CategoryEntity category) {
+    public ProductEntity(String name, int stock, String size, int price, String image, CategoryEntity category) {
         this.name = name;
         this.stock = stock;
         this.size = size;
@@ -110,7 +109,7 @@ public class ProductEntity {
      * @param price The product's price.
      * @param image The product's image.
      */
-    public ProductEntity(String name, int stock, String size, int price, byte[] image) {
+    public ProductEntity(String name, int stock, String size, int price, String image) {
         this.name = name;
         this.stock = stock;
         this.size = size;
@@ -213,7 +212,7 @@ public class ProductEntity {
      *
      * @return The product's image.
      */
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
 
@@ -222,7 +221,7 @@ public class ProductEntity {
      *
      * @param image The product's image.
      */
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
