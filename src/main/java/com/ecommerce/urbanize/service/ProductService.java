@@ -31,9 +31,16 @@ public class ProductService {
     }
 
     // Get a page of products
-    public Page<ProductEntity> getPage(Pageable oPageable) {
-        oSessionService.onlyAdmins();
-        return oProductRepository.findAll(oPageable);
+    public Page<ProductEntity> getPage(Pageable oPageable, String filter) {
+    
+        Page<ProductEntity> page;
+
+        if (filter == null || filter.isEmpty() || filter.trim().isEmpty()) {
+            page = oProductRepository.findAll(oPageable);
+        } else {
+            page = oProductRepository.findByName(filter, oPageable); // Assuming findByName exists in your repository
+        }
+        return page;
     }
 
     // Create a new product

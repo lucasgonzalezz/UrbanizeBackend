@@ -43,9 +43,16 @@ public class RatingService {
     }
 
     // Get a page of ratings
-    public Page<RatingEntity> getPage(Pageable oPageable) {
-        oSessionService.onlyAdminsOrUsers();
-        return oRatingRepository.findAll(oPageable);
+    public Page<RatingEntity> getPage(Pageable oPageable, String filter) {
+        Page<RatingEntity> page;
+
+        if (filter == null || filter.isEmpty() || filter.trim().isEmpty()) {
+            page = oRatingRepository.findAll(oPageable);
+        } else {
+            page = oRatingRepository.findByMensajeOrTitulo(
+                    filter, filter, oPageable);
+        }
+        return page;
     }
 
     // Create a new rating or update an existing one for a product and user

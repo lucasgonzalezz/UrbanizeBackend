@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import org.springframework.data.web.PageableDefault;
-
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ecommerce.urbanize.entity.RatingEntity;
@@ -68,8 +69,10 @@ public class RatingApi {
     // Get a page of ratings
     @GetMapping("")
     public ResponseEntity<Page<RatingEntity>> getPage(
-            @PageableDefault(size = PAGE_SIZE, sort = { "id" }, direction = Sort.Direction.ASC) Pageable oPageable) {
-        return ResponseEntity.ok(oRatingService.getPage(oPageable));
+            Pageable oPageable,
+
+            @RequestParam(name = "filter", required = false) String strFilter) {
+        return new ResponseEntity<>(oRatingService.getPage(oPageable, strFilter), HttpStatus.OK);
     }
 
     // Populate the rating table

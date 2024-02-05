@@ -58,6 +58,9 @@ public interface RatingRepository extends JpaRepository<RatingEntity, Long> {
     @Query(value = "SELECT * FROM rating WHERE user_id = ?1 ORDER BY date ASC", nativeQuery = true)
     Page<RatingEntity> getRatingByOldestOfUsers(Long user_id, Pageable pageable);
 
+    @Query(value = "SELECT * FROM rating WHERE length(?1) >= 3 AND (title LIKE %?1% OR description LIKE %?1%)", nativeQuery = true)
+    Page<RatingEntity> findByMensajeOrTitulo(String title, String description, Pageable oPageable);
+
     // Reset the auto-increment value of the rating table
     @Modifying
     @Query(value = "ALTER TABLE rating AUTO_INCREMENT = 1", nativeQuery = true)

@@ -39,6 +39,9 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
     @Query(value = "SELECT p.* FROM product p INNER JOIN purchase_detail pd ON p.id = pd.product_id INNER JOIN purchase pu ON pd.purchase_id = pu.id GROUP BY p.id ORDER BY SUM(pd.amount) DESC", nativeQuery = true)
     Page<ProductEntity> findProductsMostSold(Pageable pageable);
 
+    @Query(value = "SELECT * FROM product WHERE length(?1) >= 3 AND (name LIKE %?1% )", nativeQuery = true)
+    Page<ProductEntity> findByName(String name, Pageable oPageable);
+
     // Method to reset the auto-increment counter for the "user" table
     @Modifying
     @Query(value = "ALTER TABLE user AUTO_INCREMENT = 1", nativeQuery = true)

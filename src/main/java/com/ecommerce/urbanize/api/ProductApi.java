@@ -65,8 +65,9 @@ public class ProductApi {
     // Get a cantity of products using pagination
     @GetMapping("")
     public ResponseEntity<Page<ProductEntity>> getPage(
-            @PageableDefault(size = 30, sort = { "id" }, direction = Sort.Direction.ASC) Pageable oPageable) {
-        return ResponseEntity.ok(oProductService.getPage(oPageable));
+            Pageable oPageable,
+            @RequestParam(name = "filter", required = false) String strFilter) {
+        return new ResponseEntity<>(oProductService.getPage(oPageable, strFilter), HttpStatus.OK);
     }
 
     // Populate database with random products

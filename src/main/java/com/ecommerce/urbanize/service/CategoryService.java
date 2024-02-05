@@ -30,11 +30,16 @@ public class CategoryService {
     }
 
     // Get page of categories
-    public Page<CategoryEntity> getPage(Pageable oPageable) {
-        oSessionService.onlyAdminsOrUsers();
-        return oCategoryRepository.findAll(oPageable);
-    }
-
+    public Page<CategoryEntity> getPage(Pageable oPageable, String filter) {
+        Page<CategoryEntity> page;
+  
+          if (filter == null || filter.isEmpty() || filter.trim().isEmpty()) {
+              page = oCategoryRepository.findAll(oPageable);
+          } else {
+              page = oCategoryRepository.findByName(filter, oPageable);
+          }
+          return page;
+      }
     // Create a new category
     public Long create(CategoryEntity oCategoryEntity) {
         oSessionService.onlyAdmins();

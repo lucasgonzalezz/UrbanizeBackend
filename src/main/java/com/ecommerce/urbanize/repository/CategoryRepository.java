@@ -16,6 +16,9 @@ public interface CategoryRepository extends JpaRepository<CategoryEntity, Long> 
     @Query(value = "SELECT * FROM category ORDER BY (SELECT COUNT(*) FROM product WHERE product.category_id = category.id) DESC", nativeQuery = true)
     Page<CategoryEntity> findByQuantityProduct(Pageable pageable);
 
+    @Query(value = "SELECT * FROM category WHERE length(?1) >= 3 AND (name LIKE %?1% )", nativeQuery = true)
+    Page<CategoryEntity> findByName(String name, Pageable oPageable);
+
     // Reset the auto-increment value for the primary key in the category table
     @Modifying
     @Query(value = "ALTER TABLE category AUTO_INCREMENT = 1", nativeQuery = true)
