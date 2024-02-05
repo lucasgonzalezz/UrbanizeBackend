@@ -2,10 +2,8 @@ package com.ecommerce.urbanize.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -74,9 +72,11 @@ public class UserApi {
     //     return ResponseEntity.ok(oUserService.getPage(oPageable));
     // }
 
-       @GetMapping("")
-    public ResponseEntity<Page<UserEntity>> getPage(Pageable oPageable){
-        return  ResponseEntity.ok(oUserService.getPage(oPageable));
+    @GetMapping("")
+    public ResponseEntity<Page<UserEntity>> getPage(
+            Pageable oPageable,
+            @RequestParam(name = "filter", required = false) String strFilter) {
+        return new ResponseEntity<>(oUserService.getPage(oPageable, strFilter), HttpStatus.OK);
     }
 
     // Populate database with random users

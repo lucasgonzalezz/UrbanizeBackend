@@ -43,9 +43,24 @@ public class UserService {
                 .orElseThrow(() -> new ResourceNotFoundException("User not found by username"));
     }
 
+    // Get a random user
+    public UserEntity getOneRandom() {
+        Pageable oPageable = PageRequest.of((int) (Math.random() * oUserRepository.count()), 1);
+        return oUserRepository.findAll(oPageable).getContent().get(0);
+    }
+
     // Get a page of users
-    public Page<UserEntity> getPage(Pageable oPageable) {
-        return oUserRepository.findAll(oPageable);
+    public Page<UserEntity> getPage(Pageable oPageable, String filter) {
+        oSessionService.onlyAdmins();
+        Page<UserEntity> page;
+
+        if (filter == null || filter.isEmpty() || filter.trim().isEmpty()) {
+            page = oUserRepository.findAll(oPageable);
+        } else {
+            page = oUserRepository.findByUserByNameOrSurnameOrLastnameContainingIgnoreCase(
+                    filter, filter, filter, filter, oPageable);
+        }
+        return page;
     }
 
     // Create a new user
@@ -70,12 +85,6 @@ public class UserService {
         oSessionService.onlyAdmins();
         oUserRepository.deleteById(id);
         return id;
-    }
-
-    // Get a random user
-    public UserEntity getOneRandom() {
-        Pageable oPageable = PageRequest.of((int) (Math.random() * oUserRepository.count()), 1);
-        return oUserRepository.findAll(oPageable).getContent().get(0);
     }
 
     // Populate the database with random users
