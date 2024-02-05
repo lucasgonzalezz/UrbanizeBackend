@@ -6,7 +6,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ecommerce.urbanize.entity.UserEntity;
@@ -37,7 +38,7 @@ public class UserApi {
     }
 
     // Get user by username
-    @GetMapping("/byUsername/{username}")
+    @GetMapping("/username/{username}")
     public ResponseEntity<UserEntity> get(@PathVariable("username") String username) {
         return ResponseEntity.ok(oUserService.getByUsername(username));
     }
@@ -66,11 +67,16 @@ public class UserApi {
         return ResponseEntity.ok(oUserService.delete(id));
     }
 
-    // Get a cantity of users using pagination
-    @GetMapping("")
-    public ResponseEntity<Page<UserEntity>> getPage(
-            @PageableDefault(size = 30, sort = { "id" }, direction = Sort.Direction.ASC) Pageable oPageable) {
-        return ResponseEntity.ok(oUserService.getPage(oPageable));
+    // // Get a cantity of users using pagination
+    // @GetMapping("")
+    // public ResponseEntity<Page<UserEntity>> getPage(
+    //         @PageableDefault(size = 30, sort = { "id" }, direction = Sort.Direction.ASC) Pageable oPageable) {
+    //     return ResponseEntity.ok(oUserService.getPage(oPageable));
+    // }
+
+       @GetMapping("")
+    public ResponseEntity<Page<UserEntity>> getPage(Pageable oPageable){
+        return  ResponseEntity.ok(oUserService.getPage(oPageable));
     }
 
     // Populate database with random users

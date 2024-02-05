@@ -45,7 +45,6 @@ public class UserService {
 
     // Get a page of users
     public Page<UserEntity> getPage(Pageable oPageable) {
-        oSessionService.onlyAdmins();
         return oUserRepository.findAll(oPageable);
     }
 

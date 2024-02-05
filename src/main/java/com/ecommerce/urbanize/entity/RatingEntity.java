@@ -2,7 +2,6 @@ package com.ecommerce.urbanize.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.LocalDate;
 
@@ -30,7 +29,6 @@ public class RatingEntity {
     @NotNull
     private int punctuation;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private LocalDate date;
 
     @ManyToOne
