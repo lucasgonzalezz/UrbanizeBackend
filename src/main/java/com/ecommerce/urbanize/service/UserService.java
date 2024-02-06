@@ -20,7 +20,7 @@ import jakarta.servlet.http.HttpServletRequest;
 public class UserService {
 
     // Default password for user accounts
-    private final String password = "B221D9DBB083A7F33428D7C2A3C3198AE925614D70210E28716CCAA7CD4DDB79";
+    private final String password = "c2dbd3ccae9ed8f37e3c31641825e6ecb4edee3bb01708a5fb1b074cc574317b";
 
     // Autowired repository and HTTPServletRequest
     @Autowired
@@ -135,13 +135,13 @@ public class UserService {
         oUserRepository.deleteAll();
         oUserRepository.resetAutoIncrement();
         // Add an admin user
-        UserEntity userAdmin = new UserEntity(1L, "Lucas", "Gonzalez", "Rozalen", LocalDate.of(2004, 03, 21),
-                640383838, "26882786H", 46022, "Valencia", "Calle Duqe de Gaeta", "lucgr04@gmail.com", "lucgrgon",
+        UserEntity userAdmin = new UserEntity(1L, "Pepe", "Pérez", "Fernández", LocalDate.of(1950, 03, 21),
+                640259857, "24518752L", 46033, "Valencia", "Calle Perico los Palotes", "pepe4@gmail.com", "pepe33",
                 password, true);
         oUserRepository.save(userAdmin);
         // Add a normal user
-        UserEntity userNormal = new UserEntity(2L, "Blanca", "Pérez", "García", LocalDate.of(1995, 6, 15),
-                555555555, "12345678A", 28001, "Madrid", "Calle Gran Vía", "blanca@gmail.com", "blanqui",
+        UserEntity userNormal = new UserEntity(2L, "Pepa", "Sánchez", "García", LocalDate.of(1995, 6, 15),
+                555555555, "12345678A", 28001, "Madrid", "Calle Gran Vía", "pepa@gmail.com", "pepita",
                 password, false);
         oUserRepository.save(userNormal);
         return oUserRepository.count();
