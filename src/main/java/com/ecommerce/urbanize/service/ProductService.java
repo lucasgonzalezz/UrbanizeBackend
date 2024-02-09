@@ -31,16 +31,20 @@ public class ProductService {
     }
 
     // Get a page of products
-    public Page<ProductEntity> getPage(Pageable oPageable, String filter) {
-    
+    public Page<ProductEntity> getPage(Pageable oPageable, Long category_id, String filter) {
+    if(category_id != null) {
+        return oProductRepository.findByCategoryId(category_id, oPageable);
+    } else {
         Page<ProductEntity> page;
 
         if (filter == null || filter.isEmpty() || filter.trim().isEmpty()) {
             page = oProductRepository.findAll(oPageable);
         } else {
+            
             page = oProductRepository.findByName(filter, oPageable); // Assuming findByName exists in your repository
         }
         return page;
+    }
     }
 
     // Create a new product

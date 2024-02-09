@@ -66,8 +66,9 @@ public class ProductApi {
     @GetMapping("")
     public ResponseEntity<Page<ProductEntity>> getPage(
             Pageable oPageable,
-            @RequestParam(name = "filter", required = false) String strFilter) {
-        return new ResponseEntity<>(oProductService.getPage(oPageable, strFilter), HttpStatus.OK);
+            @RequestParam(name = "filter", required = false) String strFilter,
+            @RequestParam(name = "category", required = false) Long category_id) {
+        return new ResponseEntity<>(oProductService.getPage(oPageable, category_id, strFilter), HttpStatus.OK);
     }
 
     // Populate database with random products
