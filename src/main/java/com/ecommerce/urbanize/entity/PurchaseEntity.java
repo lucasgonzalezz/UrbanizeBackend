@@ -16,11 +16,8 @@ public class PurchaseEntity {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private LocalDate purchase_date;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private LocalDate delivery_date;
 
-    @NotNull
-    @NotBlank
     @Size(min = 3, max = 255)
     private String status;
 
@@ -36,7 +33,6 @@ public class PurchaseEntity {
     @NotNull
     private int num_bill;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private LocalDate date_bill;
 
     /**

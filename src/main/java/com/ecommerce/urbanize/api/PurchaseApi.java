@@ -20,9 +20,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ecommerce.urbanize.entity.CartEntity;
+import com.ecommerce.urbanize.entity.ProductEntity;
 import com.ecommerce.urbanize.entity.PurchaseEntity;
 import com.ecommerce.urbanize.entity.UserEntity;
 import com.ecommerce.urbanize.service.CartService;
+import com.ecommerce.urbanize.service.ProductService;
 import com.ecommerce.urbanize.service.PurchaseService;
 import com.ecommerce.urbanize.service.UserService;
 
@@ -39,6 +41,9 @@ public class PurchaseApi {
 
     @Autowired
     UserService oUserService;
+
+    @Autowired
+    ProductService oProductService;
 
     // Get purchase by ID
     @GetMapping("/{id}")
@@ -64,6 +69,14 @@ public class PurchaseApi {
     public ResponseEntity<PurchaseEntity> getRandomCompra() {
         PurchaseEntity purchase = oPurchaseService.getOneRandom();
         return new ResponseEntity<>(purchase, HttpStatus.OK);
+    }
+
+    @PostMapping("/makeProductPurhase/{product_id}/{user_id}/{amount}")
+    public ResponseEntity<PurchaseEntity> realizarCompraProducto(@PathVariable Long product_id, @PathVariable Long user_id, @PathVariable int amount) {
+        UserEntity user = oUserService.get(user_id);
+        ProductEntity product = oProductService.get(product_id);
+        PurchaseEntity purchase = oPurchaseService.makeProductPurhase(product, user, amount);
+        return new ResponseEntity<>(purchase, HttpStatus.CREATED);
     }
 
     // Make a single cart purchase

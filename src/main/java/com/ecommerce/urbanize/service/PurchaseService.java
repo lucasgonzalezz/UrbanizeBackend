@@ -82,6 +82,34 @@ public class PurchaseService {
         return currentDate + uuid;
     }
 
+    @Transactional
+    public PurchaseEntity makeProductPurhase(ProductEntity oProductEntity, UserEntity oUserEntity, int amount) {
+
+        oSessionService.onlyAdminsOrUsersWithTheirData(oUserEntity.getId());
+
+        PurchaseEntity oPurchaseEntity = new PurchaseEntity();
+
+        oPurchaseEntity.setUser(oUserEntity);
+        oPurchaseEntity.setPurchaseDate(LocalDate.now());
+        oPurchaseEntity.setPurchaseCode(generateOrderCode());
+
+        oPurchaseRepository.save(oPurchaseEntity);
+
+        PurchaseDetailEntity oPurchaseDetailEntity = new PurchaseDetailEntity();
+        oPurchaseDetailEntity.setId(null);
+        oPurchaseDetailEntity.setProduct(oProductEntity);
+        oPurchaseDetailEntity.setPurchase(oPurchaseEntity);
+        oPurchaseDetailEntity.setAmount(amount);
+        oPurchaseDetailEntity.setPrice(oProductEntity.getPrice());
+        
+        oPurchaseDetailRepository.save(oPurchaseDetailEntity);
+
+        oProductService.updateStock(oProductEntity, amount);
+
+        return oPurchaseEntity;
+    }
+
+
     // Make a single cart purchase
     @Transactional
     public PurchaseEntity makeSingleCartPurchase(CartEntity oCartEntity, UserEntity oUserEntity) {
