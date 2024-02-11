@@ -43,16 +43,24 @@ public class RatingService {
     }
 
     // Get a page of ratings
-    public Page<RatingEntity> getPage(Pageable oPageable, String filter) {
+    public Page<RatingEntity> getPage(Pageable oPageable, Long user_id, Long product_id, String filter) {
         Page<RatingEntity> page;
 
-        if (filter == null || filter.isEmpty() || filter.trim().isEmpty()) {
-            page = oRatingRepository.findAll(oPageable);
+        if (user_id != null) {
+            return oRatingRepository.findByUserId(user_id, oPageable);
+        } else if (product_id != null) {
+            return oRatingRepository.findByProductId(product_id, oPageable);
+
         } else {
-            page = oRatingRepository.findByMensajeOrTitulo(
-                    filter, filter, oPageable);
+            if (filter == null || filter.isEmpty() || filter.trim().isEmpty()) {
+                page = oRatingRepository.findAll(oPageable);
+            } else {
+                page = oRatingRepository.findByMensajeOrTitulo(
+                        filter, filter, oPageable);
+            }
         }
         return page;
+
     }
 
     // Create a new rating or update an existing one for a product and user

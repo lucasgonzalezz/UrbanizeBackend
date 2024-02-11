@@ -70,9 +70,10 @@ public class RatingApi {
     @GetMapping("")
     public ResponseEntity<Page<RatingEntity>> getPage(
             Pageable oPageable,
-
-            @RequestParam(name = "filter", required = false) String strFilter) {
-        return new ResponseEntity<>(oRatingService.getPage(oPageable, strFilter), HttpStatus.OK);
+            @RequestParam(name = "filter", required = false) String strFilter,
+            @RequestParam(name = "user", required = false) Long user_id,
+            @RequestParam(name = "product", required = false) Long product_id) {
+        return new ResponseEntity<>(oRatingService.getPage(oPageable, user_id, product_id, strFilter), HttpStatus.OK);
     }
 
     // Populate the rating table

@@ -1,5 +1,8 @@
 package com.ecommerce.urbanize.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.NotBlank;
@@ -35,10 +38,22 @@ public class ProductEntity {
     @JoinColumn(name = "category_id")
     private CategoryEntity category;
 
+    @OneToMany(mappedBy = "product", fetch = jakarta.persistence.FetchType.LAZY)
+    private List<PurchaseDetailEntity> purchaseDetails;
+
+    @OneToMany(mappedBy = "product", fetch = jakarta.persistence.FetchType.LAZY)
+    private List<RatingEntity> ratings;
+
+    @OneToMany(mappedBy = "product", fetch = jakarta.persistence.FetchType.LAZY)
+    private List<CartEntity> carts;
+
     /**
-     * Default constructor.
+     * Default constructor initializes lists.
      */
     public ProductEntity() {
+        purchaseDetails = new ArrayList<>();
+        ratings = new ArrayList<>();
+        carts = new ArrayList<>();
     }
 
     /**
@@ -241,5 +256,35 @@ public class ProductEntity {
      */
     public void setCategory(CategoryEntity category) {
         this.category = category;
+    }
+
+        /**
+     * Returns the number of orders associated with this category.
+     * Uses the size of the orders collection.
+     *
+     * @return The number of orders associated with the category.
+     */
+    public int getPurchaseDetails() {
+        return purchaseDetails.size();
+    }
+
+    /**
+     * Returns the number of ratings associated with this category.
+     * Uses the size of the ratings collection.
+     *
+     * @return The number of ratings associated with the category.
+     */
+    public int getRatings() {
+        return ratings.size();
+    }
+
+    /**
+     * Returns the number of carts associated with this category.
+     * Uses the size of the carts collection.
+     *
+     * @return The number of carts associated with the category.
+     */
+    public int getCarts() {
+        return carts.size();
     }
 }
