@@ -13,20 +13,15 @@ public class RatingEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
-    @NotBlank
     @Size(min = 3, max = 255)
     private String title;
 
-    @NotNull
-    @NotBlank
     @Size(min = 3, max = 255)
     private String description;
 
     @Lob
     private byte[] image;
 
-    @NotNull
     private int punctuation;
 
     private LocalDate date;

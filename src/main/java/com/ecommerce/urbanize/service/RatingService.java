@@ -63,46 +63,11 @@ public class RatingService {
 
     }
 
-
-    // public Page<RatingEntity> getPage(Pageable oPageable, String filter, Long id_usuario, Long id_producto) {
-
-    //     if (id_usuario == 0) {
-    //         if (id_producto == 0) {
-    //             if (filter == null || filter.isEmpty()) {
-    //                 return oRatingRepository.findAll(oPageable);
-    //             } else {
-    //                 return oRatingRepository.findByMensajeOrTitulo(filter, filter, oPageable);
-    //             }
-    //         } else {
-
-    //             return oRatingRepository.findByProductId(id_producto, oPageable);
-    //         }
-    //     } else {
-    //         if (id_producto == 0) {
-    //             return oRatingRepository.findByUserId(id_usuario, oPageable);
-    //         } else {
-
-    //             return Page.empty();
-    //         }
-    //     }
-    // }
-
-
-    // Create a new rating or update an existing one for a product and user
-    // combination
     public Long create(RatingEntity oRatingEntity) {
-        oSessionService.onlyAdminsOrUsersWithTheirData(oRatingEntity.getUser().getId());
-        Optional<RatingEntity> ratingFromDatabase = oRatingRepository
-                .findByProductIdAndUserId(oRatingEntity.getProduct().getId(), oRatingEntity.getUser().getId());
-        if (ratingFromDatabase.isPresent()) {
-            RatingEntity rating = ratingFromDatabase.get();
-            rating.setDate(LocalDate.now());
-            return oRatingRepository.save(rating).getId();
-        } else {
-            oRatingEntity.setId(null);
-            oRatingEntity.setDate(LocalDate.now());
-            return oRatingRepository.save(oRatingEntity).getId();
-        }
+        oSessionService.onlyAdminsOrUsersWithTheirData(oSessionService.getSessionUser().getId());
+        oRatingEntity.setId(null);
+        oRatingEntity.setDate(LocalDate.now());
+        return oRatingRepository.save(oRatingEntity).getId();
     }
 
     // Update an existing rating
