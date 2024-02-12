@@ -69,13 +69,17 @@ public class RatingApi {
     // Get a page of ratings
     @GetMapping("")
     public ResponseEntity<Page<RatingEntity>> getPage(
-            Pageable oPageable,
-            @RequestParam(name = "filter", required = false) String strFilter,
-            @RequestParam(name = "user", required = false) Long user_id,
-            @RequestParam(name = "product", required = false) Long product_id) {
-        return new ResponseEntity<>(oRatingService.getPage(oPageable, user_id, product_id, strFilter), HttpStatus.OK);
+            Pageable pageable,
+            @RequestParam(name = "filter", required = false) String filter,
+            @RequestParam(name = "user", defaultValue = "0", required = false) Long userId,
+            @RequestParam(name = "product", defaultValue = "0", required = false) Long productId) {
+        Page<RatingEntity> resultPage = oRatingService.getPage(pageable, userId, productId, filter);
+        return new ResponseEntity<>(resultPage, HttpStatus.OK);
     }
+    
 
+
+ 
     // Populate the rating table
     @PostMapping("/populate/{amount}")
     public ResponseEntity<Long> populate(@PathVariable("amount") Integer amount) {

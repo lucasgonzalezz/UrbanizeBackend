@@ -26,6 +26,11 @@ public class PurchaseDetailService {
     @Autowired
     SessionService oSessionService;
 
+    public Page<PurchaseDetailEntity> getPageByCompra(Long purchase_id, Pageable oPageable) {
+        oSessionService.onlyAdminsOrUsers();
+        return oPurchaseDetailRepository.findByPurchase(purchase_id, oPageable);
+    }
+
     // Get purchase detail by ID
     public PurchaseDetailEntity get(Long id) {
         return oPurchaseDetailRepository.findById(id)

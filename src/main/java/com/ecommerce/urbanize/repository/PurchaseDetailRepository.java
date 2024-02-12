@@ -28,6 +28,9 @@ public interface PurchaseDetailRepository extends JpaRepository<PurchaseDetailEn
     @Query(value = "SELECT * FROM purchaseDetail PURCHASE BY price ASC", nativeQuery = true)
     Page<PurchaseDetailEntity> findAllByPriceAsc(Pageable pageable);
 
+    @Query(value = "SELECT * FROM purchase_detail WHERE purchase_id = ?1", nativeQuery = true)
+    Page<PurchaseDetailEntity> findByPurchase(Long purchase_id, Pageable pageable);
+
     // Reset the auto-increment value of the purchaseDetail table
     @Modifying
     @Query(value = "ALTER TABLE purchaseDetail AUTO_INCREMENT = 1", nativeQuery = true)

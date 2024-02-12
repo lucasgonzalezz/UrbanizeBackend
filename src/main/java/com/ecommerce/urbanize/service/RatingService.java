@@ -46,9 +46,9 @@ public class RatingService {
     public Page<RatingEntity> getPage(Pageable oPageable, Long user_id, Long product_id, String filter) {
         Page<RatingEntity> page;
 
-        if (user_id != null) {
+        if (user_id != 0) {
             return oRatingRepository.findByUserId(user_id, oPageable);
-        } else if (product_id != null) {
+        } else if (product_id != 0) {
             return oRatingRepository.findByProductId(product_id, oPageable);
 
         } else {
@@ -62,6 +62,31 @@ public class RatingService {
         return page;
 
     }
+
+
+    // public Page<RatingEntity> getPage(Pageable oPageable, String filter, Long id_usuario, Long id_producto) {
+
+    //     if (id_usuario == 0) {
+    //         if (id_producto == 0) {
+    //             if (filter == null || filter.isEmpty()) {
+    //                 return oRatingRepository.findAll(oPageable);
+    //             } else {
+    //                 return oRatingRepository.findByMensajeOrTitulo(filter, filter, oPageable);
+    //             }
+    //         } else {
+
+    //             return oRatingRepository.findByProductId(id_producto, oPageable);
+    //         }
+    //     } else {
+    //         if (id_producto == 0) {
+    //             return oRatingRepository.findByUserId(id_usuario, oPageable);
+    //         } else {
+
+    //             return Page.empty();
+    //         }
+    //     }
+    // }
+
 
     // Create a new rating or update an existing one for a product and user
     // combination
