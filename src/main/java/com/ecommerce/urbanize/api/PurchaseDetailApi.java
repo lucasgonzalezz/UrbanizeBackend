@@ -25,7 +25,7 @@ import com.ecommerce.urbanize.service.PurchaseDetailService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/prchaseDetail")
+@RequestMapping("/purchaseDetail")
 public class PurchaseDetailApi {
 
     @Autowired
@@ -40,13 +40,6 @@ public class PurchaseDetailApi {
     @GetMapping("/byPurchase/{purchase_id}")
     public ResponseEntity<Page<PurchaseDetailEntity>> getByCompra(@PathVariable Long purchase_id, @PageableDefault(size = 10, sort = {"id"}, direction = Sort.Direction.ASC) Pageable pageable) {
         return ResponseEntity.ok(oPurchaseDetailService.getPageByCompra(purchase_id, pageable));
-    }
-
-    // Get purchase details by purchase ID
-    @GetMapping("/purchase/{purchase_id}")
-    public ResponseEntity<Page<PurchaseDetailEntity>> findByPurchaseId(@PathVariable("purchase_id") Long purchase_id,
-            @PageableDefault(size = 30, sort = { "id" }, direction = Sort.Direction.ASC) Pageable oPageable) {
-        return ResponseEntity.ok(oPurchaseDetailService.findByPurchaseId(purchase_id, oPageable));
     }
 
     // Get purchase details by product ID
