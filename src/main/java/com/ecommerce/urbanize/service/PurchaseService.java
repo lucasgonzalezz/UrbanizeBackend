@@ -101,14 +101,13 @@ public class PurchaseService {
         oPurchaseDetailEntity.setPurchase(oPurchaseEntity);
         oPurchaseDetailEntity.setAmount(amount);
         oPurchaseDetailEntity.setPrice(oProductEntity.getPrice());
-        
+
         oPurchaseDetailRepository.save(oPurchaseDetailEntity);
 
         oProductService.updateStock(oProductEntity, amount);
 
         return oPurchaseEntity;
     }
-
 
     // Make a single cart purchase
     @Transactional
@@ -175,9 +174,6 @@ public class PurchaseService {
             oPurchaseDetailEntity.setPrice(cart.getProduct().getPrice());
 
             oPurchaseDetailRepository.save(oPurchaseDetailEntity);
-        }
-
-        for (CartEntity cart : carts) {
             ProductEntity product = cart.getProduct();
             oProductService.updateStock(product, cart.getAmount());
         }
