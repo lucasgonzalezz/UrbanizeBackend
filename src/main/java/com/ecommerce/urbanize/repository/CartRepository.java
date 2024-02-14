@@ -21,12 +21,18 @@ public interface CartRepository extends JpaRepository<CartEntity, Long> {
     Optional<CartEntity> findByUserIdAndProductId(Long user_id, Long product_id);
 
     // Calculate the cost of a specific cart
-    @Query(value = "SELECT c.amount * c.product.price FROM cart c WHERE c.id = ?1", nativeQuery = true)
+    @Query(value = "SELECT c.amount * p.price as coste_cart FROM cart c, product p WHERE c.product_id = p.id and c.id = ?1", nativeQuery = true)
     Double calculateCartCost(Long id);
 
+    @Query(value = "SELECT c.cantidad * (ca.precio + (ca.precio * ca.iva / 100.0) - (ca.precio * ca.porcentaje_descuento / 100.0)) as coste_carrito FROM carrito c, camiseta ca WHERE c.camiseta_id = ca.id and c.id = ?1", nativeQuery = true)
+    Double calcularCosteCarrito(Long id);
+
+
     // Calculate the total cost of all carts for a specific user
-    @Query(value = "SELECT SUM(c.amount * c.product.price) FROM cart c WHERE c.user_id = ?1", nativeQuery = true)
+    @Query(value = "SELECT SUM(c.amount * p.price) as coste_total FROM cart c, product p, user u WHERE c.product_id = p.id AND c.user_id = u.id and c.user_id = ?1", nativeQuery = true)
     Double calculateTotalCartCost(Long user_id);
+
+
 
     // Remove all carts for a specific user
     @Modifying
