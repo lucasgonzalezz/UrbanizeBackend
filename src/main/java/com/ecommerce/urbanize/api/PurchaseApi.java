@@ -1,10 +1,9 @@
 package com.ecommerce.urbanize.api;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import org.springframework.http.HttpStatus;
@@ -93,9 +92,9 @@ public class PurchaseApi {
 
     // Make purchase of all carts
     @PostMapping("/makeAllCartPurchase/{user_id}")
-    public ResponseEntity<PurchaseEntity> makeAllCartPurchase(@PathVariable Long user_id) {
+    public ResponseEntity<PurchaseEntity> makeAllCartPurchase(@PathVariable Long user_id, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
         UserEntity user = oUserService.get(user_id);
-        List<CartEntity> carts = oCartService.getCartByUser(user_id);
+        Page<CartEntity> carts = oCartService.getCartByUser(user_id, PageRequest.of(page, size));
         PurchaseEntity purchase = oPurchaseService.makeAllCartPurchase(carts, user);
         return new ResponseEntity<>(purchase, HttpStatus.CREATED);
     }

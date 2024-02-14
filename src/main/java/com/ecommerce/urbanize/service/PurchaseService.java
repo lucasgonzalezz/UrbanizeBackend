@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
@@ -121,6 +120,7 @@ public class PurchaseService {
         oPurchaseEntity.setDateBill(LocalDate.now());
         oPurchaseEntity.setDeliveryDate(LocalDate.now().plusDays(3));
         oPurchaseEntity.setNumBill(1);
+
         oPurchaseEntity.setPurchaseCode(generateOrderCode());
         oPurchaseEntity.setPurchaseDate(LocalDate.now());
         oPurchaseEntity.setUser(oUserEntity);
@@ -147,7 +147,7 @@ public class PurchaseService {
 
     // Make purchase of all carts
     @Transactional
-    public PurchaseEntity makeAllCartPurchase(List<CartEntity> carts, UserEntity oUserEntity) {
+    public PurchaseEntity makeAllCartPurchase(Page<CartEntity> carts, UserEntity oUserEntity) {
 
         oSessionService.onlyAdminsOrUsersWithTheirData(oUserEntity.getId());
 
@@ -157,13 +157,14 @@ public class PurchaseService {
         oPurchaseEntity.setDateBill(LocalDate.now());
         oPurchaseEntity.setDeliveryDate(LocalDate.now().plusDays(3));
         oPurchaseEntity.setNumBill(1);
+    
         oPurchaseEntity.setPurchaseCode(generateOrderCode());
         oPurchaseEntity.setPurchaseDate(LocalDate.now());
         oPurchaseEntity.setUser(oUserEntity);
 
         oPurchaseRepository.save(oPurchaseEntity);
 
-        carts = oCartService.getCartByUser(oUserEntity.getId());
+        carts = oCartService.getCartByUser(oUserEntity.getId(), PageRequest.of(0, 1000));
 
         for (CartEntity cart : carts) {
             PurchaseDetailEntity oPurchaseDetailEntity = new PurchaseDetailEntity();

@@ -41,8 +41,8 @@ public class CartApi {
 
     // Get cart by user ID
     @GetMapping("/byUser/{user_id}")
-    public ResponseEntity<List<CartEntity>> getCartByUser(@PathVariable("user_id") Long user_id) {
-        return ResponseEntity.ok(oCartService.getCartByUser(user_id));
+    public ResponseEntity<Page<CartEntity>> getCartByUser(@PathVariable("user_id") Long user_id, @PageableDefault(size = 10, sort = {"id"}, direction = Sort.Direction.ASC) Pageable oPageable) {
+        return ResponseEntity.ok(oCartService.getCartByUser(user_id, oPageable));
     }
 
     // Get cart by user ID and product ID
