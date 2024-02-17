@@ -23,7 +23,7 @@ import com.ecommerce.urbanize.service.UserService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 public class UserApi {
 
     @Autowired

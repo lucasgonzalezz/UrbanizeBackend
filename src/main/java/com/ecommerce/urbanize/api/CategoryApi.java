@@ -24,7 +24,7 @@ import com.ecommerce.urbanize.service.CategoryService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/category")
+@RequestMapping("/api/category")
 public class CategoryApi {
 
     @Autowired

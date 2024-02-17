@@ -25,7 +25,7 @@ import com.ecommerce.urbanize.service.PurchaseDetailService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/purchaseDetail")
+@RequestMapping("/api/purchaseDetail")
 public class PurchaseDetailApi {
 
     @Autowired

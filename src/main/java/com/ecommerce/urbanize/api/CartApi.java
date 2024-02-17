@@ -27,7 +27,7 @@ import com.ecommerce.urbanize.service.CartService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/cart")
+@RequestMapping("/api/cart")
 public class CartApi {
 
     @Autowired

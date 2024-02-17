@@ -28,7 +28,7 @@
 
     @CrossOrigin(origins = "*", allowedHeaders = "*", maxAge = 3600)
     @RestController
-    @RequestMapping("/rating")
+    @RequestMapping("/api/rating")
     public class RatingApi {
 
         private static final int PAGE_SIZE = 30;

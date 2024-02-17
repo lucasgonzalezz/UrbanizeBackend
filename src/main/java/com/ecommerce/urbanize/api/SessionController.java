@@ -16,7 +16,7 @@ import com.ecommerce.urbanize.service.SessionService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/session")
+@RequestMapping("/api/session")
 public class SessionController {
 
     @Autowired
