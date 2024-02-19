@@ -26,7 +26,7 @@ import com.ecommerce.urbanize.service.ProductService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/product")
+@RequestMapping("/product")
 public class ProductApi {
 
     @Autowired

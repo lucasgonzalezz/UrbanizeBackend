@@ -12,7 +12,7 @@ import com.ecommerce.urbanize.service.CaptchaService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/captcha")
+@RequestMapping("/captcha")
 public class CaptchaApi {
 
     @Autowired
