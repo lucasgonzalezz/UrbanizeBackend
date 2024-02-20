@@ -6,13 +6,14 @@ import java.util.Random;
 public class RatingGenerationHelper {
 
     private static final String[] titles = {
-            "Great Product", "Awesome Experience", "Not Satisfied", "Highly Recommended", "Terrible Quality"
+            "Excelente Producto", "Experiencia Increíble", "No Satisfecho", "Altamente Recomendado", "Calidad Terrible",
+            "Buen Valor por el Dinero", "Envío Rápido y Eficiente"
     };
 
     private static final String[] descriptions = {
-            "The product exceeded my expectations.", "Smooth transaction and fast shipping.",
-            "Disappointed with the purchase.",
-            "Will buy again!", "Waste of money, do not recommend."
+            "El producto superó mis expectativas.", "Transacción fluida y envío rápido.",
+            "Decepcionado con la compra.", "¡Compraré de nuevo!", "Pérdida de dinero, no lo recomiendo.",
+            "Buena relación calidad-precio.", "Entrega rápida y eficiente."
     };
 
     public static String getRandomTitle() {
