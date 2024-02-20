@@ -140,7 +140,7 @@ public class ProductService {
             String productName = ProductDataGenerationHelper.getRandomProductName();
             int stock = ProductDataGenerationHelper.getRandomStock();
             String size = ProductDataGenerationHelper.getRandomSize();
-            int price = ProductDataGenerationHelper.getRandomPrice();
+            double price = ProductDataGenerationHelper.getRandomPrice();
             // For simplicity, assuming you have a method to get a random CategoryEntity
             CategoryEntity category = oCategoryService.getOneRandom();
 

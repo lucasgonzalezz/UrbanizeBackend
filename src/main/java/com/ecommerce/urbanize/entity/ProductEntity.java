@@ -26,11 +26,11 @@ public class ProductEntity {
 
     @NotNull
     @NotBlank
-    @Size(min = 1, max = 3)
+    @Size(min = 1, max = 20)
     private String size;
 
     @NotNull
-    private int price;
+    private double price;
 
     private String image;
 
@@ -67,7 +67,7 @@ public class ProductEntity {
      * @param image    The product's image.
      * @param category The product's category.
      */
-    public ProductEntity(Long id, String name, int stock, String size, int price, String image,
+    public ProductEntity(Long id, String name, int stock, String size, double price, String image,
             CategoryEntity category) {
         this.id = id;
         this.name = name;
@@ -87,7 +87,7 @@ public class ProductEntity {
      * @param price    The product's price.
      * @param category The product's category.
      */
-    public ProductEntity(String name, int stock, String size, int price,
+    public ProductEntity(String name, int stock, String size, double price,
             CategoryEntity category) {
         this.name = name;
         this.stock = stock;
@@ -106,7 +106,7 @@ public class ProductEntity {
      * @param image    The product's image.
      * @param category The product's category.
      */
-    public ProductEntity(String name, int stock, String size, int price, String image, CategoryEntity category) {
+    public ProductEntity(String name, int stock, String size, double price, String image, CategoryEntity category) {
         this.name = name;
         this.stock = stock;
         this.size = size;
@@ -124,7 +124,7 @@ public class ProductEntity {
      * @param price The product's price.
      * @param image The product's image.
      */
-    public ProductEntity(String name, int stock, String size, int price, String image) {
+    public ProductEntity(String name, int stock, String size, double price, String image) {
         this.name = name;
         this.stock = stock;
         this.size = size;
@@ -209,7 +209,7 @@ public class ProductEntity {
      *
      * @return The product's price.
      */
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
@@ -218,7 +218,7 @@ public class ProductEntity {
      *
      * @param price The product's price.
      */
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

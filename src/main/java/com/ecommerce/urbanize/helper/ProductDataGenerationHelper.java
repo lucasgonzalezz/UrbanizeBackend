@@ -44,7 +44,7 @@ public class ProductDataGenerationHelper {
         return new Random().nextInt(91) + 10;
     }
 
-    public static int getRandomPrice() {
+    public static double getRandomPrice() {
         // Assuming the price is between 50 and 500
         return new Random().nextInt(451) + 50;
     }

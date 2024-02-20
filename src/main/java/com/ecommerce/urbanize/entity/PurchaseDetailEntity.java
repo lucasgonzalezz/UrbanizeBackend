@@ -15,7 +15,7 @@ public class PurchaseDetailEntity {
     private int amount;
 
     @NotNull
-    private int price;
+    private double price;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
@@ -40,7 +40,7 @@ public class PurchaseDetailEntity {
      * @param product  The product associated with the purchase detail.
      * @param purchase The purchase associated with the purchase detail.
      */
-    public PurchaseDetailEntity(Long id, int amount, int price, ProductEntity product, PurchaseEntity purchase) {
+    public PurchaseDetailEntity(Long id, int amount, double price, ProductEntity product, PurchaseEntity purchase) {
         this.id = id;
         this.amount = amount;
         this.price = price;
@@ -56,7 +56,7 @@ public class PurchaseDetailEntity {
      * @param product  The product associated with the purchase detail.
      * @param purchase The purchase associated with the purchase detail.
      */
-    public PurchaseDetailEntity(int amount, int price, ProductEntity product, PurchaseEntity purchase) {
+    public PurchaseDetailEntity(int amount, double price, ProductEntity product, PurchaseEntity purchase) {
         this.amount = amount;
         this.price = price;
         this.product = product;
@@ -104,7 +104,7 @@ public class PurchaseDetailEntity {
      *
      * @return The purchase detail's price.
      */
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
@@ -113,7 +113,7 @@ public class PurchaseDetailEntity {
      *
      * @param price The purchase detail's price.
      */
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
