@@ -91,9 +91,9 @@ public class CartApi {
 
     // Delete all carts for a specific user
     @DeleteMapping("/user/{user_id}")
-    public ResponseEntity<Long> deleteCarritoByUsuario(@PathVariable("usuarioId") Long usuarioId) {
-        oCartService.deleteByUserId(usuarioId);
-        return ResponseEntity.ok(usuarioId);
+    public ResponseEntity<Long> deleteCarritoByUsuario(@PathVariable("user_id") Long user_id) {
+        oCartService.deleteByUserId(user_id);
+        return ResponseEntity.ok(user_id);
     }
 
     // Calculate the cost of a specific cart
