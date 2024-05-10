@@ -16,11 +16,10 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
+    
     @Size(min = 3, max = 255)
     private String name;
 
-    @NotNull
     @Size(min = 3, max = 255)
     private String last_name1;
 
@@ -29,35 +28,29 @@ public class UserEntity {
 
     private LocalDate birth_date;
 
-    @NotNull
+    
     private int phone_number;
 
-    @NotNull
     @Size(min = 9, max = 9, message = "DNI must have 8 numbers followed by a letter")
     @Pattern(regexp = "\\d{8}[a-zA-Z]", message = "DNI must have 8 numbers followed by a letter")
     private String dni;
 
-    @NotNull
     @Size(min = 3, max = 255)
     private String city;
 
-    @NotNull
     private int postal_code;
 
-    @NotNull
     @Size(min = 3, max = 255)
     private String address;
 
-    @NotNull
     @Size(min = 3, max = 255)
     private String email;
 
-    @NotNull
+    
     @Size(min = 6, max = 15)
     private String username;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @NotNull
     @NotBlank
     @Size(min = 64, max = 64)
     @Pattern(regexp = "^[a-fA-F0-9]+$", message = "Password must be hexadecimal")

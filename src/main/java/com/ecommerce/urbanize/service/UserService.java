@@ -65,7 +65,7 @@ public class UserService {
 
     // Create a new user
     public Long create(UserEntity oUserEntity) {
-        oSessionService.onlyAdmins();
+        
         oUserEntity.setId(null);
         oUserEntity.setPassword(password);
         return oUserRepository.save(oUserEntity).getId();
