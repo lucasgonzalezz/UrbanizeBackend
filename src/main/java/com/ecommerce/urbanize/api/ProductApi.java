@@ -1,5 +1,7 @@
 package com.ecommerce.urbanize.api;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.Page;
@@ -54,6 +56,18 @@ public class ProductApi {
     @PutMapping("")
     public ResponseEntity<ProductEntity> update(@RequestBody ProductEntity oProductEntity) {
         return ResponseEntity.ok(oProductService.update(oProductEntity));
+    }
+
+    // Actualizar el stock del producto por ID
+    @PutMapping("/{id}/stock")
+    public ResponseEntity<ProductEntity> updateStock(@PathVariable("id") Long id,
+            @RequestBody Map<String, Integer> stockUpdate) {
+        try {
+            oProductService.updateStock(id, stockUpdate.get("stock"));
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     // Delete a product by ID

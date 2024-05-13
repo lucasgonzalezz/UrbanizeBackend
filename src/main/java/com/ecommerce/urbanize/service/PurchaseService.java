@@ -137,8 +137,8 @@ public class PurchaseService {
 
         oPurchaseDetailRepository.save(oPurchaseDetailEntity);
 
-        ProductEntity Product = oCartEntity.getProduct();
-        oProductService.updateStock(Product, oCartEntity.getAmount());
+        // ProductEntity Product = oCartEntity.getProduct();
+        // oProductService.updateStock(Product, oCartEntity.getAmount());
 
         oCartService.delete(oCartEntity.getId());
 
@@ -175,8 +175,8 @@ public class PurchaseService {
             oPurchaseDetailEntity.setPrice(cart.getProduct().getPrice());
 
             oPurchaseDetailRepository.save(oPurchaseDetailEntity);
-            ProductEntity product = cart.getProduct();
-            oProductService.updateStock(product, cart.getAmount());
+            // ProductEntity product = cart.getProduct();
+            // oProductService.updateStock(product, cart.getAmount());
         }
 
         oCartService.deleteByUserId(oUserEntity.getId());
