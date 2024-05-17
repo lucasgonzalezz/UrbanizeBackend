@@ -15,7 +15,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
     // Method to find products by category ID
     Page<ProductEntity> findByCategoryId(Long id, Pageable pageable);
 
-    // Method to find products by size (sizes: xs, s, m, l, xl, xxl)
+    // Method to find products by size
     @Query(value = "SELECT * FROM product WHERE size = ?1", nativeQuery = true)
     Page<ProductEntity> findBySize(String size, Pageable pageable);
 
@@ -32,8 +32,10 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
     Page<ProductEntity> findByPriceDescAndIdCategory(Long category_id, Pageable pageable);
 
     // Method to find products by search text ignoring case
-    @Query(value = "SELECT * FROM product WHERE LENGTH(?1) >=3 AND name LIKE %?1%", nativeQuery = true)
-    Page<ProductEntity> findBySearchIgnoreCase(String searchText, Pageable pageable);
+    Page<ProductEntity> findByNameContainingIgnoreCase(String name, Pageable pageable);
+
+    @Query(value = "SELECT * FROM product p WHERE p.id IN (SELECT pd.product_id FROM purchase_detail pd WHERE pd.purchase_id IN (SELECT p.id FROM purchase p WHERE p.user_id = ?1))", nativeQuery = true)
+    Page<ProductEntity> findProductsPurchaseByUser(Long user_id, Pageable pageable);
 
     // Method to find products most sold
     @Query(value = "SELECT p.* FROM product p INNER JOIN purchase_detail pd ON p.id = pd.product_id INNER JOIN purchase pu ON pd.purchase_id = pu.id GROUP BY p.id ORDER BY SUM(pd.amount) DESC", nativeQuery = true)

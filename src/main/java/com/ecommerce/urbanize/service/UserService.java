@@ -63,6 +63,12 @@ public class UserService {
         return page;
     }
 
+public Long createUserWithPassword(UserEntity userEntity, String password) {
+    userEntity.setId(null);
+    userEntity.setPassword(password);
+    return oUserRepository.save(userEntity).getId();
+}
+
     // Create a new user
     public Long create(UserEntity oUserEntity) {
         

@@ -32,19 +32,18 @@ public class ProductService {
 
     // Get a page of products
     public Page<ProductEntity> getPage(Pageable oPageable, Long category_id, String filter) {
-    if(category_id != null) {
-        return oProductRepository.findByCategoryId(category_id, oPageable);
-    } else {
-        Page<ProductEntity> page;
-
-        if (filter == null || filter.isEmpty() || filter.trim().isEmpty()) {
-            page = oProductRepository.findAll(oPageable);
+        if (category_id != null) {
+            return oProductRepository.findByCategoryId(category_id, oPageable);
         } else {
-            
-            page = oProductRepository.findByName(filter, oPageable); // Assuming findByName exists in your repository
+            Page<ProductEntity> page;
+
+            if (filter == null || filter.isEmpty() || filter.trim().isEmpty()) {
+                page = oProductRepository.findAll(oPageable);
+            } else {
+                page = oProductRepository.findByNameContainingIgnoreCase(filter, oPageable); // Assuming findByName exists in your
+            }
+            return page;
         }
-        return page;
-    }
     }
 
     // Create a new product
@@ -125,11 +124,29 @@ public class ProductService {
 
     // Get products by search text ignoring case
     public Page<ProductEntity> getPageBySearchIgnoreCase(String searchText, Pageable oPageable) {
-        return oProductRepository.findBySearchIgnoreCase(searchText, oPageable);
+        return oProductRepository.findByNameContainingIgnoreCase(searchText, oPageable);
     }
 
+    public Page<ProductEntity> findProductsPurchaseByUser(Long usuario_id, Pageable oPageable) {
+        return oProductRepository.findProductsPurchaseByUser(usuario_id, oPageable);
+    }
+
+    // Get products most sold
     public Page<ProductEntity> getProductsMostSold(Pageable oPageable) {
         return oProductRepository.findProductsMostSold(oPageable);
+    }
+
+    // Actualizar el stock del producto
+    @Transactional
+    public void updateStock(Long productId, int amount) {
+        ProductEntity product = oProductRepository.findById(productId)
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+        int updatedStock = product.getStock() + amount;
+        if (updatedStock < 0) {
+            throw new IllegalArgumentException("Insufficient stock.");
+        }
+        product.setStock(updatedStock);
+        oProductRepository.save(product);
     }
 
     // Populate the product table

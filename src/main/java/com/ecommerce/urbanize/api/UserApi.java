@@ -47,6 +47,11 @@ public class UserApi {
         return ResponseEntity.ok(oUserService.getOneRandom());
     }
 
+        @PostMapping("/createWithPassword")
+        public ResponseEntity<Long> createUserWithPassword(@RequestBody UserEntity userEntity, @RequestParam String password) {
+            return ResponseEntity.ok(oUserService.createUserWithPassword(userEntity, password));
+        }
+
     // Create a new user
     @PostMapping("")
     public ResponseEntity<Long> create(@RequestBody UserEntity oUserEntity) {
