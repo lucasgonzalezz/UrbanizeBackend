@@ -127,8 +127,8 @@ public class ProductService {
         return oProductRepository.findByNameContainingIgnoreCase(searchText, oPageable);
     }
 
-    public Page<ProductEntity> findProductsPurchaseByUser(Long usuario_id, Pageable oPageable) {
-        return oProductRepository.findProductsPurchaseByUser(usuario_id, oPageable);
+    public Page<ProductEntity> findProductsPurchased(Long user_id, Pageable oPageable) {
+        return oProductRepository.findProductsPurchaseByUser(user_id, oPageable);
     }
 
     // Get products most sold

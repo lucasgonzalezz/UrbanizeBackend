@@ -50,9 +50,16 @@
 
         // Create a new rating
         @PostMapping("")
-        public ResponseEntity<Long> create(@RequestBody RatingEntity oRatingEntity) {
+        public ResponseEntity<Long> create(@RequestBody RatingEntity oRatingEntity) throws Exception{
             return ResponseEntity.ok(oRatingService.create(oRatingEntity));
         }
+    
+
+        @GetMapping("/user/{user_id}/product/{product_id}")
+        public ResponseEntity<Optional<RatingEntity>> findByIdProductAndIdUser(@PathVariable("user_id") Long user_id, @PathVariable("product_id") Long product_id) {
+            return ResponseEntity.ok(oRatingService.findByIdProductAndIdUser(user_id, product_id));
+        }
+
 
         // Update an existing rating
         @PutMapping("")

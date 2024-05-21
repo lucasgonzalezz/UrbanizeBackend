@@ -20,7 +20,7 @@ public interface RatingRepository extends JpaRepository<RatingEntity, Long> {
     Page<RatingEntity> findByUserId(Long user_id, Pageable pageable);
 
     // Find a rating for a specific product and user
-    Optional<RatingEntity> findByProductIdAndUserId(Long product_id, Long user_id);
+    Optional<RatingEntity> findByUserIdAndProductId(Long user_id, Long product_id );
 
     // Get the average rating of a product
     @Query(value = "SELECT AVG(punctuation) FROM rating WHERE product_id = ?1", nativeQuery = true)

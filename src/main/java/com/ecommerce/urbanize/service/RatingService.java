@@ -63,11 +63,34 @@ public class RatingService {
 
     }
 
-    public Long create(RatingEntity oRatingEntity) {
-        oSessionService.onlyAdminsOrUsersWithTheirData(oSessionService.getSessionUser().getId());
-        oRatingEntity.setId(null);
-        oRatingEntity.setDate(LocalDate.now());
-        return oRatingRepository.save(oRatingEntity).getId();
+    // public Long create(RatingEntity oRatingEntity) {
+    //     oSessionService.onlyAdminsOrUsersWithTheirData(oSessionService.getSessionUser().getId());
+    //     oRatingEntity.setId(null);
+    //     oRatingEntity.setDate(LocalDate.now());
+    //     return oRatingRepository.save(oRatingEntity).getId();
+    // }
+
+    public Long create(RatingEntity oRatingEntity) throws Exception {
+
+        UserEntity oUserEntity = oSessionService.getSessionUser();
+        ProductEntity oProductEntity = oProductService.get(oRatingEntity.getProduct().getId());
+
+        Page<ProductEntity> productsPurchased = oProductService.findProductsPurchased(oUserEntity.getId(), PageRequest.of(0, Integer.MAX_VALUE));
+
+        boolean purchasedProduct = productsPurchased.stream().anyMatch(product -> product.getId().equals(oProductEntity.getId()));
+
+        if (!purchasedProduct) {
+            throw new Exception("Para poder valorar la camiseta primero has de comprarla");
+        } else {
+            Optional<RatingEntity> ratingFromBD = oRatingRepository.findByUserIdAndProductId(oUserEntity.getId(), oProductEntity.getId());
+            if (ratingFromBD.isPresent()) {
+                throw new Exception("Error: ya has valorado la camiseta");
+            } else {
+                oRatingEntity.setId(null);
+                oRatingEntity.setDate(LocalDate.now());
+                return oRatingRepository.save(oRatingEntity).getId();
+            }
+        }
     }
 
     // Update an existing rating
@@ -107,7 +130,7 @@ public class RatingService {
     // Get a rating for a specific product and user
     public Optional<RatingEntity> findByIdProductAndIdUser(Long product_id, Long user_id) {
         oSessionService.onlyAdminsOrUsers();
-        return oRatingRepository.findByProductIdAndUserId(product_id, user_id);
+        return oRatingRepository.findByUserIdAndProductId(product_id, user_id);
     }
 
     // Get average rating for a product

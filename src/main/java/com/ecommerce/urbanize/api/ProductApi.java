@@ -121,6 +121,12 @@ public class ProductApi {
         return ResponseEntity.ok(oProductService.getByPriceDesc(oPageable));
     }
 
+    @GetMapping("/purchased")
+    public ResponseEntity<Page<ProductEntity>> getProductsPurchasedByUser(Long userId, Pageable pageable) {
+        Page<ProductEntity> products = oProductService.findProductsPurchased(userId, pageable);
+        return ResponseEntity.ok(products);
+    }
+
     // Get products most sold
     @GetMapping("/mostSold")
     public ResponseEntity<Page<ProductEntity>> getProductsMostSold(
