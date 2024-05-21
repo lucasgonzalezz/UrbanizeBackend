@@ -70,13 +70,6 @@ public class UserApi {
         return ResponseEntity.ok(oUserService.delete(id));
     }
 
-    // // Get a cantity of users using pagination
-    // @GetMapping("")
-    // public ResponseEntity<Page<UserEntity>> getPage(
-    //         @PageableDefault(size = 30, sort = { "id" }, direction = Sort.Direction.ASC) Pageable oPageable) {
-    //     return ResponseEntity.ok(oUserService.getPage(oPageable));
-    // }
-
     @GetMapping("")
     public ResponseEntity<Page<UserEntity>> getPage(
             Pageable oPageable,

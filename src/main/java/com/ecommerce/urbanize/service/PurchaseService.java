@@ -63,10 +63,23 @@ public class PurchaseService {
         return oPurchaseRepository.findByUserId(user_id, oPageable);
     }
 
-    public Page<PurchaseEntity> getPage(Pageable oPageable) {
+    public Page<PurchaseEntity> getPage(Pageable oPageable, String filter) {
         oSessionService.onlyAdminsOrUsers();
-        return oPurchaseRepository.findAll(oPageable);
+        Page<PurchaseEntity> page;
+
+        if (filter == null || filter.isEmpty() || filter.trim().isEmpty()) {
+            page = oPurchaseRepository.findAll(oPageable);
+        } else {
+            page = oPurchaseRepository.findByPurchaseCodeOrUserIdContaining(filter, oPageable);
+        }
+        return page;
     }
+
+    public Page<PurchaseEntity> getPageForUser(Pageable oPageable, Integer userId) {
+        // Aquí debes asegurarte de que el repositorio tenga un método para filtrar por userId
+        return oPurchaseRepository.findByUserId(userId, oPageable);
+    }
+    
 
     public PurchaseEntity getOneRandom() {
         Pageable oPageable = PageRequest.of((int) (Math.random() * oPurchaseRepository.count()), 1);

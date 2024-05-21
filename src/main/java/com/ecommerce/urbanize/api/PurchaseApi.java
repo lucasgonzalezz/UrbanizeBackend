@@ -50,11 +50,17 @@ public class PurchaseApi {
         return ResponseEntity.ok(oPurchaseService.get(id));
     }
 
-    // Get page of purchases
     @GetMapping("")
-    public ResponseEntity<Page<PurchaseEntity>> getPage(Pageable oPageable) {
-        return ResponseEntity.ok(oPurchaseService.getPage(oPageable));
-    }
+    public ResponseEntity<Page<PurchaseEntity>> getPage(Pageable oPageable, 
+                                                        @RequestParam(required = false) Integer user,
+                                                        @RequestParam(name = "filter", required = false) String strFilter) {
+        if (user != null && user > 0) {
+            return ResponseEntity.ok(oPurchaseService.getPageForUser(oPageable, user));
+        } else {
+            return ResponseEntity.ok(oPurchaseService.getPage(oPageable, strFilter));
+        }
+    }    
+    
 
     // Get page of purchases by user ID
     @GetMapping("/byUser/{user_id}")

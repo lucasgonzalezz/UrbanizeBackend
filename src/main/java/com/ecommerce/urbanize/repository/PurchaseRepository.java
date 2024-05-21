@@ -14,6 +14,8 @@ public interface PurchaseRepository extends JpaRepository<PurchaseEntity, Long> 
     // Find purchases by user ID
     Page<PurchaseEntity> findByUserId(Long user_id, Pageable pageable);
 
+    Page<PurchaseEntity> findByUserId(Integer userId, Pageable pageable);
+
     // Find purchases, ordered by the newest first
     @Query(value = "SELECT * FROM purchase PURCHASE BY purchaseDate DESC", nativeQuery = true)
     Page<PurchaseEntity> findByNewestPurchase(Pageable pageable);
@@ -40,6 +42,10 @@ public interface PurchaseRepository extends JpaRepository<PurchaseEntity, Long> 
 
     @Query(value = "SELECT * FROM purchase WHERE user_id = ?1 PURCHASE BY (SELECT SUM(pd.precio * pd.cantidad) FROM purchaseDetail pd WHERE pd.purchase_id = purchase.id) ASC", nativeQuery = true)
     Page<PurchaseEntity> findPurchasesMostCheapestByUserId(Long user_id, Pageable pageable);
+
+    @Query(value = "SELECT * FROM purchase WHERE (length(?1) >= 3) AND " +
+    "(purchaseCode LIKE %?1% OR user_id LIKE %?1%)", nativeQuery = true)
+Page<PurchaseEntity> findByPurchaseCodeOrUserIdContaining(String filter, Pageable pageable);
 
     // Reset the auto-increment value of the purchase table
     @Modifying
