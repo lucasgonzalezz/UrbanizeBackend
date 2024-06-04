@@ -28,7 +28,6 @@ public class UserEntity {
 
     private LocalDate birth_date;
 
-    
     private int phone_number;
 
     @Size(min = 9, max = 9, message = "DNI must have 8 numbers followed by a letter")
@@ -46,7 +45,6 @@ public class UserEntity {
     @Size(min = 3, max = 255)
     private String email;
 
-    
     @Size(min = 6, max = 15)
     private String username;
 
