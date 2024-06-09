@@ -100,18 +100,18 @@ public class UserService {
             // Generate random user data
             String name = UserGenerationHelper.getRadomName();
             String lastName1 = UserGenerationHelper.getRadomLastName1();
-            String lastName2 = UserGenerationHelper.getRadomLastName2();
+            // String lastName2 = UserGenerationHelper.getRadomLastName2();
             LocalDate birthDate = UserGenerationHelper.getRandomBirthDate();
-            int phoneNumber = UserGenerationHelper.getRandomPhoneNumber();
+            // int phoneNumber = UserGenerationHelper.getRandomPhoneNumber();
             String dni = UserGenerationHelper.getRandomDNI();
-            int postalCode = UserGenerationHelper.getRandomPostalCode();
-            String city = UserGenerationHelper.getRandomCity();
+            // int postalCode = UserGenerationHelper.getRandomPostalCode();
+            // String city = UserGenerationHelper.getRandomCity();
             String address = UserGenerationHelper.getRandomAddress();
             String email = UserGenerationHelper.getRandomEmail();
             String username = UserGenerationHelper.getRandomUsername();
             // Save the user to the repository
-            oUserRepository.save(new UserEntity(name, lastName1, lastName2, birthDate, phoneNumber, dni, postalCode,
-                    city, address, email, username, password, true));
+            oUserRepository.save(new UserEntity(name, lastName1, birthDate, dni,
+                    address, email, username, password, true));
         }
         return oUserRepository.count();
     }
@@ -141,13 +141,13 @@ public class UserService {
         oUserRepository.deleteAll();
         oUserRepository.resetAutoIncrement();
         // Add an admin user
-        UserEntity userAdmin = new UserEntity(1L, "Pepe", "Pérez", "Fernández", LocalDate.of(1950, 03, 21),
-                640259857, "24518752L", 46033, "Valencia", "Calle Perico los Palotes", "pepe4@gmail.com", "pepe33",
+        UserEntity userAdmin = new UserEntity(1L, "Pepe", "Pérez", LocalDate.of(1950, 03, 21),
+                "24518752L", "Calle Perico los Palotes", "pepe4@gmail.com", "pepe33",
                 password, true);
         oUserRepository.save(userAdmin);
         // Add a normal user
-        UserEntity userNormal = new UserEntity(2L, "Pepa", "Sánchez", "García", LocalDate.of(1995, 6, 15),
-                555555555, "12345678A", 28001, "Madrid", "Calle Gran Vía", "pepa@gmail.com", "pepita",
+        UserEntity userNormal = new UserEntity(2L, "Pepa", "Sánchez", LocalDate.of(1995, 6, 15),
+                "12345678A", "Calle Gran Vía", "pepa@gmail.com", "pepita",
                 password, false);
         oUserRepository.save(userNormal);
         return oUserRepository.count();

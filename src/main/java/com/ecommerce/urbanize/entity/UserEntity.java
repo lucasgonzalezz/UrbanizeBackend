@@ -23,21 +23,21 @@ public class UserEntity {
     @Size(min = 3, max = 255)
     private String last_name1;
 
-    @Size(min = 3, max = 255)
-    private String last_name2;
+    // @Size(min = 3, max = 255)
+    // private String last_name2;
 
     private LocalDate birth_date;
 
-    private int phone_number;
+    // private int phone_number;
 
     @Size(min = 9, max = 9, message = "DNI must have 8 numbers followed by a letter")
     @Pattern(regexp = "\\d{8}[a-zA-Z]", message = "DNI must have 8 numbers followed by a letter")
     private String dni;
 
-    @Size(min = 3, max = 255)
-    private String city;
+    // @Size(min = 3, max = 255)
+    // private String city;
 
-    private int postal_code;
+    // private int postal_code;
 
     @Size(min = 3, max = 255)
     private String address;
@@ -92,20 +92,17 @@ public class UserEntity {
      * @param password     The user's password.
      * @param role         The user's role.
      */
-    public UserEntity(Long id, String name, String last_name1, String last_name2, LocalDate birth_date,
-            int phone_number,
-            String dni,
-            int postal_code, String city, String address, String email, String username, String password,
-            Boolean role) {
+    public UserEntity(Long id, String name, String last_name1, LocalDate birth_date,  String dni,
+           String address, String email, String username, String password, Boolean role) {
         this.id = id;
         this.name = name;
         this.last_name1 = last_name1;
-        this.last_name2 = last_name2;
+        // this.last_name2 = last_name2;
         this.birth_date = birth_date;
-        this.phone_number = phone_number;
+        // this.phone_number = phone_number;
         this.dni = dni;
-        this.city = city;
-        this.postal_code = postal_code;
+        // this.city = city;
+        // this.postal_code = postal_code;
         this.address = address;
         this.email = email;
         this.username = username;
@@ -118,30 +115,23 @@ public class UserEntity {
      *
      * @param name         The user's first name.
      * @param last_name1   The user's first last name.
-     * @param last_name2   The user's second last name.
      * @param birth_date   The user's birth date.
-     * @param phone_number The user's phone number.
      * @param dni          The user's DNI.
-     * @param postal_code  The user's postal code.
-     * @param city         The user's city.
      * @param address      The user's address.
      * @param email        The user's email address.
      * @param username     The user's username.
      * @param password     The user's password.
      * @param role         The user's role.
      */
-    public UserEntity(String name, String last_name1, String last_name2, LocalDate birthDate, int phone_number,
-            String dni,
-            int postal_code, String city, String address, String email, String username, String password,
-            Boolean role) {
+    public UserEntity(String name, String last_name1, LocalDate birthDate, String dni, String address, String email, String username, String password, Boolean role) {
         this.name = name;
         this.last_name1 = last_name1;
-        this.last_name2 = last_name2;
+        // this.last_name2 = last_name2;
         this.birth_date = birthDate;
-        this.phone_number = phone_number;
+        // this.phone_number = phone_number;
         this.dni = dni;
-        this.city = city;
-        this.postal_code = postal_code;
+        // this.city = city;
+        // this.postal_code = postal_code;
         this.address = address;
         this.email = email;
         this.username = username;
@@ -214,23 +204,23 @@ public class UserEntity {
         this.last_name1 = last_name1;
     }
 
-    /**
-     * Get the user's second last name.
-     *
-     * @return The user's second last name.
-     */
-    public String getLast_name2() {
-        return last_name2;
-    }
+    // /**
+    //  * Get the user's second last name.
+    //  *
+    //  * @return The user's second last name.
+    //  */
+    // public String getLast_name2() {
+    //     return last_name2;
+    // }
 
-    /**
-     * Set the user's second last name.
-     *
-     * @param last_name2 The user's second last name.
-     */
-    public void setLast_name2(String last_name2) {
-        this.last_name2 = last_name2;
-    }
+    // /**
+    //  * Set the user's second last name.
+    //  *
+    //  * @param last_name2 The user's second last name.
+    //  */
+    // public void setLast_name2(String last_name2) {
+    //     this.last_name2 = last_name2;
+    // }
 
     /**
      * Get the user's birth date.
@@ -250,23 +240,23 @@ public class UserEntity {
         this.birth_date = birth_date;
     }
 
-    /**
-     * Get the user's phone number.
-     *
-     * @return The user's phone number.
-     */
-    public int getPhone_number() {
-        return phone_number;
-    }
+    // /**
+    //  * Get the user's phone number.
+    //  *
+    //  * @return The user's phone number.
+    //  */
+    // public int getPhone_number() {
+    //     return phone_number;
+    // }
 
-    /**
-     * Set the user's phone number.
-     *
-     * @param phone_number The user's phone number.
-     */
-    public void setPhone_number(int phone_number) {
-        this.phone_number = phone_number;
-    }
+    // /**
+    //  * Set the user's phone number.
+    //  *
+    //  * @param phone_number The user's phone number.
+    //  */
+    // public void setPhone_number(int phone_number) {
+    //     this.phone_number = phone_number;
+    // }
 
     /**
      * Get the user's DNI.
@@ -286,41 +276,41 @@ public class UserEntity {
         this.dni = dni;
     }
 
-    /**
-     * Get the user's city.
-     *
-     * @return The user's city.
-     */
-    public String getCity() {
-        return city;
-    }
+    // /**
+    //  * Get the user's city.
+    //  *
+    //  * @return The user's city.
+    //  */
+    // public String getCity() {
+    //     return city;
+    // }
 
-    /**
-     * Set the user's city.
-     *
-     * @param city The user's city.
-     */
-    public void setCity(String city) {
-        this.city = city;
-    }
+    // /**
+    //  * Set the user's city.
+    //  *
+    //  * @param city The user's city.
+    //  */
+    // public void setCity(String city) {
+    //     this.city = city;
+    // }
 
-    /**
-     * Get the user's postal code.
-     *
-     * @return The user's postal code.
-     */
-    public int getPostal_code() {
-        return postal_code;
-    }
+    // /**
+    //  * Get the user's postal code.
+    //  *
+    //  * @return The user's postal code.
+    //  */
+    // public int getPostal_code() {
+    //     return postal_code;
+    // }
 
-    /**
-     * Set the user's postal code.
-     *
-     * @param postal_Code The user's postal code.
-     */
-    public void setPostal_code(int postal_code) {
-        this.postal_code = postal_code;
-    }
+    // /**
+    //  * Set the user's postal code.
+    //  *
+    //  * @param postal_Code The user's postal code.
+    //  */
+    // public void setPostal_code(int postal_code) {
+    //     this.postal_code = postal_code;
+    // }
 
     /**
      * Get the user's address.
