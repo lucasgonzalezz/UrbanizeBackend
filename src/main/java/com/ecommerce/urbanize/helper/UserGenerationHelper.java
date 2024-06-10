@@ -11,13 +11,13 @@ public class UserGenerationHelper {
             "Aria", "Oliver", "Scarlett", "Mason", "Grace"
     };
 
-    private static final String[] aLastname1 = {
+    private static final String[] aSurname1 = {
             "Smith", "Johnson", "Williams", "Jones", "Brown",
             "Davis", "Miller", "Wilson", "Moore", "Taylor",
             "Anderson", "Thomas", "Jackson", "White", "Harris"
     };
 
-    private static final String[] aLastname2 = {
+    private static final String[] aSurname2 = {
             "Johnson", "Williams", "Jones", "Brown", "Davis",
             "Miller", "Wilson", "Moore", "Taylor", "Anderson",
             "Thomas", "Jackson", "White", "Harris", "Martin"
@@ -88,12 +88,12 @@ public class UserGenerationHelper {
         return aNames[(int) (Math.random() * aNames.length)];
     }
 
-    public static String getRadomLastName1() {
-        return aLastname1[(int) (Math.random() * aLastname1.length)];
+    public static String getRadomSurname1() {
+        return aSurname1[(int) (Math.random() * aSurname1.length)];
     }
 
-    public static String getRadomLastName2() {
-        return aLastname2[(int) (Math.random() * aLastname2.length)];
+    public static String getRadomSurname2() {
+        return aSurname2[(int) (Math.random() * aSurname2.length)];
     }
 
     public static LocalDate getRandomBirthDate() {
@@ -126,9 +126,9 @@ public class UserGenerationHelper {
 
     public static String getRandomUsername() {
         String name = aNames[(int) (Math.random() * aNames.length)];
-        String lastName1 = aLastname1[(int) (Math.random() * aLastname1.length)];
+        String Surname1 = aSurname1[(int) (Math.random() * aSurname1.length)];
 
-        return name + " " + lastName1.substring(0, 3);
+        return name + " " + Surname1.substring(0, 3);
     }
 
 }

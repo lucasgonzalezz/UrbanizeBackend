@@ -103,6 +103,30 @@ public class SessionService {
         }
     }
 
+    @Transactional
+    public UserEntity register(UserBean oUserBean) {
+        if (userRepository.findByEmail(oUserBean.getEmail()).isPresent()) {
+            throw new ResourceNotFoundException("Este email ya está en uso");
+        }
+
+        if (userRepository.findByUsername(oUserBean.getUsername()).isPresent()) {
+            throw new ResourceNotFoundException("Este username ya está en uso");
+        }
+
+        UserEntity newUser = new UserEntity();
+        newUser.setName(oUserBean.getName());
+        newUser.setSurname(oUserBean.getSurname());
+        newUser.setUsername(oUserBean.getUsername());
+        newUser.setEmail(oUserBean.getEmail());
+        newUser.setAddress(oUserBean.getAddress());
+        newUser.setPassword(oUserBean.getPassword());
+        newUser.setBirth_date(oUserBean.getBirth_date());
+        newUser.setDni(oUserBean.getDni());
+        newUser.setRole(false);
+
+        return userRepository.save(newUser);
+    }
+
     // Login without captcha verification
     public String login(UserBean oUsuarioBean) {
         userRepository.findByUsernameAndPassword(oUsuarioBean.getUsername(), oUsuarioBean.getPassword()).orElseThrow(() -> new ResourceNotFoundException("Usuario o contraseña incorrectos"));

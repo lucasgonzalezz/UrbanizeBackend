@@ -57,7 +57,7 @@ public class UserService {
         if (filter == null || filter.isEmpty() || filter.trim().isEmpty()) {
             page = oUserRepository.findAll(oPageable);
         } else {
-            page = oUserRepository.findByUserByNameOrSurnameOrLastnameContainingIgnoreCase(
+            page = oUserRepository.findByUserByNameOrSurnameOrSurnameContainingIgnoreCase(
                     filter, filter, filter, filter, oPageable);
         }
         return page;
@@ -99,8 +99,8 @@ public class UserService {
         for (int i = 0; i < amount; i++) {
             // Generate random user data
             String name = UserGenerationHelper.getRadomName();
-            String lastName1 = UserGenerationHelper.getRadomLastName1();
-            // String lastName2 = UserGenerationHelper.getRadomLastName2();
+            String Surname1 = UserGenerationHelper.getRadomSurname1();
+            // String Surname2 = UserGenerationHelper.getRadomSurname2();
             LocalDate birthDate = UserGenerationHelper.getRandomBirthDate();
             // int phoneNumber = UserGenerationHelper.getRandomPhoneNumber();
             String dni = UserGenerationHelper.getRandomDNI();
@@ -110,7 +110,7 @@ public class UserService {
             String email = UserGenerationHelper.getRandomEmail();
             String username = UserGenerationHelper.getRandomUsername();
             // Save the user to the repository
-            oUserRepository.save(new UserEntity(name, lastName1, birthDate, dni,
+            oUserRepository.save(new UserEntity(name, Surname1, birthDate, dni,
                     address, email, username, password, true));
         }
         return oUserRepository.count();

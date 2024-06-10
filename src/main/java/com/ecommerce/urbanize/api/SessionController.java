@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ecommerce.urbanize.bean.CaptchaBean;
 import com.ecommerce.urbanize.bean.CaptchaResponseBean;
 import com.ecommerce.urbanize.bean.UserBean;
+import com.ecommerce.urbanize.entity.UserEntity;
 import com.ecommerce.urbanize.service.SessionService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*", maxAge = 3600)
@@ -38,5 +39,10 @@ public class SessionController {
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody UserBean userBean) {
         return ResponseEntity.ok(oSessionService.login(userBean));
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<UserEntity> register(@RequestBody UserBean userBean) {
+        return ResponseEntity.ok(oSessionService.register(userBean));
     }
 }
