@@ -80,11 +80,11 @@ public class RatingService {
         boolean purchasedProduct = productsPurchased.stream().anyMatch(product -> product.getId().equals(oProductEntity.getId()));
 
         if (!purchasedProduct) {
-            throw new Exception("Para poder valorar la camiseta primero has de comprarla");
+            throw new Exception("Para poder valorar el producto primero has de comprarlo");
         } else {
             Optional<RatingEntity> ratingFromBD = oRatingRepository.findByUserIdAndProductId(oUserEntity.getId(), oProductEntity.getId());
             if (ratingFromBD.isPresent()) {
-                throw new Exception("Error: ya has valorado la camiseta");
+                throw new Exception("Error: ya has valorado el producto");
             } else {
                 oRatingEntity.setId(null);
                 oRatingEntity.setDate(LocalDate.now());
